@@ -7,15 +7,17 @@ using System.Linq;
 
 public class Compiler
 {
-    public static int errors = 0;
+    private static StreamWriter sourceWriter;
+    private static Scanner scanner;
+    private static Parser parser;
 
+    public static int errors = 0;
     public static List<string> sourceLines;
 
     // arg[0] określa plik źródłowy
     // pozostałe argumenty są ignorowane
     public static int Main(string[] args)
     {
-        FileStream sourceStream;
         Console.WriteLine("\nMini Compiler - Gardens Point");
 
         string file = args.FirstOrDefault();
@@ -27,28 +29,32 @@ public class Compiler
 
         try
         {
-            var sr = new StreamReader(file);
-            string str = sr.ReadToEnd();
-            sr.Close();
-            Compiler.sourceLines = new System.Collections.Generic.List<string>(str.Split(new string[] { "\r\n" }, System.StringSplitOptions.None));
-            sourceStream = new FileStream(file, FileMode.Open);
+            using (var reader = new StreamReader(file))
+            {
+                string source = reader.ReadToEnd();
+                sourceLines = new List<string>(source.Split(new string[] { "\r\n" }, System.StringSplitOptions.None)); ;
+            }
         }
         catch (Exception e)
         {
             Console.WriteLine("\n" + e.Message);
             return 1;
         }
-        Scanner scanner = new Scanner(sourceStream);
-        Parser parser = new Parser(scanner);
-        Console.WriteLine();
-        sw = new StreamWriter(file + ".il");
 
-        GenProlog();
-        parser.Parse();
-        GenEpilog();
+        using (var sourceStream = new FileStream(file, FileMode.Open))
+        {
+            scanner = new Scanner(sourceStream);
+            parser = new Parser(scanner);
 
-        sw.Close();
-        sourceStream.Close();
+            Console.WriteLine();
+
+            sourceWriter = new StreamWriter(file + ".il");
+            GenProlog();
+            parser.Parse();
+            GenEpilog();
+
+            sourceWriter.Close();
+        }
 
         if (errors > 0)
         {
@@ -64,15 +70,13 @@ public class Compiler
 
     public static void EmitCode(string instr = null)
     {
-        sw.WriteLine(instr);
+        sourceWriter.WriteLine(instr);
     }
 
     public static void EmitCode(string instr, params object[] args)
     {
-        sw.WriteLine(instr, args);
+        sourceWriter.WriteLine(instr, args);
     }
-
-    private static StreamWriter sw;
 
     private static void GenProlog()
     {

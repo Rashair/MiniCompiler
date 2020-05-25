@@ -22,7 +22,7 @@ start         : Program blokInstr start
               | start newline_list
               | newline_list Eof 
                 {
-                   // Compiler.EmitCode("// linia {0,3} :  "+ Compiler.source[lineNum - 1], lineNum);
+                   // Compiler.EmitCode("// linia {0,3} :  "+ Compiler.sourceLines[lineNum - 1], lineNum);
                    Compiler.EmitCode("ldstr \"\\nEnd of execution\\n\"");
                    Compiler.EmitCode("call void [mscorlib]System.Console::WriteLine(string)");
                    Compiler.EmitCode("");
