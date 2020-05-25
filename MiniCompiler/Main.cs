@@ -8,8 +8,6 @@ using System.Linq;
 public class Compiler
 {
     private static StreamWriter sourceWriter;
-    private static Scanner scanner;
-    private static Parser parser;
 
     public static int errors = 0;
     public static List<string> sourceLines;
@@ -43,8 +41,8 @@ public class Compiler
 
         using (var sourceStream = new FileStream(file, FileMode.Open))
         {
-            scanner = new Scanner(sourceStream);
-            parser = new Parser(scanner);
+            var scanner = new Scanner(sourceStream);
+            var parser = new Parser(scanner);
 
             Console.WriteLine();
 

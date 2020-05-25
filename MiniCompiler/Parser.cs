@@ -4,9 +4,9 @@
 
 // GPPG version 1.5.2
 // Machine:  GED
-// DateTime: 25/05/2020 12:56:56
+// DateTime: 25/05/2020 19:47:59
 // UserName: przem
-// Input file <Parser.y - 24/05/2020 14:13:48>
+// Input file <Parser.y - 25/05/2020 19:46:21>
 
 // options: lines gplex
 
@@ -56,78 +56,67 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 #pragma warning disable 649
   private static Dictionary<int, string> aliases;
 #pragma warning restore 649
-  private static Rule[] rules = new Rule[34];
-  private static State[] states = new State[29];
+  private static Rule[] rules = new Rule[29];
+  private static State[] states = new State[23];
   private static string[] nonTerms = new string[] {
-      "content", "blokInstr", "openBr", "closeBr", "line", "exp", "term", "factor", 
-      "start", "$accept", "end", };
+      "content", "blokInstr", "openBr", "closeBr", "newline", "exp", "term", 
+      "factor", "start", "$accept", "end", };
 
   static Parser() {
-    states[0] = new State(new int[]{4,4,9,7,18,9,2,10},new int[]{-9,1});
-    states[1] = new State(new int[]{3,2,9,3});
+    states[0] = new State(new int[]{4,3,9,8,18,9,2,10},new int[]{-9,1,-5,6});
+    states[1] = new State(new int[]{3,2});
     states[2] = new State(-1);
-    states[3] = new State(-4);
-    states[4] = new State(new int[]{9,12,5,24,2,26},new int[]{-2,5,-3,28});
-    states[5] = new State(new int[]{4,4,9,7,18,9,2,10},new int[]{-9,6});
-    states[6] = new State(new int[]{9,3,3,-2});
-    states[7] = new State(new int[]{4,4,9,7,18,9,2,10,3,-5},new int[]{-9,8});
-    states[8] = new State(new int[]{9,3,3,-3});
-    states[9] = new State(-6);
+    states[3] = new State(new int[]{9,8,5,14,2,21},new int[]{-2,4,-5,12});
+    states[4] = new State(new int[]{4,3,9,8,18,9,2,10},new int[]{-9,5,-5,6});
+    states[5] = new State(-2);
+    states[6] = new State(new int[]{4,3,9,8,18,9,2,10},new int[]{-9,7,-5,6});
+    states[7] = new State(-3);
+    states[8] = new State(-16);
+    states[9] = new State(-4);
     states[10] = new State(new int[]{18,11});
-    states[11] = new State(-7);
-    states[12] = new State(new int[]{9,12,5,24,2,26},new int[]{-2,13,-3,14});
-    states[13] = new State(-8);
-    states[14] = new State(new int[]{2,21,9,23,6,-12},new int[]{-1,15});
-    states[15] = new State(new int[]{9,17,6,20},new int[]{-4,16});
-    states[16] = new State(-9);
-    states[17] = new State(new int[]{9,19,6,20},new int[]{-4,18});
-    states[18] = new State(-15);
-    states[19] = new State(new int[]{9,19,6,20},new int[]{-4,18});
-    states[20] = new State(-16);
+    states[11] = new State(-5);
+    states[12] = new State(new int[]{9,8,5,14,2,21},new int[]{-2,13,-5,12});
+    states[13] = new State(-6);
+    states[14] = new State(new int[]{2,17,9,8,6,-15},new int[]{-1,15,-5,19});
+    states[15] = new State(new int[]{6,16});
+    states[16] = new State(-7);
+    states[17] = new State(new int[]{18,18});
+    states[18] = new State(-8);
+    states[19] = new State(new int[]{9,8,6,-15},new int[]{-1,20,-5,19});
+    states[20] = new State(-14);
     states[21] = new State(new int[]{18,22});
-    states[22] = new State(-10);
-    states[23] = new State(-18);
-    states[24] = new State(new int[]{9,25,2,-14,6,-14});
-    states[25] = new State(-13);
-    states[26] = new State(new int[]{18,27});
-    states[27] = new State(-11);
-    states[28] = new State(new int[]{2,21,9,23,6,-19},new int[]{-1,15});
+    states[22] = new State(-9);
 
     for (int sNo = 0; sNo < states.Length; sNo++) states[sNo].number = sNo;
 
     rules[1] = new Rule(-10, new int[]{-9,3});
     rules[2] = new Rule(-9, new int[]{4,-2,-9});
-    rules[3] = new Rule(-9, new int[]{9,-9});
-    rules[4] = new Rule(-9, new int[]{-9,9});
-    rules[5] = new Rule(-9, new int[]{9});
-    rules[6] = new Rule(-9, new int[]{18});
-    rules[7] = new Rule(-9, new int[]{2,18});
-    rules[8] = new Rule(-2, new int[]{9,-2});
-    rules[9] = new Rule(-2, new int[]{-3,-1,-4});
-    rules[10] = new Rule(-2, new int[]{-3,2,18});
-    rules[11] = new Rule(-2, new int[]{2,18});
-    rules[12] = new Rule(-3, new int[]{9,-3});
-    rules[13] = new Rule(-3, new int[]{5,9});
-    rules[14] = new Rule(-3, new int[]{5});
-    rules[15] = new Rule(-4, new int[]{9,-4});
-    rules[16] = new Rule(-4, new int[]{6});
-    rules[17] = new Rule(-1, new int[]{-1,9});
-    rules[18] = new Rule(-1, new int[]{9});
-    rules[19] = new Rule(-1, new int[]{});
-    rules[20] = new Rule(-5, new int[]{});
-    rules[21] = new Rule(-5, new int[]{9});
-    rules[22] = new Rule(-11, new int[]{8});
-    rules[23] = new Rule(-11, new int[]{18});
-    rules[24] = new Rule(-6, new int[]{-6,12,-7});
-    rules[25] = new Rule(-6, new int[]{-6,13,-7});
-    rules[26] = new Rule(-6, new int[]{-7});
-    rules[27] = new Rule(-7, new int[]{-7,14,-8});
-    rules[28] = new Rule(-7, new int[]{-7,15,-8});
-    rules[29] = new Rule(-7, new int[]{-8});
-    rules[30] = new Rule(-8, new int[]{16,-6,17});
-    rules[31] = new Rule(-8, new int[]{21});
-    rules[32] = new Rule(-8, new int[]{22});
-    rules[33] = new Rule(-8, new int[]{20});
+    rules[3] = new Rule(-9, new int[]{-5,-9});
+    rules[4] = new Rule(-9, new int[]{18});
+    rules[5] = new Rule(-9, new int[]{2,18});
+    rules[6] = new Rule(-2, new int[]{-5,-2});
+    rules[7] = new Rule(-2, new int[]{5,-1,6});
+    rules[8] = new Rule(-2, new int[]{5,2,18});
+    rules[9] = new Rule(-2, new int[]{2,18});
+    rules[10] = new Rule(-3, new int[]{5,-5});
+    rules[11] = new Rule(-3, new int[]{5});
+    rules[12] = new Rule(-4, new int[]{-5,6});
+    rules[13] = new Rule(-4, new int[]{6});
+    rules[14] = new Rule(-1, new int[]{-5,-1});
+    rules[15] = new Rule(-1, new int[]{});
+    rules[16] = new Rule(-5, new int[]{9});
+    rules[17] = new Rule(-11, new int[]{8});
+    rules[18] = new Rule(-11, new int[]{18});
+    rules[19] = new Rule(-6, new int[]{-6,12,-7});
+    rules[20] = new Rule(-6, new int[]{-6,13,-7});
+    rules[21] = new Rule(-6, new int[]{-7});
+    rules[22] = new Rule(-7, new int[]{-7,14,-8});
+    rules[23] = new Rule(-7, new int[]{-7,15,-8});
+    rules[24] = new Rule(-7, new int[]{-8});
+    rules[25] = new Rule(-8, new int[]{16,-6,17});
+    rules[26] = new Rule(-8, new int[]{21});
+    rules[27] = new Rule(-8, new int[]{22});
+    rules[28] = new Rule(-8, new int[]{20});
   }
 
   protected override void Initialize() {
@@ -142,25 +131,10 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
 #pragma warning disable 162, 1522
     switch (action)
     {
-      case 3: // start -> Endl, start
-#line 21 "Parser.y"
-                           { ++lineNum; }
-#line default
-        break;
-      case 4: // start -> start, Endl
-#line 22 "Parser.y"
-                           { ++lineNum; }
-#line default
-        break;
-      case 5: // start -> Endl
+      case 4: // start -> Eof
 #line 23 "Parser.y"
-                     { ++lineNum; }
-#line default
-        break;
-      case 6: // start -> Eof
-#line 25 "Parser.y"
                 {
-                   // Compiler.EmitCode("// linia {0,3} :  "+ Compiler.source[lineNum - 1], lineNum);
+                   Compiler.EmitCode("// linia {0,3} :  "+ Compiler.sourceLines[lineNum - 1], lineNum);
                    Compiler.EmitCode("ldstr \"\\nEnd of execution\\n\"");
                    Compiler.EmitCode("call void [mscorlib]System.Console::WriteLine(string)");
                    Compiler.EmitCode("");
@@ -168,8 +142,8 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                 }
 #line default
         break;
-      case 7: // start -> error, Eof
-#line 33 "Parser.y"
+      case 5: // start -> error, Eof
+#line 31 "Parser.y"
                 {
                     Console.WriteLine("  line {0,3}: 'program' statement required.", lineNum);
                     ++Compiler.errors;
@@ -178,19 +152,14 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                 }
 #line default
         break;
-      case 8: // blokInstr -> Endl, blokInstr
+      case 7: // blokInstr -> OpenBrace, content, CloseBrace
 #line 40 "Parser.y"
-                               { ++lineNum; }
-#line default
-        break;
-      case 9: // blokInstr -> openBr, content, closeBr
-#line 42 "Parser.y"
                 {
                 }
 #line default
         break;
-      case 10: // blokInstr -> openBr, error, Eof
-#line 45 "Parser.y"
+      case 8: // blokInstr -> OpenBrace, error, Eof
+#line 43 "Parser.y"
                 {
                     Console.WriteLine("  line {0,3}: No brace matching.", lineNum);
                     ++Compiler.errors;
@@ -199,8 +168,8 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                 }
 #line default
         break;
-      case 11: // blokInstr -> error, Eof
-#line 52 "Parser.y"
+      case 9: // blokInstr -> error, Eof
+#line 50 "Parser.y"
                 {
                     Console.WriteLine("  line {0,3}: Braces expected.", lineNum);
                     ++Compiler.errors;
@@ -209,32 +178,12 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                 }
 #line default
         break;
-      case 12: // openBr -> Endl, openBr
-#line 59 "Parser.y"
-                            { ++lineNum; }
-#line default
-        break;
-      case 13: // openBr -> OpenBrace, Endl
-#line 60 "Parser.y"
-                               { ++lineNum; }
-#line default
-        break;
-      case 15: // closeBr -> Endl, closeBr
-#line 63 "Parser.y"
-                             { ++lineNum; }
-#line default
-        break;
-      case 17: // content -> content, Endl
-#line 66 "Parser.y"
-                             { ++lineNum; }
-#line default
-        break;
-      case 18: // content -> Endl
-#line 67 "Parser.y"
+      case 16: // newline -> Endl
+#line 70 "Parser.y"
                      { ++lineNum; }
 #line default
         break;
-      case 23: // end -> Eof
+      case 18: // end -> Eof
 #line 75 "Parser.y"
                 {
                     Console.WriteLine("  line {0,3}:  syntax error - unexpected symbol Eof", lineNum);
@@ -244,51 +193,51 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                 }
 #line default
         break;
-      case 24: // exp -> exp, Plus, term
-#line 84 "Parser.y"
+      case 19: // exp -> exp, Plus, term
+#line 85 "Parser.y"
                    { CurrentSemanticValue.type = BinaryOpGenCode(Tokens.Plus, ValueStack[ValueStack.Depth-3].type, ValueStack[ValueStack.Depth-1].type); }
 #line default
         break;
-      case 25: // exp -> exp, Minus, term
-#line 86 "Parser.y"
+      case 20: // exp -> exp, Minus, term
+#line 87 "Parser.y"
                    { CurrentSemanticValue.type = BinaryOpGenCode(Tokens.Minus, ValueStack[ValueStack.Depth-3].type, ValueStack[ValueStack.Depth-1].type); }
 #line default
         break;
-      case 26: // exp -> term
-#line 88 "Parser.y"
+      case 21: // exp -> term
+#line 89 "Parser.y"
                    { CurrentSemanticValue.type = ValueStack[ValueStack.Depth-1].type; }
 #line default
         break;
-      case 27: // term -> term, Multiplies, factor
-#line 92 "Parser.y"
+      case 22: // term -> term, Multiplies, factor
+#line 93 "Parser.y"
                    { CurrentSemanticValue.type = BinaryOpGenCode(Tokens.Multiplies, ValueStack[ValueStack.Depth-3].type, ValueStack[ValueStack.Depth-1].type); }
 #line default
         break;
-      case 28: // term -> term, Divides, factor
-#line 94 "Parser.y"
+      case 23: // term -> term, Divides, factor
+#line 95 "Parser.y"
                    { CurrentSemanticValue.type = BinaryOpGenCode(Tokens.Divides, ValueStack[ValueStack.Depth-3].type, ValueStack[ValueStack.Depth-1].type); }
 #line default
         break;
-      case 29: // term -> factor
-#line 96 "Parser.y"
+      case 24: // term -> factor
+#line 97 "Parser.y"
                    { CurrentSemanticValue.type = ValueStack[ValueStack.Depth-1].type; }
 #line default
         break;
-      case 30: // factor -> OpenPar, exp, ClosePar
-#line 100 "Parser.y"
+      case 25: // factor -> OpenPar, exp, ClosePar
+#line 101 "Parser.y"
                    { CurrentSemanticValue.type = ValueStack[ValueStack.Depth-2].type; }
 #line default
         break;
-      case 31: // factor -> IntNumber
-#line 102 "Parser.y"
+      case 26: // factor -> IntNumber
+#line 103 "Parser.y"
                    {
                    Compiler.EmitCode("ldc.i4 {0}",int.Parse(ValueStack[ValueStack.Depth-1].val));
                    CurrentSemanticValue.type = 'i'; 
                    }
 #line default
         break;
-      case 32: // factor -> RealNumber
-#line 107 "Parser.y"
+      case 27: // factor -> RealNumber
+#line 108 "Parser.y"
                    {
                    double d = double.Parse(ValueStack[ValueStack.Depth-1].val,System.Globalization.CultureInfo.InvariantCulture) ;
                    Compiler.EmitCode(string.Format(System.Globalization.CultureInfo.InvariantCulture,"ldc.r8 {0}",d));
@@ -296,8 +245,8 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
                    }
 #line default
         break;
-      case 33: // factor -> Ident
-#line 113 "Parser.y"
+      case 28: // factor -> Ident
+#line 114 "Parser.y"
                    {
                    Compiler.EmitCode("ldloc _{0}{1}", ValueStack[ValueStack.Depth-1].val[0]=='@'?'i':'r', ValueStack[ValueStack.Depth-1].val[1]);
                    CurrentSemanticValue.type = ValueStack[ValueStack.Depth-1].val[0]=='@'?'i':'r';
@@ -318,7 +267,9 @@ public class Parser: ShiftReduceParser<ValueType, LexLocation>
         return CharToString((char)terminal);
   }
 
-#line 120 "Parser.y"
+#line 121 "Parser.y"
+
+/* HELPER FUNCTIONS ------------------------------------------------------------------------------------------------*/
 
 int lineNum = 1;
 

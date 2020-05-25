@@ -236,3 +236,4 @@ _Pvt_Extensions
 # Custom
 *.tokens
 *.il
+*.lst

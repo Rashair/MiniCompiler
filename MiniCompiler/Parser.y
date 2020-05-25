@@ -13,16 +13,15 @@
 %token Program OpenBrace CloseBrace Return Colon Endl Write Assign Plus Minus Multiplies Divides OpenPar ClosePar Eof Error
 %token <val> Ident IntNumber RealNumber
 
-%type <type> content blokInstr openBr closeBr newline_list line exp term factor
+%type <type> content blokInstr openBr closeBr newline exp term factor
 
 %%
 
 start         : Program blokInstr start
-              | newline_list start
-              | start newline_list
-              | newline_list Eof 
+              | newline start
+              | Eof 
                 {
-                   // Compiler.EmitCode("// linia {0,3} :  "+ Compiler.sourceLines[lineNum - 1], lineNum);
+                   Compiler.EmitCode("// linia {0,3} :  "+ Compiler.sourceLines[lineNum - 1], lineNum);
                    Compiler.EmitCode("ldstr \"\\nEnd of execution\\n\"");
                    Compiler.EmitCode("call void [mscorlib]System.Console::WriteLine(string)");
                    Compiler.EmitCode("");
@@ -36,8 +35,8 @@ start         : Program blokInstr start
                     YYABORT;
                 }
               ;
-blokInstr     : newline_list blokInstr
-              | OpenBrace newline_list content newline_list CloseBrace
+blokInstr     : newline blokInstr
+              | OpenBrace content CloseBrace
                 {
                 }
               | OpenBrace error Eof
@@ -56,25 +55,19 @@ blokInstr     : newline_list blokInstr
                 }
               ;
 
-openBr        : OpenBrace newline_list
+openBr        : OpenBrace newline
               | OpenBrace
               ;
 
-closeBr       : newline_list CloseBrace
+closeBr       : newline CloseBrace
+              | CloseBrace
               ;
 
-content       : content Endl { ++lineNum; }
-              | Endl { ++lineNum; }
+content       : newline content
               |
               ;
 
-line          : 
-              | newline_list
-              ;
-
-newline_list  :          
-              |              Endl { ++lineNum; }
-              | newline_list Endl { ++lineNum; }
+newline       : Endl { ++lineNum; }
               ;
 
 end           : Colon
@@ -87,8 +80,7 @@ end           : Colon
                 }
               ;
 
-
-/* ARITHEMITIC ----------------------------------------------------------------------------- */ 
+/* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
 exp           : exp Plus term
                    { $$ = BinaryOpGenCode(Tokens.Plus, $1, $3); }
               | exp Minus term
