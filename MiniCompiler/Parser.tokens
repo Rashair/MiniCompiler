@@ -1,0 +1,22 @@
+// Symbolic tokens for grammar file ".\Parser.y - 24/05/2020 03:12:01"
+	Tokens.error /* 2 */
+	Tokens.EOF /* 3 */
+	Tokens.Program /* 4 */
+	Tokens.OpenBrace /* 5 */
+	Tokens.CloseBrace /* 6 */
+	Tokens.Return /* 7 */
+	Tokens.Colon /* 8 */
+	Tokens.Write /* 9 */
+	Tokens.Assign /* 10 */
+	Tokens.Plus /* 11 */
+	Tokens.Minus /* 12 */
+	Tokens.Multiplies /* 13 */
+	Tokens.Divides /* 14 */
+	Tokens.OpenPar /* 15 */
+	Tokens.ClosePar /* 16 */
+	Tokens.Eof /* 17 */
+	Tokens.Error /* 18 */
+	Tokens.Ident /* 19 */
+	Tokens.IntNumber /* 20 */
+	Tokens.RealNumber /* 21 */
+// End symbolic tokens for parser
