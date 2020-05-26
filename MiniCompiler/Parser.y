@@ -2,7 +2,7 @@
 // Uwaga: W wywołaniu generatora gppg należy użyć opcji /gplex
 %output=Parser.cs
 
-%namespace GardensPoint
+%namespace MiniCompiler
 
 %union
 {
@@ -10,10 +10,14 @@
     public char    type;
 }
 
-%token Program OpenBrace CloseBrace Return Colon Endl Write Assign Plus Minus Multiplies Divides OpenPar ClosePar Eof Error
-%token <val> Ident IntNumber RealNumber
+%token Program OpenBrace CloseBrace Return Colon Endl Eof Error
+%token Write Assign Plus Minus Multiplies Divides OpenPar ClosePar 
+%token <val> IntA DoubleA BoolA Id
+%token <val> IntVal DoubleVal True False
 
-%type <type> content blokInstr openBr closeBr newline exp term factor
+%type <type> content newline blokInstr
+%type <type> declare
+%type <type> exp term factor
 
 %%
 
@@ -35,10 +39,11 @@ start         : Program blokInstr start
                     YYABORT;
                 }
               ;
-blokInstr     : newline blokInstr
+blokInstr     : newline OpenBrace content CloseBrace
               | OpenBrace content CloseBrace
                 {
                 }
+              | OpenBrace blokInstr CloseBrace
               | OpenBrace error Eof
                 {
                     Console.WriteLine("  line {0,3}: No brace matching.", lineNum);
@@ -55,18 +60,13 @@ blokInstr     : newline blokInstr
                 }
               ;
 
-openBr        : OpenBrace newline
-              | OpenBrace
-              ;
-
-closeBr       : newline CloseBrace
-              | CloseBrace
-              ;
 
 content       : newline content
               |
               ;
-
+declare       : IntA Id Colon
+              | DoubleA Id Colon
+              ;
 newline       : Endl { ++lineNum; }
               ;
 
@@ -79,6 +79,9 @@ end           : Colon
                     YYABORT;
                 }
               ;
+
+/* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
+
 
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
 exp           : exp Plus term
@@ -99,22 +102,22 @@ term          : term Multiplies factor
               
 factor        : OpenPar exp ClosePar
                    { $$ = $2; }
-              | IntNumber
+              | IntVal
                    {
                    Compiler.EmitCode("ldc.i4 {0}",int.Parse($1));
                    $$ = 'i'; 
                    }
-              | RealNumber
+              | DoubleVal
                    {
                    double d = double.Parse($1,System.Globalization.CultureInfo.InvariantCulture) ;
                    Compiler.EmitCode(string.Format(System.Globalization.CultureInfo.InvariantCulture,"ldc.r8 {0}",d));
                    $$ = 'r'; 
                    }
-              | Ident
-                   {
-                   Compiler.EmitCode("ldloc _{0}{1}", $1[0]=='@'?'i':'r', $1[1]);
-                   $$ = $1[0]=='@'?'i':'r';
-                   }
+              | Id
+                {
+                    Compiler.EmitCode("ldloc _{0}{1}", $1[0]=='@'?'i':'r', $1[1]);
+                    $$ = $1[0]=='@'?'i':'r';
+                }
               ;
 
 %%

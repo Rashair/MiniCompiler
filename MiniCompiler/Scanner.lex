@@ -1,24 +1,28 @@
 
 %using QUT.Gppg;
-%namespace GardensPoint
+%namespace MiniCompiler
 
-IntNumber   [0-9]+
-RealNumber  [0-9]+\.[0-9]+
-Ident       ("@"|"$")[a-z]
+IntVal      (0|[1-9][0-9]*)
+DoubleVal   (0\.[0-9]+|[1-9][0-9]*\.[0-9]+)
+Id          [a-zA-Z][a-zA-Z0-9]*
 PrintErr    "print"("@"|"$"|[a-z0-9])[a-z0-9]*
 Endl        (\r\n|\n)
 
 %%
 
 "program"	  { Console.WriteLine("Found program"); return (int)Tokens.Program; }
-"{"           { Console.WriteLine("Found openBrace"); return (int) Tokens.OpenBrace; }
-"}"           { Console.WriteLine("Found closeBrace"); return (int) Tokens.CloseBrace; }
-"return"	  { return (int) Tokens.Return; }
-";"           { return (int) Tokens.Colon; }
+"{"           { Console.WriteLine("Found openBrace"); return (int)Tokens.OpenBrace; }
+"}"           { Console.WriteLine("Found closeBrace"); return (int)Tokens.CloseBrace; }
+"return"	  { return (int)Tokens.Return; }
+";"           { return (int)Tokens.Colon; }
 "write"       { return (int)Tokens.Write; }
-{IntNumber}   { yylval.val=yytext; return (int)Tokens.IntNumber; }
-{RealNumber}  { yylval.val=yytext; return (int)Tokens.RealNumber; }
-{Ident}       { yylval.val=yytext; return (int)Tokens.Ident; }
+"int"         { return (int)Tokens.IntA; }
+"double"      { return (int)Tokens.DoubleA; }
+"bool"        { return (int)Tokens.BoolA; }
+"true"		  { return (int)Tokens.True; }
+"false"	      { return (int)Tokens.False; }
+{IntVal}	  { yylval.val=yytext; return (int)Tokens.IntVal; }
+{DoubleVal}   { yylval.val=yytext; return (int)Tokens.DoubleVal; }
 "="           { return (int)Tokens.Assign; }
 "+"           { return (int)Tokens.Plus; }
 "-"           { return (int)Tokens.Minus; }
@@ -26,6 +30,7 @@ Endl        (\r\n|\n)
 "/"           { return (int)Tokens.Divides; }
 "("           { return (int)Tokens.OpenPar; }
 ")"           { return (int)Tokens.ClosePar; }
+{Id}          { yylval.val=yytext; return (int)Tokens.Id; }
 {Endl}		  { Console.WriteLine("Found endl"); return (int)Tokens.Endl; }
 <<EOF>>       { Console.WriteLine("Found eof"); return (int)Tokens.Eof; }
 " "           { }
