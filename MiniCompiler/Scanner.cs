@@ -6,7 +6,7 @@
 //
 //  GPLEX Version:  1.2.2
 //  Machine:  GED
-//  DateTime: 25/05/2020 19:47:59
+//  DateTime: 25/05/2020 20:42:00
 //  UserName: przem
 //  GPLEX input file <Scanner.lex - 25/05/2020 16:36:34>
 //  GPLEX frame file <embedded resource>

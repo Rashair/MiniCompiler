@@ -79,7 +79,7 @@ public class Compiler
     private static void GenProlog()
     {
         EmitCode(".assembly extern mscorlib { }");
-        EmitCode(".assembly calculator { }");
+        EmitCode(".assembly MiniCompiler { }");
         EmitCode(".method static void main()");
         EmitCode("{");
         EmitCode(".entrypoint");
