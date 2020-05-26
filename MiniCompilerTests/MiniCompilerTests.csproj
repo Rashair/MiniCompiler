@@ -49,9 +49,16 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseTest.cs" />
-    <Compile Include="EmptyProgramTests\EmptyNotValidProgramTests.cs" />
-    <Compile Include="EmptyProgramTests\EmptyValidProgramTests.cs" />
+    <Compile Include="BaseTests.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="ValidTests.cs" />
+    <Compile Include="BracesTests\BracesNotValidTests.cs" />
+    <Compile Include="BracesTests\BracesValidTests.cs" />
+    <Compile Include="DeclarationsTests\DeclarationsNotValidTests.cs" />
+    <Compile Include="DeclarationsTests\DeclarationsValidTests.cs" />
+    <Compile Include="EmptyProgramTests\EmptyProgramNotValidTests.cs" />
+    <Compile Include="EmptyProgramTests\EmptyProgramValidTests.cs" />
+    <Compile Include="NotValidTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,8 +70,12 @@
       <Name>MiniCompiler</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Content Include="DeclarationsTests\NotValid\WithoutSemicolon.txt" />
+    <Content Include="DeclarationsTests\Valid\OneLineProgram.txt" />
+    <Content Include="BracesTests\NotValid\NestedBracesMissingClose.txt" />
+    <Content Include="BracesTests\NotValid\NestedBracesMissingOpen.txt" />
+    <Content Include="BracesTests\NotValid\NestedBracesMissingOpenAndClose.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramWrongBraceOrder.txt" />
     <Content Include="EmptyProgramTests\NotValid\BracesBeforeProgram.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramNoBraces.txt" />
@@ -76,8 +87,10 @@
     <Content Include="EmptyProgramTests\Valid\WhitespaceAfterBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceAfterProgramBeforeBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceBeforeProgram.txt" />
+    <Content Include="BracesTests\Valid\NestedEmptyBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
