@@ -237,3 +237,6 @@ _Pvt_Extensions
 *.tokens
 *.il
 *.lst
+
+**/Parser.cs
+**/Scanner.cs

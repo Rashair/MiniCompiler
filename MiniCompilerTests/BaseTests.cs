@@ -29,6 +29,7 @@ namespace MiniCompilerTests
         [TestInitialize]
         public void Init()
         {
+            // Do not run in parallel !!!
             Compiler.errors = 0;
         }
 
