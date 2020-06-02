@@ -1,5 +1,6 @@
 
 %using QUT.Gppg;
+
 %namespace MiniCompiler
 
 IntVal      (0|[1-9][0-9]*)
@@ -36,4 +37,4 @@ Endl        (\r\n|\n)
 " "           { }
 "\t"          { }
 {PrintErr}    { return (int)Tokens.Error; }
-.             { Console.WriteLine("Found: " + (int)yytext[0]); return (int)Tokens.Error; }
+.             { Console.WriteLine("Unexpected token: {0}/{1}", (int)yytext[0], yytext[0]); return (int)Tokens.Error; }

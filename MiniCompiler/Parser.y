@@ -2,12 +2,14 @@
 // Uwaga: W wywołaniu generatora gppg należy użyć opcji /gplex
 %output=Parser.cs
 
+%using MiniCompiler.Syntax;
+
 %namespace MiniCompiler
 
 %union
 {
-    public string  val;
     public char    type;
+    public string  val;
 }
 
 %token Program OpenBrace CloseBrace Return Colon Endl Eof Error
@@ -15,47 +17,40 @@
 %token <val> IntA DoubleA BoolA Id
 %token <val> IntVal DoubleVal True False
 
-%type <type> content newline blokInstr
+%type <type> content newline block
 %type <type> declare
 %type <type> exp term factor
 
 %%
 
-start         : Program blokInstr start
+start         : Program block start
+                {
+                }
               | newline start
               | Eof 
                 {
-                   Compiler.EmitCode("// linia {0,3} :  "+ Compiler.sourceLines[lineNum - 1], lineNum);
-                   Compiler.EmitCode("ldstr \"\\nEnd of execution\\n\"");
-                   Compiler.EmitCode("call void [mscorlib]System.Console::WriteLine(string)");
-                   Compiler.EmitCode("");
+                   GenerateCode();
                    YYACCEPT;
                 }
               | error Eof
                 {
-                    Console.WriteLine("  line {0,3}: 'program' statement required.", lineNum);
-                    ++Compiler.errors;
-                    yyerrok();
+                    Error("'program' statement required.");
                     YYABORT;
                 }
               ;
-blokInstr     : newline OpenBrace content CloseBrace
+block     : newline OpenBrace content CloseBrace
               | OpenBrace content CloseBrace
                 {
                 }
-              | OpenBrace blokInstr CloseBrace
+              | OpenBrace block CloseBrace
               | OpenBrace error Eof
                 {
-                    Console.WriteLine("  line {0,3}: No brace matching.", lineNum);
-                    ++Compiler.errors;
-                    yyerrok();
+                    Error("No brace matching.");
                     YYABORT;
                 }
               | error Eof
                 {
-                    Console.WriteLine("  line {0,3}: Braces expected.", lineNum);
-                    ++Compiler.errors;
-                    yyerrok();
+                    Error("Braces expected.");
                     YYABORT;
                 }
               ;
@@ -73,9 +68,7 @@ newline       : Endl { ++lineNum; }
 end           : Colon
               | Eof
                 {
-                    Console.WriteLine("  line {0,3}:  syntax error - unexpected symbol Eof", lineNum);
-                    ++Compiler.errors;
-                    yyerrok();
+                    Error("Syntax error - unexpected symbol Eof.");
                     YYABORT;
                 }
               ;
@@ -124,9 +117,27 @@ factor        : OpenPar exp ClosePar
 
 /* HELPER FUNCTIONS ------------------------------------------------------------------------------------------------*/
 
-int lineNum = 1;
+private int lineNum = 1;
+private SyntaxTree tree;
+private SyntaxVisitor visitor;
 
-public Parser(Scanner scanner) : base(scanner) { }
+public Parser(Scanner scanner) : base(scanner) 
+{ 
+    this.tree = new SyntaxTree();
+    this.visitor = new SyntaxVisitor(tree);
+}
+
+private void GenerateCode()
+{
+    this.visitor.Visit();
+}
+
+private void Error(string msg) 
+{
+      Console.WriteLine($"  line {lineNum, 3}: {msg}");
+      ++Compiler.errors;
+      yyerrok();
+}
 
 private char BinaryOpGenCode(Tokens t, char type1, char type2)
 {
@@ -160,3 +171,4 @@ private char BinaryOpGenCode(Tokens t, char type1, char type2)
         }
     return type;
 }
+

@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using MiniCompiler.Syntax;
 
 namespace MiniCompiler
 {
@@ -76,6 +77,7 @@ namespace MiniCompiler
         {
             sourceWriter.WriteLine(instr, args);
         }
+
 
         private static void GenProlog()
         {
