@@ -17,9 +17,9 @@ Endl        (\r\n|\n)
 "return"	  { return (int)Tokens.Return; }
 ";"           { return (int)Tokens.Colon; }
 "write"       { return (int)Tokens.Write; }
-"int"         { return (int)Tokens.IntA; }
-"double"      { return (int)Tokens.DoubleA; }
-"bool"        { return (int)Tokens.BoolA; }
+"int"         { return (int)Tokens.IntKey; }
+"double"      { return (int)Tokens.DoubleKey; }
+"bool"        { return (int)Tokens.BoolKey; }
 "true"		  { return (int)Tokens.True; }
 "false"	      { return (int)Tokens.False; }
 {IntVal}	  { yylval.val=yytext; return (int)Tokens.IntVal; }
@@ -32,7 +32,7 @@ Endl        (\r\n|\n)
 "("           { return (int)Tokens.OpenPar; }
 ")"           { return (int)Tokens.ClosePar; }
 {Id}          { yylval.val=yytext; return (int)Tokens.Id; }
-{Endl}		  { Console.WriteLine("Found endl"); return (int)Tokens.Endl; }
+{Endl}		  { }
 <<EOF>>       { Console.WriteLine("Found eof"); return (int)Tokens.Eof; }
 " "           { }
 "\t"          { }

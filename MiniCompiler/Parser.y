@@ -12,21 +12,20 @@
     public string  val;
 }
 
-%token Program OpenBrace CloseBrace Return Colon Endl Eof Error
+%token Program OpenBrace CloseBrace Return Colon Eof Error
 %token Write Assign Plus Minus Multiplies Divides OpenPar ClosePar 
-%token <val> IntA DoubleA BoolA Id
+%token <val> IntKey DoubleKey BoolKey Id
 %token <val> IntVal DoubleVal True False
 
-%type <type> content newline block
+%type <type> content block
 %type <type> declare
 %type <type> exp term factor
 
 %%
 
-start         : Program block start
+start         : Program block Eof
                 {
                 }
-              | newline start
               | Eof 
                 {
                    GenerateCode();
@@ -38,10 +37,7 @@ start         : Program block start
                     YYABORT;
                 }
               ;
-block     : newline OpenBrace content CloseBrace
-              | OpenBrace content CloseBrace
-                {
-                }
+block         : OpenBrace content CloseBrace
               | OpenBrace block CloseBrace
               | OpenBrace error Eof
                 {
@@ -56,13 +52,12 @@ block     : newline OpenBrace content CloseBrace
               ;
 
 
-content       : newline content
+content       : content
               |
               ;
-declare       : IntA Id Colon
-              | DoubleA Id Colon
-              ;
-newline       : Endl { ++lineNum; }
+declare       : IntKey Id Colon
+              | BoolKey Id Colon
+              | DoubleKey Id Colon
               ;
 
 end           : Colon
