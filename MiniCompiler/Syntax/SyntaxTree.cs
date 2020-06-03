@@ -10,11 +10,13 @@ namespace MiniCompiler.Syntax
     // Based on https://docs.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/get-started/syntax-analysis
     public class SyntaxTree
     {
-        public SyntaxTree()
+        private readonly CompilationUnit compilationUnit;
+
+        public SyntaxTree(CompilationUnit compilationUnit)
         {
+            this.compilationUnit = compilationUnit;
         }
 
-
-        public CompilationUnit CompilationUnit { get; set; }
+        public CompilationUnit CompilationUnit => compilationUnit;
     }
 }

@@ -3,6 +3,7 @@
 %output=Parser.cs
 
 %using MiniCompiler.Syntax;
+%using MiniCompiler.Syntax.General;
 
 %namespace MiniCompiler
 
@@ -18,18 +19,19 @@
 %token <val> IntVal DoubleVal True False
 
 %type <type> content block
-%type <type> declare
+%type <type> declaration
 %type <type> exp term factor
 
 %%
 
 start         : Program block Eof
                 {
-                }
-              | Eof 
-                {
-                   GenerateCode();
-                   YYACCEPT;
+                    var node = new CompilationUnit(Loc);
+                    AddChildren(node);
+
+                    tree = new SyntaxTree(node);
+                    GenerateCode();
+                    YYACCEPT;
                 }
               | error Eof
                 {
@@ -52,10 +54,10 @@ block         : OpenBrace content CloseBrace
               ;
 
 
-content       : content
-              |
+content       : 
+              | content declaration
               ;
-declare       : IntKey Id Colon
+declaration   : IntKey Id Colon
               | BoolKey Id Colon
               | DoubleKey Id Colon
               ;
@@ -114,17 +116,25 @@ factor        : OpenPar exp ClosePar
 
 private int lineNum = 1;
 private SyntaxTree tree;
-private SyntaxVisitor visitor;
+private List<SyntaxNode> childrenWaitingForAdoption;
 
 public Parser(Scanner scanner) : base(scanner) 
 { 
-    this.tree = new SyntaxTree();
-    this.visitor = new SyntaxVisitor(tree);
+    childrenWaitingForAdoption = new List<SyntaxNode>();
+}
+
+public LexLocation Loc => Scanner.yylloc;
+
+private void AddChildren(SyntaxNode node)
+{
+    node.SetChildren(childrenWaitingForAdoption);
+    childrenWaitingForAdoption = new List<SyntaxNode>();
 }
 
 private void GenerateCode()
 {
-    this.visitor.Visit();
+    var visitor = new SyntaxVisitor(tree);
+    visitor.Visit();
 }
 
 private void Error(string msg) 

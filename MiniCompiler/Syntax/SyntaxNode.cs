@@ -38,5 +38,10 @@ namespace MiniCompiler.Syntax
             node.tree = tree;
             children.Add(node);
         }
+
+        public void SetChildren(List<SyntaxNode> children)
+        {
+            this.children = children;
+        }
     }
 }
