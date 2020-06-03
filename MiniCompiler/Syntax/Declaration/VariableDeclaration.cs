@@ -9,6 +9,10 @@ namespace MiniCompiler.Syntax.Declaration
 {
     public class VariableDeclaration : SyntaxNode
     {
+        public VariableDeclaration()
+        {
+        }
+        
         public VariableDeclaration(LexLocation loc) : base(loc)
         {
         }

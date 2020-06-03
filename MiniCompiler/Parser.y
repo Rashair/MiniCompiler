@@ -128,7 +128,7 @@ public Parser(Scanner scanner) : base(scanner)
     childrenWaitingForAdoption = new List<SyntaxNode>();
 }
 
-public LexLocation Loc => Scanner.yylloc;
+public LexLocation Loc => CurrentLocationSpan;
 
 private void AddChildren(SyntaxNode node)
 {

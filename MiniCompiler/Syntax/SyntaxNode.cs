@@ -11,6 +11,7 @@ namespace MiniCompiler.Syntax
     {
         protected SyntaxNode parent;
         protected List<SyntaxNode> children;
+        protected LexLocation location;
 
         public SyntaxNode()
         {
@@ -20,12 +21,19 @@ namespace MiniCompiler.Syntax
         public SyntaxNode(LexLocation loc)
             : this()
         {
-            this.Location = new LexLocation(loc.StartLine, loc.StartColumn, loc.EndLine, loc.EndColumn);
+            this.Location = loc;
         }
 
         public SyntaxTree Tree { get; set; }
 
-        public LexLocation Location { get; }
+        public LexLocation Location
+        {
+            get => location;
+            set
+            {
+                location = new LexLocation(value.StartLine, value.StartColumn, value.EndLine, value.EndColumn);
+            }
+        }
 
         public SyntaxNode this[int i] => children[i];
 
