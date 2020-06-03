@@ -2,6 +2,7 @@
 %using QUT.Gppg;
 
 %namespace MiniCompiler
+%option out:ScannerRes\Scanner.cs
 
 IntVal      (0|[1-9][0-9]*)
 DoubleVal   (0\.[0-9]+|[1-9][0-9]*\.[0-9]+)
@@ -33,7 +34,7 @@ Endl        (\r\n|\n)
 ")"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.ClosePar; }
 {Id}          { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.val=yytext; return (int)Tokens.Id; }
 {Endl}		  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); }
-<<EOF>>       { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); Console.WriteLine("Found eof"); return (int)Tokens.Eof; }
+<<EOF>>       { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.Eof; }
 " "           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); }
 "\t"          { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); }
 {PrintErr}    { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.Error; }

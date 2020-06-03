@@ -1,7 +1,9 @@
 
 // Uwaga: W wywołaniu generatora gppg należy użyć opcji /gplex
-%output=Parser.cs
+%output=.\ParserRes\Parser.cs
+%partial
 
+%using System.Linq;
 %using MiniCompiler.Syntax;
 %using MiniCompiler.Syntax.General;
 %using MiniCompiler.Syntax.Declaration;
@@ -28,7 +30,7 @@
 start         : Program block Eof
                 {
                     var unit = new CompilationUnit(Loc);
-                    AddChildren(unit);
+                    AddChildrenToNode(unit);
 
                     GenerateCode(unit);
                     YYACCEPT;
@@ -42,7 +44,7 @@ start         : Program block Eof
 block         : OpenBrace content CloseBrace
                 {
                     var node = new Block(Loc);
-                    AddChildren(node);
+                    AddChildrenToNode(node);
                 }
               | OpenBrace error Eof
                 {
@@ -59,7 +61,7 @@ block         : OpenBrace content CloseBrace
 content       : 
               | content declaration
                 {
-                    childrenWaitingForAdoption.Add(new VariableDeclaration(Loc));
+                    AddOrphan(new VariableDeclaration(Loc));
                 }
               | content block
               ;
@@ -119,67 +121,3 @@ factor        : OpenPar exp ClosePar
 %%
 
 /* HELPER FUNCTIONS ------------------------------------------------------------------------------------------------*/
-
-private List<SyntaxNode> childrenWaitingForAdoption;
-private SyntaxTree tree;
-
-public Parser(Scanner scanner) : base(scanner) 
-{ 
-    childrenWaitingForAdoption = new List<SyntaxNode>();
-}
-
-public LexLocation Loc => CurrentLocationSpan;
-
-private void AddChildren(SyntaxNode node)
-{
-    node.SetChildren(childrenWaitingForAdoption);
-    childrenWaitingForAdoption = new List<SyntaxNode>() { node };
-}
-
-private void GenerateCode(CompilationUnit unit)
-{
-    tree = new SyntaxTree(unit);
-    var visitor = new SyntaxVisitor(tree);
-    visitor.Visit();
-}
-
-private void Error(string msg) 
-{
-      Console.WriteLine($"  line {Loc.StartLine, 3}: {msg}");
-      ++Compiler.errors;
-      yyerrok();
-}
-
-private char BinaryOpGenCode(Tokens t, char type1, char type2)
-{
-    char type = ( type1=='i' && type2=='i' ) ? 'i' : 'r' ;
-    if ( type1!=type )
-        {
-        Compiler.EmitCode("stloc temp");
-        Compiler.EmitCode("conv.r8");
-        Compiler.EmitCode("ldloc temp");
-        }
-    if ( type2!=type )
-        Compiler.EmitCode("conv.r8");
-    switch ( t )
-        {
-        case Tokens.Plus:
-            Compiler.EmitCode("add");
-            break;
-        case Tokens.Minus:
-            Compiler.EmitCode("sub");
-            break;
-        case Tokens.Multiplies:
-            Compiler.EmitCode("mul");
-            break;
-        case Tokens.Divides:
-            Compiler.EmitCode("div");
-            break;
-        default:
-            Console.WriteLine($"  line {Loc.StartLine,3}:  internal gencode error");
-            ++Compiler.errors;
-            break;
-        }
-    return type;
-}
-
