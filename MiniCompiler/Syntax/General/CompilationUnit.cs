@@ -9,14 +9,18 @@ namespace MiniCompiler.Syntax.General
 {
     public class CompilationUnit : SyntaxNode
     {
+        public CompilationUnit()
+        {
+        }
+
         public CompilationUnit(LexLocation location) : base(location)
         {
         }
 
-        public CompilationUnit(SyntaxTree tree, LexLocation location)
-            : this(location)
+        public CompilationUnit(SyntaxTree tree, LexLocation location = null) :
+            this(location)
         {
-            this.tree = tree;
+            this.Tree = tree;
         }
     }
 }

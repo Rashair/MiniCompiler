@@ -26,8 +26,10 @@ namespace MiniCompilerTests
                 namePrefix);
         }
 
+        protected abstract void AssertCorrect();
+
         [TestInitialize]
-        public void Init()
+        public virtual void Init()
         {
             // Do not run in parallel !!!
             Compiler.errors = 0;
@@ -44,6 +46,7 @@ namespace MiniCompilerTests
 
             // Assert
             Assert.AreEqual(expectedResult, result);
+            AssertCorrect();
         }
 
 

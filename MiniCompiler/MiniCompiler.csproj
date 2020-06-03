@@ -74,6 +74,7 @@
     <Compile Include="Syntax\General\CompilationUnit.cs" />
     <Compile Include="Syntax\SyntaxNode.cs" />
     <Compile Include="Syntax\SyntaxTree.cs" />
+    <Compile Include="Syntax\SyntaxTreeWalker.cs" />
     <Compile Include="Syntax\SyntaxTrivia.cs" />
     <Compile Include="Syntax\SyntaxVisitor.cs" />
   </ItemGroup>

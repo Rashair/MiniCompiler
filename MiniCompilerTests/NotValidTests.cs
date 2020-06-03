@@ -6,5 +6,9 @@
              base(2, Helpers.Self())
         {
         }
+
+        protected override void AssertCorrect()
+        {
+        }
     }
 }

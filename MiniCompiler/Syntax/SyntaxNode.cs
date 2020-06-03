@@ -1,20 +1,18 @@
 ﻿using QUT.Gppg;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniCompiler.Syntax
 {
-    public abstract class SyntaxNode
+    public abstract class SyntaxNode :
+        IEquatable<SyntaxNode>,
+        IEnumerable<SyntaxNode>
     {
-        private readonly LexLocation location;
-        protected SyntaxTree tree;
         protected SyntaxNode parent;
         protected List<SyntaxNode> children;
 
-        private SyntaxNode()
+        public SyntaxNode()
         {
             children = new List<SyntaxNode>();
         }
@@ -22,26 +20,63 @@ namespace MiniCompiler.Syntax
         public SyntaxNode(LexLocation loc)
             : this()
         {
-            this.location = new LexLocation(loc.StartLine, loc.StartColumn, loc.EndLine, loc.EndColumn);
+            this.Location = new LexLocation(loc.StartLine, loc.StartColumn, loc.EndLine, loc.EndColumn);
         }
 
-        public LexLocation Location => location;
+        public SyntaxTree Tree { get; set; }
+
+        public LexLocation Location { get; }
+
+        public SyntaxNode this[int i] => children[i];
+
+        public int Count => children.Count;
 
         public bool IsLeaf()
         {
             return children.Count == 0;
         }
 
-        public void AddChild(SyntaxNode node)
+        public SyntaxNode Add(SyntaxNode node)
         {
             node.parent = this;
-            node.tree = tree;
+            node.Tree = Tree;
             children.Add(node);
+
+            return this;
         }
 
         public void SetChildren(List<SyntaxNode> children)
         {
             this.children = children;
+        }
+
+        public bool Equals(SyntaxNode other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            var typeThis = GetType();
+            var typeOther = other.GetType();
+            if (typeThis == typeOther)
+            {
+
+                return children.Count == other.children.Count;
+            }
+
+            return false;
+        }
+
+
+        public IEnumerator<SyntaxNode> GetEnumerator()
+        {
+            return children.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return children.GetEnumerator();
         }
     }
 }

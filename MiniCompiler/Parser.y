@@ -55,7 +55,7 @@ block         : OpenBrace content CloseBrace
                     YYABORT;
                 }
               ;
-
+              /* TODO: Fix tree creation ^^ */ 
 content       : 
               | content declaration
                 {
@@ -121,6 +121,7 @@ factor        : OpenPar exp ClosePar
 /* HELPER FUNCTIONS ------------------------------------------------------------------------------------------------*/
 
 private List<SyntaxNode> childrenWaitingForAdoption;
+private SyntaxTree tree;
 
 public Parser(Scanner scanner) : base(scanner) 
 { 
@@ -137,7 +138,7 @@ private void AddChildren(SyntaxNode node)
 
 private void GenerateCode(CompilationUnit unit)
 {
-    var tree = new SyntaxTree(unit);
+    tree = new SyntaxTree(unit);
     var visitor = new SyntaxVisitor(tree);
     visitor.Visit();
 }

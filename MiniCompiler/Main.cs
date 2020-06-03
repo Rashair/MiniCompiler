@@ -10,6 +10,8 @@ namespace MiniCompiler
     public class Compiler
     {
         private static StreamWriter sourceWriter;
+        public static Scanner scanner;
+        public static Parser parser;
 
         public static int errors = 0;
         public static List<string> sourceLines;
@@ -43,8 +45,8 @@ namespace MiniCompiler
 
             using (var sourceStream = new FileStream(file, FileMode.Open))
             {
-                var scanner = new Scanner(sourceStream);
-                var parser = new Parser(scanner);
+                scanner = new Scanner(sourceStream);
+                parser = new Parser(scanner);
 
                 Console.WriteLine();
 

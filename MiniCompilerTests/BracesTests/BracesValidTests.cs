@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MiniCompiler.Syntax;
+using MiniCompiler.Syntax.General;
 
 namespace MiniCompilerTests
 {
@@ -8,6 +10,29 @@ namespace MiniCompilerTests
         [TestMethod]
         public void TestNestedEmptyBraces()
         {
+            ExpectedTree = new SyntaxTree(
+                new CompilationUnit()
+                {
+                    new Block()
+                    {
+                        new Block(),
+                        new Block()
+                        {
+                            new Block(),
+                            new Block(),
+                            new Block(),
+                        },
+                        new Block(),
+                        new Block(),
+                        new Block()
+                        {
+                            new Block(),
+                        },
+                        new Block(),
+                    }
+                }
+            );
+
             Invoke();
         }
     }
