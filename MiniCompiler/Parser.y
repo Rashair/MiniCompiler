@@ -26,11 +26,10 @@
 
 start         : Program block Eof
                 {
-                    var node = new CompilationUnit(Loc);
-                    AddChildren(node);
+                    var unit = new CompilationUnit(Loc);
+                    AddChildren(unit);
 
-                    tree = new SyntaxTree(node);
-                    GenerateCode();
+                    GenerateCode(unit);
                     YYACCEPT;
                 }
               | error Eof
@@ -114,7 +113,6 @@ factor        : OpenPar exp ClosePar
 
 /* HELPER FUNCTIONS ------------------------------------------------------------------------------------------------*/
 
-private SyntaxTree tree;
 private List<SyntaxNode> childrenWaitingForAdoption;
 
 public Parser(Scanner scanner) : base(scanner) 
@@ -130,8 +128,9 @@ private void AddChildren(SyntaxNode node)
     childrenWaitingForAdoption = new List<SyntaxNode>();
 }
 
-private void GenerateCode()
+private void GenerateCode(CompilationUnit unit)
 {
+    var tree = new SyntaxTree(unit);
     var visitor = new SyntaxVisitor(tree);
     visitor.Visit();
 }
