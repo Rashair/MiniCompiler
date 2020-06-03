@@ -19,10 +19,10 @@ namespace MiniCompiler.Syntax
             children = new List<SyntaxNode>();
         }
 
-        public SyntaxNode(LexLocation location)
+        public SyntaxNode(LexLocation loc)
             : this()
         {
-            this.location = location;
+            this.location = new LexLocation(loc.StartLine, loc.StartColumn, loc.EndLine, loc.EndColumn);
         }
 
         public LexLocation Location => location;

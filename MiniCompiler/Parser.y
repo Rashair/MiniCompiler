@@ -40,7 +40,6 @@ start         : Program block Eof
                 }
               ;
 block         : OpenBrace content CloseBrace
-              | OpenBrace block CloseBrace
               | OpenBrace error Eof
                 {
                     Error("No brace matching.");
@@ -56,6 +55,7 @@ block         : OpenBrace content CloseBrace
 
 content       : 
               | content declaration
+              | content block
               ;
 declaration   : IntKey Id Colon
               | BoolKey Id Colon
@@ -114,7 +114,6 @@ factor        : OpenPar exp ClosePar
 
 /* HELPER FUNCTIONS ------------------------------------------------------------------------------------------------*/
 
-private int lineNum = 1;
 private SyntaxTree tree;
 private List<SyntaxNode> childrenWaitingForAdoption;
 
@@ -139,7 +138,7 @@ private void GenerateCode()
 
 private void Error(string msg) 
 {
-      Console.WriteLine($"  line {lineNum, 3}: {msg}");
+      Console.WriteLine($"  line {Loc.StartLine, 3}: {msg}");
       ++Compiler.errors;
       yyerrok();
 }
@@ -170,7 +169,7 @@ private char BinaryOpGenCode(Tokens t, char type1, char type2)
             Compiler.EmitCode("div");
             break;
         default:
-            Console.WriteLine($"  line {lineNum,3}:  internal gencode error");
+            Console.WriteLine($"  line {Loc.StartLine,3}:  internal gencode error");
             ++Compiler.errors;
             break;
         }

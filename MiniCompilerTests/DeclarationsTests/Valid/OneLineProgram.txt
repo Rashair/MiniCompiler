@@ -1,1 +1,1 @@
-program { int a }
+program { int a; }
