@@ -11,9 +11,9 @@ Endl        (\r\n|\n)
 
 %%
 
-"program"	  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); Console.WriteLine("Found program"); return (int)Tokens.Program; }
-"{"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); Console.WriteLine("Found openBrace"); return (int)Tokens.OpenBrace; }
-"}"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); Console.WriteLine("Found closeBrace"); return (int)Tokens.CloseBrace; }
+"program"	  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.Program; }
+"{"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.OpenBrace; }
+"}"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.CloseBrace; }
 "return"	  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.Return; }
 ";"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.Colon; }
 "write"       { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Tokens.Write; }

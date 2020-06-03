@@ -69,6 +69,7 @@
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scanner.cs" />
+    <Compile Include="Syntax\Declaration\VariableDeclaration.cs" />
     <Compile Include="Syntax\General\Block.cs" />
     <Compile Include="Syntax\General\CompilationUnit.cs" />
     <Compile Include="Syntax\SyntaxNode.cs" />

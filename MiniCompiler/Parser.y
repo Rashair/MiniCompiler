@@ -4,6 +4,7 @@
 
 %using MiniCompiler.Syntax;
 %using MiniCompiler.Syntax.General;
+%using MiniCompiler.Syntax.Declaration;
 
 %namespace MiniCompiler
 
@@ -39,6 +40,10 @@ start         : Program block Eof
                 }
               ;
 block         : OpenBrace content CloseBrace
+                {
+                    var node = new Block(Loc);
+                    AddChildren(node);
+                }
               | OpenBrace error Eof
                 {
                     Error("No brace matching.");
@@ -51,9 +56,11 @@ block         : OpenBrace content CloseBrace
                 }
               ;
 
-
 content       : 
               | content declaration
+                {
+                    childrenWaitingForAdoption.Add(new VariableDeclaration(Loc));
+                }
               | content block
               ;
 declaration   : IntKey Id Colon
@@ -125,7 +132,7 @@ public LexLocation Loc => Scanner.yylloc;
 private void AddChildren(SyntaxNode node)
 {
     node.SetChildren(childrenWaitingForAdoption);
-    childrenWaitingForAdoption = new List<SyntaxNode>();
+    childrenWaitingForAdoption = new List<SyntaxNode>() { node };
 }
 
 private void GenerateCode(CompilationUnit unit)
