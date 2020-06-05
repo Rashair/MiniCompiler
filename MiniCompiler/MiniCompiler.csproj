@@ -65,14 +65,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\LexLocationExtensions.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ParserRes\Parser.cs" />
     <Compile Include="ParserRes\ParserHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScannerRes\Scanner.cs" />
+    <Compile Include="Syntax\Declaration\Scopes\EmptyScope.cs" />
+    <Compile Include="Syntax\Declaration\Scopes\IScope.cs" />
+    <Compile Include="Syntax\Declaration\Scopes\SubordinateScope.cs" />
     <Compile Include="Syntax\Declaration\VariableDeclaration.cs" />
     <Compile Include="Syntax\General\Block.cs" />
     <Compile Include="Syntax\General\CompilationUnit.cs" />
+    <Compile Include="Syntax\General\EmptyNode.cs" />
     <Compile Include="Syntax\SyntaxNode.cs" />
     <Compile Include="Syntax\SyntaxTree.cs" />
     <Compile Include="Syntax\SyntaxTreeWalker.cs" />

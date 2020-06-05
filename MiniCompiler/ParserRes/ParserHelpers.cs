@@ -1,37 +1,23 @@
 ﻿using MiniCompiler.Syntax;
+using MiniCompiler.Syntax.Declaration.Scopes;
 using MiniCompiler.Syntax.General;
 using QUT.Gppg;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MiniCompiler
 {
     public partial class Parser
     {
-        private int level;
-        private readonly List<(int id, SyntaxNode node)> childrenWaitingForAdoption;
+        private IScope currentScope;
 
         public Parser(Scanner scanner) : base(scanner)
         {
-            childrenWaitingForAdoption = new List<(int, SyntaxNode)>();
+            currentScope = new EmptyScope();
         }
 
         public SyntaxTree SyntaxTree { get; private set; }
 
         public LexLocation Loc => CurrentLocationSpan;
-
-        private void AddOrphan(SyntaxNode node)
-        {
-            childrenWaitingForAdoption.Add((level, node));
-        }
-
-        private void AddChildrenToNode(SyntaxNode node)
-        {
-            --level;
-            node.SetChildren(childrenWaitingForAdoption.Where(pair => pair.id == level + 1).Select(pair => pair.node).ToList());
-            childrenWaitingForAdoption.Add((level, node));
-        }
 
         private void GenerateCode(CompilationUnit unit)
         {
@@ -40,11 +26,23 @@ namespace MiniCompiler
             visitor.Visit();
         }
 
-        private void Error(string msg)
+        private void EnterScope(IScope scope)
         {
-            Console.WriteLine($"  line {Loc.StartLine,3}: {msg}");
+            currentScope = scope;
+        }
+
+        private void LeaveScope()
+        {
+            currentScope = currentScope.GetParentScope();
+        }
+
+
+        private void Error(string msg, params object[] pars)
+        {
+            Console.WriteLine($"  line {Loc.StartLine,3}: {string.Format(msg, pars)}");
             ++Compiler.errors;
             yyerrok();
+            CurrentSemanticValue.node = new EmptyNode(Loc);
         }
 
         private char BinaryOpGenCode(Token t, char type1, char type2)

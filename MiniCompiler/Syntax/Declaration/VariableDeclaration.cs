@@ -1,20 +1,18 @@
 ﻿using QUT.Gppg;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MiniCompiler.Syntax.Declaration
+namespace MiniCompiler.Syntax.Declaration.Scopes
 {
     public class VariableDeclaration : SyntaxNode
     {
-        public VariableDeclaration()
+        public string Name { get; private set; }
+        public IScope Scope { get; private set; }
+        public string Value { get; set; }
+
+        public VariableDeclaration(string name, IScope scope, LexLocation loc = null) :
+            base(loc)
         {
-        }
-        
-        public VariableDeclaration(LexLocation loc) : base(loc)
-        {
+            Name = name;
+            Scope = scope;
         }
     }
 }

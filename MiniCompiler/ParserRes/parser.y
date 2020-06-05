@@ -7,6 +7,7 @@
 %using MiniCompiler.Syntax;
 %using MiniCompiler.Syntax.General;
 %using MiniCompiler.Syntax.Declaration;
+%using MiniCompiler.Syntax.Declaration.Scopes;
 
 %namespace MiniCompiler
 
@@ -18,14 +19,14 @@
     public List<SyntaxNode> orphans;
 }
 
-%token Program OpenBrace CloseBrace Return Colon Eof Error
+%token Program OpenBrace CloseBrace Return Colon True False Eof Error 
 %token Write Assign Plus Minus Multiplies Divides OpenPar ClosePar 
 %token <val> IntKey DoubleKey BoolKey Id
-%token <val> IntVal DoubleVal True False
+%token <val> IntVal DoubleVal 
 
 %type <orphans> content
 %type <node> block none
-%type <node> declaration
+%type <node> declar declarKey
 %type <type> exp term factor
 
 %%
@@ -44,10 +45,15 @@ start         : Program block Eof
                 }
               ;
 block         : OpenBrace
+                {
+                     EnterScope(new SubordinateScope(currentScope));
+                }
                 content CloseBrace
                 {
+                    LeaveScope();
+
                     var newBlock = new Block(Loc);
-                    newBlock.SetChildren($2);
+                    newBlock.SetChildren($3);
                     $$ = newBlock;
                 }
               | OpenBrace error Eof
@@ -61,12 +67,11 @@ block         : OpenBrace
                     YYABORT;
                 }
               ;
-              /* TODO: Fix tree creation ^^ */ 
 content       : none
                 {
                     $$ = new List<SyntaxNode>();
                 }
-              | content declaration
+              | content declar
                 {
                     ($1).Add($2);
                     $$ = $1;
@@ -76,20 +81,22 @@ content       : none
                     ($1).Add($2);
                     $$ = $1;
                 }
+              | content Colon
               ;
-declaration   : IntKey Id Colon
+declar        : declarKey Id Colon
                 {
-                    $$ = new VariableDeclaration(Loc);
-                }
-              | BoolKey Id Colon
-                {
-                    $$ = new VariableDeclaration(Loc);
-                }
-              | DoubleKey Id Colon
-                {
-                    $$ = new VariableDeclaration(Loc);
+                    if(currentScope.AddToScope($2))
+                    {
+                        $$ = new VariableDeclaration($2, currentScope, Loc);
+                    }
+                    else
+                    {
+                        Error("Variable '{0}' was already declared in this scope.", $2);
+                    }
                 }
               ;
+declarKey     : IntKey | BoolKey | DoubleKey
+              ;  
 
 end           : Colon
               | Eof

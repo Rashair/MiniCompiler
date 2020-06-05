@@ -116,11 +116,6 @@ namespace MiniCompiler.Syntax
             return true;
         }
 
-        public void Clear()
-        {
-            levels.Clear();
-        }
-
         public IEnumerator<List<SyntaxNode>> GetEnumerator()
         {
             return levels.GetEnumerator();
@@ -129,6 +124,11 @@ namespace MiniCompiler.Syntax
         IEnumerator IEnumerable.GetEnumerator()
         {
             return levels.GetEnumerator();
+        }
+
+        public void Clear()
+        {
+            levels.Clear();
         }
     }
 }
