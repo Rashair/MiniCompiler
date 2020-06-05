@@ -12,6 +12,7 @@ namespace MiniCompiler.Syntax
         IEquatable<SyntaxTree>,
         IEnumerable<List<SyntaxNode>>
     {
+        public static readonly string defaultStringIndent = new string (' ', 4);
         private readonly List<List<SyntaxNode>> levels;
         private CompilationUnit compilationUnit;
 
@@ -21,8 +22,8 @@ namespace MiniCompiler.Syntax
         }
 
         public SyntaxTree(CompilationUnit compilationUnit)
+            : this()
         {
-            levels = new List<List<SyntaxNode>>();
             this.CompilationUnit = compilationUnit;
         }
 
@@ -64,7 +65,7 @@ namespace MiniCompiler.Syntax
         public static void PrintTree(StringBuilder builder, SyntaxNode node, string indent, bool last)
         {
             builder.AppendLine($"{indent}+- {node.GetType().Name}({node.Location?.StartLine}..{node.Location?.EndLine})");
-            indent += last ? "   " : "|  ";
+            indent += last ? defaultStringIndent : $"|{defaultStringIndent}";
 
             for (int i = 0; i < node.Count; ++i)
             {
