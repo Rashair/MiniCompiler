@@ -25,6 +25,18 @@ namespace SyntaxAnalysis
                 {
 
                 }
+
+                DoSth();
+                DoSth();
+                int x;
+                int a = 1;
+                int c;
+                int g = b ? 1 : 0;
+                x = a;
+                c = x;
+                a = c;
+                g = a;
+                Console.WriteLine(g);
             }
             if (b)
             {

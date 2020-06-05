@@ -1,7 +1,7 @@
 
-// Uwaga: W wywołaniu generatora gppg należy użyć opcji /gplex
 %output=.\ParserRes\Parser.cs
 %partial
+%tokentype Token
 
 %using System.Linq;
 %using MiniCompiler.Syntax;
@@ -12,8 +12,10 @@
 
 %union
 {
-    public char    type;
-    public string  val;
+    public char             type;
+    public string           val;
+    public SyntaxNode       node;
+    public List<SyntaxNode> orphans;
 }
 
 %token Program OpenBrace CloseBrace Return Colon Eof Error
@@ -21,8 +23,9 @@
 %token <val> IntKey DoubleKey BoolKey Id
 %token <val> IntVal DoubleVal True False
 
-%type <type> content block
-%type <type> declaration
+%type <orphans> content
+%type <node> block none
+%type <node> declaration
 %type <type> exp term factor
 
 %%
@@ -30,8 +33,7 @@
 start         : Program block Eof
                 {
                     var unit = new CompilationUnit(Loc);
-                    AddChildrenToNode(unit);
-
+                    unit.Add($2);
                     GenerateCode(unit);
                     YYACCEPT;
                 }
@@ -41,10 +43,12 @@ start         : Program block Eof
                     YYABORT;
                 }
               ;
-block         : OpenBrace content CloseBrace
+block         : OpenBrace
+                content CloseBrace
                 {
-                    var node = new Block(Loc);
-                    AddChildrenToNode(node);
+                    var newBlock = new Block(Loc);
+                    newBlock.SetChildren($2);
+                    $$ = newBlock;
                 }
               | OpenBrace error Eof
                 {
@@ -58,16 +62,33 @@ block         : OpenBrace content CloseBrace
                 }
               ;
               /* TODO: Fix tree creation ^^ */ 
-content       : 
+content       : none
+                {
+                    $$ = new List<SyntaxNode>();
+                }
               | content declaration
                 {
-                    AddOrphan(new VariableDeclaration(Loc));
+                    ($1).Add($2);
+                    $$ = $1;
                 }
               | content block
+                {
+                    ($1).Add($2);
+                    $$ = $1;
+                }
               ;
 declaration   : IntKey Id Colon
+                {
+                    $$ = new VariableDeclaration(Loc);
+                }
               | BoolKey Id Colon
+                {
+                    $$ = new VariableDeclaration(Loc);
+                }
               | DoubleKey Id Colon
+                {
+                    $$ = new VariableDeclaration(Loc);
+                }
               ;
 
 end           : Colon
@@ -77,27 +98,27 @@ end           : Colon
                     YYABORT;
                 }
               ;
+none          : { $$ = null; }
+              ;
 
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 
 
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
 exp           : exp Plus term
-                   { $$ = BinaryOpGenCode(Tokens.Plus, $1, $3); }
+                   { $$ = BinaryOpGenCode(Token.Plus, $1, $3); }
               | exp Minus term
-                   { $$ = BinaryOpGenCode(Tokens.Minus, $1, $3); }
+                   { $$ = BinaryOpGenCode(Token.Minus, $1, $3); }
               | term
                    { $$ = $1; }
-              ;
-              
+              ;              
 term          : term Multiplies factor
-                   { $$ = BinaryOpGenCode(Tokens.Multiplies, $1, $3); }
+                   { $$ = BinaryOpGenCode(Token.Multiplies, $1, $3); }
               | term Divides factor
-                   { $$ = BinaryOpGenCode(Tokens.Divides, $1, $3); }
+                   { $$ = BinaryOpGenCode(Token.Divides, $1, $3); }
               | factor
                    { $$ = $1; }
               ;
-              
 factor        : OpenPar exp ClosePar
                    { $$ = $2; }
               | IntVal
@@ -117,7 +138,6 @@ factor        : OpenPar exp ClosePar
                     $$ = $1[0]=='@'?'i':'r';
                 }
               ;
-
 %%
 
 /* HELPER FUNCTIONS ------------------------------------------------------------------------------------------------*/

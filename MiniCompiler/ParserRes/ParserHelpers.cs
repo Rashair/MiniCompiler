@@ -11,12 +11,13 @@ namespace MiniCompiler
     {
         private int level;
         private readonly List<(int id, SyntaxNode node)> childrenWaitingForAdoption;
-        private SyntaxTree tree;
 
         public Parser(Scanner scanner) : base(scanner)
         {
             childrenWaitingForAdoption = new List<(int, SyntaxNode)>();
         }
+
+        public SyntaxTree SyntaxTree { get; private set; }
 
         public LexLocation Loc => CurrentLocationSpan;
 
@@ -34,8 +35,8 @@ namespace MiniCompiler
 
         private void GenerateCode(CompilationUnit unit)
         {
-            tree = new SyntaxTree(unit);
-            var visitor = new SyntaxVisitor(tree);
+            SyntaxTree = new SyntaxTree(unit);
+            var visitor = new SyntaxVisitor(SyntaxTree);
             visitor.Visit();
         }
 
@@ -46,7 +47,7 @@ namespace MiniCompiler
             yyerrok();
         }
 
-        private char BinaryOpGenCode(Tokens t, char type1, char type2)
+        private char BinaryOpGenCode(Token t, char type1, char type2)
         {
             char type = (type1 == 'i' && type2 == 'i') ? 'i' : 'r';
             if (type1 != type)
@@ -59,16 +60,16 @@ namespace MiniCompiler
                 Compiler.EmitCode("conv.r8");
             switch (t)
             {
-                case Tokens.Plus:
+                case Token.Plus:
                     Compiler.EmitCode("add");
                     break;
-                case Tokens.Minus:
+                case Token.Minus:
                     Compiler.EmitCode("sub");
                     break;
-                case Tokens.Multiplies:
+                case Token.Multiplies:
                     Compiler.EmitCode("mul");
                     break;
-                case Tokens.Divides:
+                case Token.Divides:
                     Compiler.EmitCode("div");
                     break;
                 default:

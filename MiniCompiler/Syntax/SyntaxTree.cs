@@ -10,8 +10,7 @@ namespace MiniCompiler.Syntax
     // Names based on https://docs.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/get-started/syntax-analysis
     public class SyntaxTree :
         IEquatable<SyntaxTree>,
-        IEnumerable<List<SyntaxNode>>,
-        ICollection<List<SyntaxNode>>
+        IEnumerable<List<SyntaxNode>>
     {
         private readonly List<List<SyntaxNode>> levels;
         private CompilationUnit compilationUnit;
@@ -53,8 +52,6 @@ namespace MiniCompiler.Syntax
 
         public int Count => levels.Count;
 
-        public bool IsReadOnly => true;
-
         public override string ToString()
         {
             var builder = new StringBuilder("\n");
@@ -73,6 +70,22 @@ namespace MiniCompiler.Syntax
             {
                 PrintTree(builder, node[i], indent, i == node.Count - 1);
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is SyntaxTree other)
+            {
+                return Equals(other);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            // Should be different, but performance wise.
+            return base.GetHashCode();
         }
 
         public bool Equals(SyntaxTree other)
@@ -102,37 +115,14 @@ namespace MiniCompiler.Syntax
             return true;
         }
 
-        public void Add(List<SyntaxNode> item)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Clear()
         {
             levels.Clear();
         }
 
-        public bool Contains(List<SyntaxNode> item)
-        {
-            return levels.Contains(item);
-        }
-
-        public void CopyTo(List<SyntaxNode>[] array, int arrayIndex)
-        {
-            for (int i = arrayIndex; i < levels.Count; ++i)
-            {
-                array[i] = levels[i];
-            }
-        }
-
         public IEnumerator<List<SyntaxNode>> GetEnumerator()
         {
             return levels.GetEnumerator();
-        }
-
-        public bool Remove(List<SyntaxNode> item)
-        {
-            return levels.Remove(item);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

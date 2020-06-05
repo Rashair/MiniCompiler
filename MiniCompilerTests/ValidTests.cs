@@ -24,7 +24,7 @@ namespace MiniCompilerTests
         {
             if (ExpectedTree != null)
             {
-                SyntaxTree syntaxTree = Compiler.parser.GetPrivateValue<SyntaxTree>("tree");
+                SyntaxTree syntaxTree = Compiler.parser.SyntaxTree;
                 Assert.AreEqual(ExpectedTree, syntaxTree, "Trees should be equal");
             }
         }

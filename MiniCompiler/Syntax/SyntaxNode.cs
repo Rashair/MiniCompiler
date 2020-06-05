@@ -12,10 +12,10 @@ namespace MiniCompiler.Syntax
         protected SyntaxNode parent;
 
         // TODO
-        protected List<Tokens> TokensBefore;
+        protected List<Token> TokensBefore;
         protected List<SyntaxNode> children;
         // TODO
-        protected List<Tokens> TokensAfter;
+        protected List<Token> TokensAfter;
 
         protected LexLocation location;
 
@@ -50,7 +50,7 @@ namespace MiniCompiler.Syntax
             return children.Count == 0;
         }
 
-        public void AddBefore(Tokens token)
+        public void AddBefore(Token token)
         {
             TokensBefore.Add(token);
         }
@@ -64,7 +64,7 @@ namespace MiniCompiler.Syntax
             return this;
         }
 
-        public void AddAfter(Tokens token)
+        public void AddAfter(Token token)
         {
             TokensAfter.Add(token);
         }
