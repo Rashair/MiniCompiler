@@ -20,11 +20,14 @@
     public List<SyntaxNode> orphans;
 }
 
-%token Program OpenBrace CloseBrace Return Colon True False Eof Error 
-%token If Else While Read Write
-%token Assign Plus Minus Multiplies Divides OpenPar ClosePar 
+%token Program OpenBrace CloseBrace Return 
+%token If Else While Read Write True False
 %token IntKey DoubleKey BoolKey
 %token <val> IntVal DoubleVal Id
+%token Assign Or And BitOr BitAnd Negation BitNegation
+%token Equals NotEquals Greater GreaterOrEqual Less LessOrEqual
+%token Plus Minus Multiplies Divides OpenPar ClosePar 
+%token Colon Eof Error 
 
 %type <orphans> content
 %type <node> block none
