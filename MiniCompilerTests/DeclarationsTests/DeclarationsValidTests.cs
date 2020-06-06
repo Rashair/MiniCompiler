@@ -10,5 +10,23 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestManyVariablesInOneLine()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestManyVariablesInManyLines()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestSameNamesDifferentCase()
+        {
+            Invoke();
+        }
     }
 }

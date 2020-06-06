@@ -75,6 +75,9 @@
   <ItemGroup>
     <Content Include="DeclarationsTests\NotValid\Redeclaration.txt" />
     <Content Include="DeclarationsTests\NotValid\WithoutSemicolon.txt" />
+    <Content Include="DeclarationsTests\Valid\SameNamesDifferentCase.txt" />
+    <Content Include="DeclarationsTests\Valid\ManyVariablesInManyLines.txt" />
+    <Content Include="DeclarationsTests\Valid\ManyVariablesInOneLine.txt" />
     <Content Include="DeclarationsTests\Valid\OneLineProgram.txt" />
     <Content Include="BracesTests\NotValid\NestedBracesMissingClose.txt" />
     <Content Include="BracesTests\NotValid\NestedBracesMissingOpen.txt" />
