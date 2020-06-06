@@ -47,7 +47,7 @@ namespace MiniCompilerTests
             Invoke();
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(100)]
         public void TestWrongCharsInNameOnly()
         {
             Invoke();

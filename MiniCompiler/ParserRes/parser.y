@@ -30,6 +30,7 @@
 %type <node> instr assign declar 
 %type <node> exp
 %type <type> declarKey
+%type <type> unreconWord noColon
 
 %%
 
@@ -85,6 +86,10 @@ content       : none
                     $$ = $1;
                 }
               | content Colon
+              | content Error 
+                {
+                    Error("Unexpected character: {0}({1})", Scanner.yylval.val[0], (int)(Scanner.yylval.val[0]));
+                }
               ;
 instr         : declar { $$ = $1; }
               | assign { $$ = $1; }
@@ -107,26 +112,44 @@ declar        : declarKey Id Colon
                         Error("Variable '{0}' was already declared in this scope.", $2);
                     }
                 }
-              | declarKey Id
+              | declarKey Id /* TODO: endl? */
                 {
                     Error("Missing semicolon at col: {0}", Loc.EndColumn);
                 }
-              | Id Id 
+              | Id Id Colon
                 {
                     Error("Uncrecognized type.");
-                }   
+                }
+              | declarKey unreconWord Colon
+                {
+                    Error("Identifier is restricted keyword or contains prohibited characters.");
+                }
+              | Id Error
+                {
+                    Error("Identifier contains unexpected character.");
+                }
               ;
 declarKey     : IntKey  { $$ = Type.Int; }
               | BoolKey { $$ = Type.Bool; }
               | DoubleKey { $$ = Type.Double; }
-              | Error { $$ = Type.Unknown; }
               ; 
 
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
                 /* TODO */
 exp           : Plus Minus Divides
               ;
-/* Other  ---------------------------------------------------------------------------------------------- */ 
+
+/* ERRORS  ---------------------------------------------------------------------------------------------- */ 
+unreconWord : Id Error
+            | Error
+            | unreconWord Error
+            | unreconWord Id
+            ;
+noColon     : declarKey
+            ;
+
+
+/* OTHER  ---------------------------------------------------------------------------------------------- */ 
 end           : Colon
               | Eof
                 {

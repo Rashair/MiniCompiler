@@ -10,6 +10,7 @@
 IntVal             (0|[1-9][0-9]*)
 DoubleVal          (0\.[0-9]+|[1-9][0-9]*\.[0-9]+)
 Id                 [a-zA-Z][a-zA-Z0-9]*
+String             \"[^\n]*\"
 Endl               (\r\n|\n)
 
 %%
@@ -39,4 +40,4 @@ Endl               (\r\n|\n)
 <<EOF>>       { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.Eof; }
 " "           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); }
 "\t"          { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); }
-.             { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); Console.WriteLine("Unexpected token: {0}/{1}", (int)yytext[0], yytext[0]); return (int)Token.Error; }
+.             { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.val=yytext; return (int)Token.Error; }

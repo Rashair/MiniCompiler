@@ -102,7 +102,7 @@
     <Exec Command="ScannerRes\Gplex.exe ScannerRes\scanner.lex" ConsoleToMSBuild="true" ContinueOnError="False">
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
     </Exec>
-    <Exec Command="ParserRes\Gppg.exe /gplex ParserRes\parser.y" ConsoleToMSBuild="true" ContinueOnError="false">
+    <Exec Command="ParserRes\Gppg.exe /gplex /verbose ParserRes\parser.y" ConsoleToMSBuild="true" ContinueOnError="false">
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
     </Exec>
     <Copy SourceFiles="@(TestFile)" DestinationFolder=".\bin\Debug">
