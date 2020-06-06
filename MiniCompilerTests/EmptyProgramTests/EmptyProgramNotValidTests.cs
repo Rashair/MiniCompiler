@@ -54,5 +54,11 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestEmptyFile()
+        {
+            Invoke();
+        }
     }
 }

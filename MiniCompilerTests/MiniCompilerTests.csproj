@@ -100,6 +100,7 @@
     <Content Include="BracesTests\NotValid\NestedBracesMissingOpen.txt" />
     <Content Include="BracesTests\NotValid\NestedBracesMissingOpenAndClose.txt" />
     <Content Include="EmptyProgramTests\NotValid\CommentAtTheEndOfFile.txt" />
+    <Content Include="EmptyProgramTests\NotValid\EmptyFile.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramCommentedBraces.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramWrongBraceOrder.txt" />
     <Content Include="EmptyProgramTests\NotValid\BracesBeforeProgram.txt" />
