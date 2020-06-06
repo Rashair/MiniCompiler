@@ -21,7 +21,8 @@
 }
 
 %token Program OpenBrace CloseBrace Return Colon True False Eof Error 
-%token Write Assign Plus Minus Multiplies Divides OpenPar ClosePar 
+%token If Else While Read Write
+%token Assign Plus Minus Multiplies Divides OpenPar ClosePar 
 %token IntKey DoubleKey BoolKey
 %token <val> IntVal DoubleVal Id
 

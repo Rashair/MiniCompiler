@@ -19,12 +19,16 @@ Endl               (\r\n|\n)
 "{"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.OpenBrace; }
 "}"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.CloseBrace; }
 "return"	  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.Return; }
+"if"	      { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.If; }
+"else"	      { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.Else; }
+"while"	      { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.While; }
+"read"        { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.Read; }
 "write"       { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.Write; }
+"true"		  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.True; }
+"false"	      { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.False; }
 "int"         { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.IntKey; }
 "double"      { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.DoubleKey; }
 "bool"        { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.BoolKey; }
-"true"		  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.True; }
-"false"	      { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.False; }
 {IntVal}	  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.val=yytext; return (int)Token.IntVal; }
 {DoubleVal}   { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.val=yytext; return (int)Token.DoubleVal; }
 "="           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); return (int)Token.Assign; }

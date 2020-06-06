@@ -74,6 +74,7 @@ namespace MiniCompilerTests
         [TestMethod]
         public void TestNameSameAsKeyword()
         {
+            ExpectedErrors = 9;
             Invoke();
         }
 
