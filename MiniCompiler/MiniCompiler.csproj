@@ -74,10 +74,19 @@
     <Compile Include="Syntax\Declaration\Scopes\EmptyScope.cs" />
     <Compile Include="Syntax\Declaration\Scopes\IScope.cs" />
     <Compile Include="Syntax\Declaration\Scopes\SubordinateScope.cs" />
+    <Compile Include="Syntax\Declaration\Type.cs" />
     <Compile Include="Syntax\Declaration\VariableDeclaration.cs" />
     <Compile Include="Syntax\General\Block.cs" />
     <Compile Include="Syntax\General\CompilationUnit.cs" />
     <Compile Include="Syntax\General\EmptyNode.cs" />
+    <Compile Include="Syntax\Operators\Assignment\Assign.cs" />
+    <Compile Include="Syntax\Operators\BinaryOperator.cs" />
+    <Compile Include="Syntax\Operators\OperationValidator.cs" />
+    <Compile Include="Syntax\Operators\Operator.cs" />
+    <Compile Include="Syntax\Operators\OperatorEnum.cs" />
+    <Compile Include="Syntax\Operators\UnaryOperator.cs" />
+    <Compile Include="Syntax\Operators\Unary\UnaryMinus.cs" />
+    <Compile Include="Syntax\Operators\Unknown.cs" />
     <Compile Include="Syntax\SyntaxNode.cs" />
     <Compile Include="Syntax\SyntaxTree.cs" />
     <Compile Include="Syntax\SyntaxTreeWalker.cs" />
@@ -116,6 +125,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Syntax\Operators\Bitwise\" />
+    <Folder Include="Syntax\Operators\Logical\" />
+    <Folder Include="Syntax\Operators\Math\" />
+    <Folder Include="Syntax\Operators\Relation\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

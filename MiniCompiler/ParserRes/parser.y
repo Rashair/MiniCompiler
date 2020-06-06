@@ -8,12 +8,13 @@
 %using MiniCompiler.Syntax.General;
 %using MiniCompiler.Syntax.Declaration;
 %using MiniCompiler.Syntax.Declaration.Scopes;
+%using MiniCompiler.Syntax.Operators;
 
 %namespace MiniCompiler
 
 %union
 {
-    public char             type;
+    public Type             type;
     public string           val;
     public SyntaxNode       node;
     public List<SyntaxNode> orphans;
@@ -21,13 +22,14 @@
 
 %token Program OpenBrace CloseBrace Return Colon True False Eof Error 
 %token Write Assign Plus Minus Multiplies Divides OpenPar ClosePar 
-%token <val> IntKey DoubleKey BoolKey Id
-%token <val> IntVal DoubleVal 
+%token IntKey DoubleKey BoolKey
+%token <val> IntVal DoubleVal Id
 
 %type <orphans> content
 %type <node> block none
-%type <node> declar declarKey
-%type <type> exp term factor
+%type <node> instr assign declar 
+%type <node> exp
+%type <type> declarKey
 
 %%
 
@@ -38,6 +40,12 @@ start         : Program block Eof
                     GenerateCode(unit);
                     YYACCEPT;
                 }
+              | Program error Eof
+                {
+                    Error("Braces expected.");
+                    YYABORT;
+                }
+
               | error Eof
                 {
                     Error("'program' statement required.");
@@ -61,17 +69,12 @@ block         : OpenBrace
                     Error("No brace matching.");
                     YYABORT;
                 }
-              | error Eof
-                {
-                    Error("Braces expected.");
-                    YYABORT;
-                }
               ;
 content       : none
                 {
                     $$ = new List<SyntaxNode>();
                 }
-              | content declar
+              | content instr
                 {
                     ($1).Add($2);
                     $$ = $1;
@@ -83,21 +86,47 @@ content       : none
                 }
               | content Colon
               ;
+instr         : declar { $$ = $1; }
+              | assign { $$ = $1; }
+              ;
+assign        : Id Assign exp
+              ;
+/* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declarKey Id Colon
                 {
-                    if(currentScope.AddToScope($2))
+                    if($1 != Type.Unknown && currentScope.AddToScope($2))
                     {
-                        $$ = new VariableDeclaration($2, currentScope, Loc);
+                        $$ = new VariableDeclaration($2, currentScope, $1, Loc);
+                    }
+                    else if($1 == Type.Unknown)
+                    {
+                        Error("Unrecognized type");
                     }
                     else
                     {
                         Error("Variable '{0}' was already declared in this scope.", $2);
                     }
                 }
+              | declarKey Id
+                {
+                    Error("Missing semicolon at col: {0}", Loc.EndColumn);
+                }
+              | Id Id 
+                {
+                    Error("Uncrecognized type.");
+                }   
               ;
-declarKey     : IntKey | BoolKey | DoubleKey
-              ;  
+declarKey     : IntKey  { $$ = Type.Int; }
+              | BoolKey { $$ = Type.Bool; }
+              | DoubleKey { $$ = Type.Double; }
+              | Error { $$ = Type.Unknown; }
+              ; 
 
+/* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
+                /* TODO */
+exp           : Plus Minus Divides
+              ;
+/* Other  ---------------------------------------------------------------------------------------------- */ 
 end           : Colon
               | Eof
                 {
@@ -105,46 +134,10 @@ end           : Colon
                     YYABORT;
                 }
               ;
-none          : { $$ = null; }
+none          :       { $$ = null; }
               ;
 
-/* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 
-
-/* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
-exp           : exp Plus term
-                   { $$ = BinaryOpGenCode(Token.Plus, $1, $3); }
-              | exp Minus term
-                   { $$ = BinaryOpGenCode(Token.Minus, $1, $3); }
-              | term
-                   { $$ = $1; }
-              ;              
-term          : term Multiplies factor
-                   { $$ = BinaryOpGenCode(Token.Multiplies, $1, $3); }
-              | term Divides factor
-                   { $$ = BinaryOpGenCode(Token.Divides, $1, $3); }
-              | factor
-                   { $$ = $1; }
-              ;
-factor        : OpenPar exp ClosePar
-                   { $$ = $2; }
-              | IntVal
-                   {
-                   Compiler.EmitCode("ldc.i4 {0}",int.Parse($1));
-                   $$ = 'i'; 
-                   }
-              | DoubleVal
-                   {
-                   double d = double.Parse($1,System.Globalization.CultureInfo.InvariantCulture) ;
-                   Compiler.EmitCode(string.Format(System.Globalization.CultureInfo.InvariantCulture,"ldc.r8 {0}",d));
-                   $$ = 'r'; 
-                   }
-              | Id
-                {
-                    Compiler.EmitCode("ldloc _{0}{1}", $1[0]=='@'?'i':'r', $1[1]);
-                    $$ = $1[0]=='@'?'i':'r';
-                }
-              ;
 %%
 
 /* HELPER FUNCTIONS ------------------------------------------------------------------------------------------------*/
