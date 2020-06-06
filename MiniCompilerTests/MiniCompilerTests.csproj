@@ -108,6 +108,7 @@
     <Content Include="EmptyProgramTests\Valid\WhitespaceAfterProgramBeforeBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceBeforeProgram.txt" />
     <Content Include="BracesTests\Valid\NestedEmptyBraces.txt" />
+    <Content Include="EmptyProgramTests\Valid\ManySemicolons.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
   </ItemGroup>
   <ItemGroup />

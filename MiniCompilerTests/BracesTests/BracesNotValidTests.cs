@@ -17,7 +17,7 @@ namespace MiniCompilerTests
             Invoke();
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(DefaultTimeout)]
         public void TestNestedBracesMissingClose()
         {
             Invoke();

@@ -7,6 +7,7 @@ namespace MiniCompilerTests
 {
     public abstract class BaseTests
     {
+        public const int DefaultTimeout = 100;
         // Length(Base)
         private const int prefixLength = 4;
         // Length(Tests)

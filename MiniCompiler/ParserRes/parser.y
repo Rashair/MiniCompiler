@@ -86,13 +86,10 @@ content       : none
                     $$ = $1;
                 }
               | content Colon
-              | content Error 
-                {
-                    Error("Unexpected character: {0}({1})", Scanner.yylval.val[0], (int)(Scanner.yylval.val[0]));
-                }
               ;
 instr         : declar { $$ = $1; }
               | assign { $$ = $1; }
+              | declarKey error end { Error("Unexpected statement."); }
               ;
 assign        : Id Assign exp
               ;
@@ -112,9 +109,9 @@ declar        : declarKey Id Colon
                         Error("Variable '{0}' was already declared in this scope.", $2);
                     }
                 }
-              | declarKey Id /* TODO: endl? */
+              | declarKey Id error end /* TODO: endl? */
                 {
-                    Error("Missing semicolon at col: {0}", Loc.EndColumn);
+                    Error("Missing semicolon at col: {0}", @2.EndColumn);
                 }
               | Id Id Colon
                 {
@@ -151,11 +148,9 @@ noColon     : declarKey
 
 /* OTHER  ---------------------------------------------------------------------------------------------- */ 
 end           : Colon
+              | CloseBrace
+              | OpenBrace
               | Eof
-                {
-                    Error("Syntax error - unexpected symbol Eof.");
-                    YYABORT;
-                }
               ;
 none          :       { $$ = null; }
               ;
