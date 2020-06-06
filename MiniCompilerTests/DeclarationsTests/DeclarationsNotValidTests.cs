@@ -16,5 +16,71 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestRedeclarationInNestedScope()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestStartNameWithNumber()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestWithoutName()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestWithoutType()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestWrongCharsInName()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestWrongCharsInNameOnly()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestDifferentTypeCaseEnd()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestDifferentTypeCaseMiddle()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestDifferentTypeCaseStart()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestNameSameAsKeyword()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestNameSameAsType()
+        {
+            Invoke();
+        }
     }
 }

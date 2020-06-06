@@ -28,5 +28,17 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestManyVariablesInManyScopes()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestSameNamesDifferentScope()
+        {
+            Invoke();
+        }
     }
 }

@@ -73,8 +73,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseMiddle.txt" />
+    <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseEnd.txt" />
+    <Content Include="DeclarationsTests\NotValid\NameSameAsKeyword.txt" />
+    <Content Include="DeclarationsTests\NotValid\StartNameWithNumber.txt" />
+    <Content Include="DeclarationsTests\NotValid\WrongCharsInNameOnly.txt" />
+    <Content Include="DeclarationsTests\NotValid\WithoutName.txt" />
+    <Content Include="DeclarationsTests\NotValid\WithoutType.txt" />
+    <Content Include="DeclarationsTests\NotValid\NameSameAsType.txt" />
+    <Content Include="DeclarationsTests\NotValid\WrongCharsInName.txt" />
+    <Content Include="DeclarationsTests\NotValid\RedeclarationInNestedScope.txt" />
     <Content Include="DeclarationsTests\NotValid\Redeclaration.txt" />
     <Content Include="DeclarationsTests\NotValid\WithoutSemicolon.txt" />
+    <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseStart.txt" />
+    <Content Include="DeclarationsTests\Valid\SameNamesDifferentScope.txt" />
+    <Content Include="DeclarationsTests\Valid\ManyVariablesInManyScopes.txt" />
     <Content Include="DeclarationsTests\Valid\SameNamesDifferentCase.txt" />
     <Content Include="DeclarationsTests\Valid\ManyVariablesInManyLines.txt" />
     <Content Include="DeclarationsTests\Valid\ManyVariablesInOneLine.txt" />
@@ -89,6 +102,7 @@
     <Content Include="EmptyProgramTests\NotValid\ProgramNoClosingBrace.txt" />
     <Content Include="EmptyProgramTests\NotValid\NoProgram.txt" />
     <Content Include="EmptyProgramTests\Valid\OneLineProgram.txt" />
+    <Content Include="EmptyProgramTests\Valid\TwoLineProgram.txt" />
     <Content Include="EmptyProgramTests\Valid\ThreeLineProgram.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceAfterBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceAfterProgramBeforeBraces.txt" />

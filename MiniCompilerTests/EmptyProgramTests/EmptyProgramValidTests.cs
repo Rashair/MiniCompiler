@@ -1,10 +1,24 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MiniCompiler.Syntax;
+using MiniCompiler.Syntax.General;
 
 namespace MiniCompilerTests
 {
     [TestClass]
     public class EmptyProgramValidTests : ValidTests
     {
+        [TestInitialize]
+        public override void Init()
+        {
+            base.Init();
+            ExpectedTree = new SyntaxTree(
+                new CompilationUnit()
+                {
+                    new Block(),
+                });
+        }
+
+
         [TestMethod]
         public void TestOneLineProgram()
         {
@@ -13,6 +27,12 @@ namespace MiniCompilerTests
 
         [TestMethod]
         public void TestThreeLineProgram()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestTwoLineProgram()
         {
             Invoke();
         }
