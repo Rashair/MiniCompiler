@@ -48,5 +48,11 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestCommentAtTheEndOfFile()
+        {
+            Invoke();
+        }
     }
 }

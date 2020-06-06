@@ -22,6 +22,11 @@ namespace MiniCompiler
         private void GenerateCode(CompilationUnit unit)
         {
             SyntaxTree = new SyntaxTree(unit);
+            if (Compiler.errors > 0)
+            {
+                return;
+            }
+
             var visitor = new SyntaxVisitor(SyntaxTree);
             visitor.Visit();
         }
@@ -35,7 +40,6 @@ namespace MiniCompiler
         {
             currentScope = currentScope.GetParentScope();
         }
-
 
         private void Error(string msg, params object[] pars)
         {

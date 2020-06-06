@@ -88,6 +88,8 @@
     <Content Include="DeclarationsTests\NotValid\Redeclaration.txt" />
     <Content Include="DeclarationsTests\NotValid\WithoutSemicolon.txt" />
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseStart.txt" />
+    <Content Include="DeclarationsTests\Valid\CommentAfterDeclaration.txt" />
+    <Content Include="DeclarationsTests\Valid\DifferentNames.txt" />
     <Content Include="DeclarationsTests\Valid\SameNamesDifferentScope.txt" />
     <Content Include="DeclarationsTests\Valid\ManyVariablesInManyScopes.txt" />
     <Content Include="DeclarationsTests\Valid\SameNamesDifferentCase.txt" />
@@ -97,6 +99,7 @@
     <Content Include="BracesTests\NotValid\NestedBracesMissingClose.txt" />
     <Content Include="BracesTests\NotValid\NestedBracesMissingOpen.txt" />
     <Content Include="BracesTests\NotValid\NestedBracesMissingOpenAndClose.txt" />
+    <Content Include="EmptyProgramTests\NotValid\CommentAtTheEndOfFile.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramCommentedBraces.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramWrongBraceOrder.txt" />
     <Content Include="EmptyProgramTests\NotValid\BracesBeforeProgram.txt" />

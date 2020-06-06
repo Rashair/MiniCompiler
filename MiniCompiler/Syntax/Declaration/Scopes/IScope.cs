@@ -2,9 +2,9 @@
 {
     public interface IScope
     {
-        bool AddToScope(string id);
+        bool AddToScope(string id, Type type);
 
-        bool IsInScope(string id);
+        bool TryGetType(string id, ref Type type);
 
         IScope GetParentScope();
     }

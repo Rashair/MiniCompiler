@@ -30,11 +30,11 @@
 %token Colon Eof Error 
 
 %type <orphans> content
+%type <orphans> exp
 %type <node> block none
 %type <node> instr assign declar 
-%type <node> exp
 %type <type> declarKey
-%type <type> unreconWord noColon
+%type <type> unreconWord
 
 %%
 
@@ -90,17 +90,26 @@ content       : none
                     $$ = $1;
                 }
               | content Colon
+              | Eof { Error("Unexpected end of file."); }
               ;
 instr         : declar { $$ = $1; }
               | assign { $$ = $1; }
               | declarKey error end { Error("Unexpected statement."); }
               ;
 assign        : Id Assign exp
+                {
+                    Type type = Type.Unknown;
+                    if(!currentScope.TryGetType($1, ref type))
+                    {
+                        Error("Variable {0} not declared.", $1);
+                    }
+                    // TODO: Must check final type of expression and collect childrent to assign
+                }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declarKey Id Colon
                 {
-                    if($1 != Type.Unknown && currentScope.AddToScope($2))
+                    if($1 != Type.Unknown && currentScope.AddToScope($2, $1))
                     {
                         $$ = new VariableDeclaration($2, currentScope, $1, Loc);
                     }
@@ -146,10 +155,6 @@ unreconWord : Id Error
             | unreconWord Error
             | unreconWord Id
             ;
-noColon     : declarKey
-            ;
-
-
 /* OTHER  ---------------------------------------------------------------------------------------------- */ 
 end           : Colon
               | CloseBrace

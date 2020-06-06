@@ -2,12 +2,12 @@
 {
     public class EmptyScope : IScope
     {
-        public bool AddToScope(string id)
+        public bool AddToScope(string id, Type type)
         {
             return false;
         }
 
-        public bool IsInScope(string id)
+        public bool TryGetType(string id, ref Type type)
         {
             return false;
         }

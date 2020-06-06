@@ -40,5 +40,17 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestDifferentNames()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestCommentAfterDeclaration()
+        {
+            Invoke();
+        }
     }
 }

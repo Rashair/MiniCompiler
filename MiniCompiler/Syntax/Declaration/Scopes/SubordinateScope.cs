@@ -5,22 +5,28 @@ namespace MiniCompiler.Syntax.Declaration.Scopes
     public class SubordinateScope : IScope
     {
         private readonly IScope parentScope;
-        private readonly HashSet<string> variables;
+        private readonly Dictionary<string, Type> variables;
 
         public SubordinateScope(IScope parentScope)
         {
             this.parentScope = parentScope;
-            this.variables = new HashSet<string>();
+            this.variables = new Dictionary<string, Type>();
         }
 
-        public bool AddToScope(string id)
+        public bool AddToScope(string id, Type type)
         {
-            return variables.Add(id);
+            if (!variables.ContainsKey(id))
+            {
+                variables.Add(id, type);
+                return true;
+            }
+
+            return false;
         }
 
-        public bool IsInScope(string id)
+        public bool TryGetType(string id, ref Type type)
         {
-            return variables.Contains(id) || parentScope.IsInScope(id);
+            return variables.TryGetValue(id, out type) || parentScope.TryGetType(id, ref type);
         }
 
         public IScope GetParentScope()
