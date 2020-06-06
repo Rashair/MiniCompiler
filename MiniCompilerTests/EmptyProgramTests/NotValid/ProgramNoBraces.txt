@@ -1,7 +1,4 @@
-{} 
-program {
 
-}
-
+program 
 
 

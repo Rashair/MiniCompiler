@@ -1,0 +1,8 @@
+program
+{
+    // ;
+    // int c;
+    // int b;
+    // int a;
+    // { int a; }
+}

@@ -66,5 +66,11 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestComments()
+        {
+            Invoke();
+        }
     }
 }

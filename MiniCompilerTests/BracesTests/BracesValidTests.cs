@@ -35,5 +35,65 @@ namespace MiniCompilerTests
 
             Invoke();
         }
+
+        [TestMethod]
+        public void TestNestedBracesComments()
+        {
+            ExpectedTree = new SyntaxTree(
+                new CompilationUnit()
+                {
+                    new Block()
+                    {
+                        new Block(),
+                        new Block(),
+                        new Block(),
+                        new Block(),
+                        new Block()
+                        {
+                            new Block(),
+                        },
+                        new Block(),
+                    }
+                }
+            );
+
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestNestedBracesSemicolons()
+        {
+            ExpectedTree = new SyntaxTree(
+                new CompilationUnit()
+                {
+                    new Block()
+                    {
+                        new Block(),
+                        new Block()
+                        {
+                            new Block()
+                        },
+                        new Block(),
+                        new Block(),
+                        new Block()
+                        {
+                            new Block
+                            {
+                                new Block
+                                {
+                                    new Block
+                                    {
+                                        new Block()
+                                    }
+                                }
+                            }
+                        },
+                        new Block(),
+                    }
+                }
+            );
+
+            Invoke();
+        }
     }
 }

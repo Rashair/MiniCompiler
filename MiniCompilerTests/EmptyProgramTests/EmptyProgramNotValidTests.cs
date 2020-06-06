@@ -42,5 +42,11 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestProgramCommentedBraces()
+        {
+            Invoke();
+        }
     }
 }

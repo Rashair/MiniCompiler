@@ -73,6 +73,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BracesTests\Valid\NestedBracesComments.txt" />
+    <Content Include="BracesTests\Valid\NestedBracesSemicolons.txt" />
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseMiddle.txt" />
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseEnd.txt" />
     <Content Include="DeclarationsTests\NotValid\NameSameAsKeyword.txt" />
@@ -95,12 +97,14 @@
     <Content Include="BracesTests\NotValid\NestedBracesMissingClose.txt" />
     <Content Include="BracesTests\NotValid\NestedBracesMissingOpen.txt" />
     <Content Include="BracesTests\NotValid\NestedBracesMissingOpenAndClose.txt" />
+    <Content Include="EmptyProgramTests\NotValid\ProgramCommentedBraces.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramWrongBraceOrder.txt" />
     <Content Include="EmptyProgramTests\NotValid\BracesBeforeProgram.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramNoBraces.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramNoOpeningBrace.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramNoClosingBrace.txt" />
     <Content Include="EmptyProgramTests\NotValid\NoProgram.txt" />
+    <Content Include="EmptyProgramTests\Valid\Comments.txt" />
     <Content Include="EmptyProgramTests\Valid\OneLineProgram.txt" />
     <Content Include="EmptyProgramTests\Valid\TwoLineProgram.txt" />
     <Content Include="EmptyProgramTests\Valid\ThreeLineProgram.txt" />
