@@ -1,6 +1,6 @@
 ﻿namespace MiniCompiler.Syntax.Operators
 {
-    public class Unknown : Operator
+    public class UnknownOperator : Operator
     {
         public override bool CanUse(Type typeA)
         {

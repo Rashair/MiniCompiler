@@ -4,6 +4,8 @@ using MiniCompiler.Syntax.General;
 using QUT.Gppg;
 using MiniCompiler.Syntax.Variables;
 using System;
+using MiniCompiler.Syntax.Abstract;
+using MiniCompiler.Extensions;
 
 namespace MiniCompiler
 {
@@ -42,7 +44,7 @@ namespace MiniCompiler
             currentScope = currentScope.GetParentScope();
         }
 
-        private void Error(string msg, params object[] pars)
+        private ValueType Error(string msg, params object[] pars)
         {
             Console.WriteLine($"  line {Loc.StartLine,3}: {string.Format(msg, pars)}");
             ++Compiler.errors;
@@ -50,6 +52,48 @@ namespace MiniCompiler
             CurrentSemanticValue.node = new EmptyNode(Loc);
             CurrentSemanticValue.typeNode = new EmptyTypeNode(Loc);
             CurrentSemanticValue.type = Type.Unknown;
+
+            return CurrentSemanticValue;
+        }
+
+        private TypeNode TryCreateOperator(Token token, TypeNode left)
+        {
+            var expType = left.Type;
+            if (!Operator.CanUse(token, expType))
+            {
+                return Error("Cannot use {0} on {1}.", token, expType)
+                       .typeNode;
+            }
+                    
+            return Operator.Create(token, expType, Loc)
+                         .WithLeft(left);
+        }
+
+        private TypeNode TryCreateOperator(Token token, TypeNode left, TypeNode right)
+        {
+            if (!Operator.CanUse(token, left.Type, right.Type))
+            {
+                return Error("Cannot {0} {1} and {2}.", token, left.Type, right.Type.ToString())
+                       .typeNode;
+            }
+
+            return Operator.Create(token, left.Type, right.Type, Loc)
+                         .WithLeft(left)
+                         .WithRight(right);
+        }
+
+        private TypeNode CreateValue()
+        {
+            var value = ValueStack[ValueStack.Depth - 1];
+            Type type = value.token.ConvertToType();
+            string val = value.val;
+
+            if(type == Type.Unknown)
+            {
+                return Error("Cannot use provided type: {0}", value.token).typeNode;
+            }
+
+            return new Value(type, val, CurrentLocationSpan);
         }
     }
 }

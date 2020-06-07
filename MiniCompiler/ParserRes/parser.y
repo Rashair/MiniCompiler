@@ -4,6 +4,7 @@
 %tokentype Token
 
 %using System.Linq;
+%using MiniCompiler.Extensions;
 %using MiniCompiler.Syntax;
 %using MiniCompiler.Syntax.Abstract;
 %using MiniCompiler.Syntax.General;
@@ -16,6 +17,7 @@
 
 %union
 {
+    public Token            token;
     public Type             type;
     public string           val;
     public SyntaxNode       node;
@@ -24,9 +26,9 @@
 }
 
 %token Program OpenBrace CloseBrace Return 
-%token If Else While Read Write True False
+%token If Else While Read Write
 %token IntKey DoubleKey BoolKey
-%token <val> IntVal DoubleVal Id
+%token <val> True False IntVal DoubleVal Id
 %token Assign Or And BitOr BitAnd Negation BitNegation
 %token Equals NotEquals Greater GreaterOrEqual Less LessOrEqual
 %token Plus Minus Multiplies Divides OpenPar ClosePar 
@@ -35,7 +37,7 @@
 %type <orphans> content
 %type <node> block none
 %type <node> instr 
-%type <typeNode> exp assign declar 
+%type <typeNode> exp declar assign factor
 %type <type> declarKey 
 %type <type> unreconWord
 
@@ -95,36 +97,14 @@ content       : none
               | content Colon
               | Eof { Error("Unexpected end of file."); }
               ;
-instr         : declar { $$ = $1; }
-              | assign { $$ = $1; }
+instr         : declar Colon { $$ = $1; }
+              | exp Colon { $$ = $1; }
+              | declar error end { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | exp error end { Error("Missing semicolon at col: {0}", @1.EndColumn); }
               | declarKey error end { Error("Unexpected statement."); }
               ;
-assign        : Id Assign exp
-                {
-                    VariableDeclaration declar = null;
-                    if(!currentScope.TryGetVariable($1, ref declar))
-                    {
-                        Error("Variable {0} not declared.", $1);
-                        return;
-                    }
-                    
-                    var expType = $3.Type;
-                    // TODO: Retrieve this automatically
-                    var token = Token.Assign;
-                    if(!Operator.CanUse(token, declar.Type, expType))
-                    {
-                        Error("Cannot assign {0} to {1}.", expType, declar.Type);
-                        return;
-                    }
-                    
-                    var oper = Operator.Create(token, declar.Type, expType, Loc);
-                    oper.Left = new VariableReference(declar, @1);
-                    oper.Right = $3;
-                    $$ = oper;
-                }
-              ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
-declar        : declarKey Id Colon
+declar        : declarKey Id
                 {
                     if($1 != Type.Unknown && !currentScope.IsPresent($2))
                     {
@@ -139,15 +119,11 @@ declar        : declarKey Id Colon
                         Error("Variable '{0}' was already declared in this scope.", $2);
                     }
                 }
-              | declarKey Id error end /* TODO: endl? */
-                {
-                    Error("Missing semicolon at col: {0}", @2.EndColumn);
-                }
-              | Id Id Colon
+              | Id Id
                 {
                     Error("Uncrecognized type.");
                 }
-              | declarKey unreconWord Colon
+              | declarKey unreconWord
                 {
                     Error("Identifier is restricted keyword or contains prohibited characters.");
                 }
@@ -160,16 +136,65 @@ declarKey     : IntKey  { $$ = Type.Int; }
               | BoolKey { $$ = Type.Bool; }
               | DoubleKey { $$ = Type.Double; }
               ; 
+assign        : Id Assign exp
+                {
+                    if($3.Type == Type.Unknown)
+                    {
+                        $$ = $3;
+                        return;
+                    }
 
+                    VariableDeclaration declar = null;
+                    if(!currentScope.TryGetVariable($1, ref declar))
+                    {
+                        Error("Variable {0} not declared.", $1);
+                        return;
+                    }
+                    var reference = new VariableReference(declar, @1);
+            
+                    $$ = TryCreateOperator($2.token, reference, $3);
+                }
+              ;
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
                 /* TODO */
-exp           : IntVal
+exp           : Minus exp
                 {
-                    $$ = new Value(Type.Int, $1, Loc);
+                    $$ = TryCreateOperator($1.token, $2);
                 }
-              | assign { $$ = $1; }
+              | Negation exp
+              | BitNegation exp
+              | OpenPar IntKey ClosePar exp
+              | OpenPar DoubleKey ClosePar exp
+              | assign
+              | factor
               ;
-
+factor        : IntVal
+                {
+                    $$ = CreateValue();
+                }
+              | DoubleVal
+                {
+                    $$ = CreateValue();
+                }
+              | True
+                {
+                    $$ = CreateValue();
+                }
+              | False
+                {
+                    $$ = CreateValue();
+                }
+              | Id 
+                {
+                    VariableDeclaration declar = null;
+                    if(!currentScope.TryGetVariable($1, ref declar))
+                    {
+                        Error("Variable {0} not declared.", $1);
+                        return;
+                    }
+                    $$ = new VariableReference(declar, @1);
+                }
+              ;
 /* ERRORS  ---------------------------------------------------------------------------------------------- */ 
 unreconWord : Id Error
             | Error
@@ -177,6 +202,7 @@ unreconWord : Id Error
             | unreconWord Id
             ;
 /* OTHER  ---------------------------------------------------------------------------------------------- */ 
+// TODO: Discard 2 errors 
 end           : Colon
               | CloseBrace
               | OpenBrace

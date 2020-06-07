@@ -1,10 +1,12 @@
-﻿namespace MiniCompiler.Syntax.Operators
+﻿using MiniCompiler.Extensions;
+
+namespace MiniCompiler.Syntax.Operators
 {
     public enum OperatorEnum
     {
         Unknown = 0,
         Assign = Token.Assign,
-        UnaryMinus = Token.Minus * 100,
+        UnaryMinus = Token.Minus * TokenExtensions.UnaryMultipler,
         Minus = Token.Minus,
     }
 }

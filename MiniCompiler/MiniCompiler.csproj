@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\LexLocationExtensions.cs" />
+    <Compile Include="Extensions\SiblingsNodeExtensions.cs" />
+    <Compile Include="Extensions\TokenExtensions.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ParserRes\Parser.cs" />
     <Compile Include="ParserRes\ParserHelpers.cs" />
@@ -92,7 +94,7 @@
     <Compile Include="Syntax\Operators\OperatorEnum.cs" />
     <Compile Include="Syntax\Operators\UnaryOperator.cs" />
     <Compile Include="Syntax\Operators\Unary\UnaryMinus.cs" />
-    <Compile Include="Syntax\Operators\Unknown.cs" />
+    <Compile Include="Syntax\Operators\UnknownOperator.cs" />
     <Compile Include="Syntax\SyntaxNode.cs" />
     <Compile Include="Syntax\SyntaxTree.cs" />
     <Compile Include="Syntax\SyntaxTreeWalker.cs" />

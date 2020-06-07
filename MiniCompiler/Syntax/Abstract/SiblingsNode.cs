@@ -42,17 +42,5 @@ namespace MiniCompiler.Syntax.Abstract
                 throw new ArgumentOutOfRangeException("You cannot give me what I seek.");
             }
         }
-
-        public SiblingsNode WithLeft(SyntaxNode left)
-        {
-            Left = left;
-            return this;
-        }
-
-        public SiblingsNode WithRight(SyntaxNode right)
-        {
-            Right = right;
-            return this;
-        }
     }
 }

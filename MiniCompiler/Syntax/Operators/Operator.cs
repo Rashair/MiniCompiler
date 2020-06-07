@@ -1,4 +1,5 @@
 ﻿using MiniCompiler;
+using MiniCompiler.Extensions;
 using MiniCompiler.Syntax.Abstract;
 using MiniCompiler.Syntax.Operators;
 using MiniCompiler.Syntax.Operators.Assignment;
@@ -17,28 +18,44 @@ public abstract class Operator : TypeNode
 
     public abstract Type GetResultType(Type typeA, Type typeB = Type.Unknown);
 
-    public static bool CanUse(Token token, Type typeA, Type? typeB = null) => Factory.CanUse(token, typeA, typeB);
+    public Operator WithResultType(Type typeA, Type typeB = Type.Unknown)
+    {
+        Type = GetResultType(typeA, typeB);
+        return this;
+    }
 
-    public static Operator Create(Token token, Type typeA, Type typeB = Type.Unknown, LexLocation location = null) =>
+    public static bool CanUse(Token token, Type typeA, Type typeB) => Factory.CanUse(token, typeA, typeB);
+
+    public static bool CanUse(Token token, Type typeA) => Factory.CanUse(token, typeA);
+
+    public static Operator Create(Token token, Type typeA, Type typeB, LexLocation location = null) =>
         Factory.Create(token, typeA, typeB, location);
+
+    public static Operator Create(Token token, Type typeA, LexLocation location = null) =>
+        Factory.Create(token, typeA, location);
 
     public static class Factory
     {
         private static OperatorEnum lastToken;
         private static Operator lastOperator;
 
-        public static bool CanUse(Token token, Type typeA, Type? typeB = null)
+        public static bool CanUse(Token token, Type typeA, Type typeB)
         {
-            lastToken = (OperatorEnum)token;
+            lastToken = token.ConvertToOperator();
             lastOperator = CreateFromToken(lastToken);
-            return typeB.HasValue ?
-                lastOperator.CanUse(typeA, typeB.Value) :
-                lastOperator.CanUse(typeA);
+            return lastOperator.CanUse(typeA, typeB);
         }
 
-        private static Operator CreateFromToken(OperatorEnum token)
+        public static bool CanUse(Token token, Type typeA)
         {
-            switch (token)
+            lastToken = token.ConvertToOperator(true);
+            lastOperator = CreateFromToken(lastToken);
+            return lastOperator.CanUse(typeA);
+        }
+
+        private static Operator CreateFromToken(OperatorEnum op)
+        {
+            switch (op)
             {
                 case OperatorEnum.Assign:
                     return new Assign();
@@ -47,14 +64,25 @@ public abstract class Operator : TypeNode
                     return new UnaryMinus();
             }
 
-            return new Unknown();
+            return new UnknownOperator();
         }
 
-        public static Operator Create(Token token, Type typeA, Type typeB = Type.Unknown, LexLocation location = null)
+        public static Operator Create(Token token, Type typeA, Type typeB, LexLocation location = null)
+        {
+            var operatorToken = token.ConvertToOperator();
+            return Create(operatorToken, location).WithResultType(typeA, typeB);
+        }
+
+        public static Operator Create(Token token, Type typeA, LexLocation location = null)
+        {
+            var operatorToken = token.ConvertToOperator(true);
+            return Create(operatorToken, location).WithResultType(typeA);
+        }
+
+        private static Operator Create(OperatorEnum op, LexLocation location)
         {
             Operator result;
-            var operatorToken = (OperatorEnum)token;
-            if (operatorToken == lastToken)
+            if (op == lastToken)
             {
                 result = lastOperator;
                 lastToken = OperatorEnum.Unknown;
@@ -62,12 +90,11 @@ public abstract class Operator : TypeNode
             }
             else
             {
-                result = CreateFromToken(operatorToken);
+                result = CreateFromToken(op);
             }
 
-            result.Token = operatorToken;
+            result.Token = op;
             result.Location = location;
-            result.Type = result.GetResultType(typeA, typeB);
 
             return result;
         }
