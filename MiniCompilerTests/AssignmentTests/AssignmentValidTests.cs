@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiniCompiler;
+using MiniCompiler.Extensions;
 using MiniCompiler.Syntax.General;
 using MiniCompiler.Syntax.Operators.Assignment;
 using MiniCompiler.Syntax.Variables;
@@ -29,7 +30,7 @@ namespace MiniCompilerTests
         }
 
         [TestMethod]
-        public void TestMultipleAssignment()
+        public void TestMultipleAssign()
         {
             var scope = new SubordinateScope(new EmptyScope());
             var declare0 = new VariableDeclaration("a", scope, Type.Int);
@@ -58,5 +59,23 @@ namespace MiniCompilerTests
 
             Invoke();
         }
+
+        [TestMethod]
+        public void TestMultipleTypes()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestIntToDouble()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestVariableToVariable()
+        {
+            Invoke();
+        }      
     }
 }

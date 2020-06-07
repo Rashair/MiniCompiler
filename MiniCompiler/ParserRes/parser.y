@@ -101,7 +101,7 @@ instr         : declar Colon { $$ = $1; }
               | exp Colon { $$ = $1; }
               | declar error end { Error("Missing semicolon at col: {0}", @1.EndColumn); }
               | exp error end { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-              | declarKey error end { Error("Unexpected statement."); }
+              | declarKey error end { Error("Invalid declaration."); }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declarKey Id

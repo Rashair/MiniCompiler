@@ -1,5 +1,0 @@
-program { 
-	int b;
-	b = 5;
-	10 = b;
-}

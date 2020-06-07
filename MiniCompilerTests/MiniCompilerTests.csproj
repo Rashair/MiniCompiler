@@ -75,9 +75,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AssignmentTests\NotValid\AssignmentToNumber.txt" />
+    <Content Include="AssignmentTests\NotValid\UnmatchingTypes.txt" />
+    <Content Include="AssignmentTests\NotValid\AssignWithDeclaration.txt" />
+    <Content Include="AssignmentTests\NotValid\AssignToValue.txt" />
     <Content Include="AssignmentTests\NotValid\UndeclaredVariable.txt" />
-    <Content Include="AssignmentTests\Valid\MultipleAssignment.txt" />
+    <Content Include="AssignmentTests\Valid\VariableToVariable.txt" />
+    <Content Include="AssignmentTests\Valid\IntToDouble.txt" />
+    <Content Include="AssignmentTests\Valid\MultipleTypes.txt" />
+    <Content Include="AssignmentTests\Valid\MultipleAssign.txt" />
     <Content Include="AssignmentTests\Valid\OneLineProgram.txt" />
     <Content Include="BracesTests\Valid\NestedBracesComments.txt" />
     <Content Include="BracesTests\Valid\NestedBracesSemicolons.txt" />

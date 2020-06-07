@@ -5,7 +5,19 @@ program
 	int c;
 
 	a = 5;
-	a = b = c = 10;
+	a = b = c = -5;
 
 	a = -10;
+	b = -----12222;
+
+	bool x1;
+	bool x2;
+	x1 = true;
+	x2 = false;
+	x1 = x2;
+
+	double d2;
+	d2 = 1.0;
+	double d3;
+	d3 = --1.0;
 }
