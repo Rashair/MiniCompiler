@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniCompiler.Syntax
 {
@@ -24,9 +20,9 @@ namespace MiniCompiler.Syntax
         {
             action(level, node);
 
-            foreach (var child in node)
+            for (int i = 0; i < node.Count; ++i)
             {
-                RecursiveWalk(action, child, level + 1);
+                RecursiveWalk(action, node[i], level + 1);
             }
         }
     }

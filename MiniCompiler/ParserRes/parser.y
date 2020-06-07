@@ -5,10 +5,12 @@
 
 %using System.Linq;
 %using MiniCompiler.Syntax;
+%using MiniCompiler.Syntax.Abstract;
 %using MiniCompiler.Syntax.General;
-%using MiniCompiler.Syntax.Declaration;
-%using MiniCompiler.Syntax.Declaration.Scopes;
+%using MiniCompiler.Syntax.Variables;
+%using MiniCompiler.Syntax.Variables.Scopes;
 %using MiniCompiler.Syntax.Operators;
+%using MiniCompiler.Syntax.Operators.Assignment
 
 %namespace MiniCompiler
 
@@ -17,6 +19,7 @@
     public Type             type;
     public string           val;
     public SyntaxNode       node;
+    public TypeNode         typeNode;
     public List<SyntaxNode> orphans;
 }
 
@@ -30,10 +33,10 @@
 %token Colon Eof Error 
 
 %type <orphans> content
-%type <orphans> exp
 %type <node> block none
-%type <node> instr assign declar 
-%type <type> declarKey
+%type <node> instr 
+%type <typeNode> exp assign declar 
+%type <type> declarKey 
 %type <type> unreconWord
 
 %%
@@ -41,7 +44,7 @@
 start         : Program block Eof
                 {
                     var unit = new CompilationUnit(Loc);
-                    unit.Add($2);
+                    unit.Child = $2;
                     GenerateCode(unit);
                     YYACCEPT;
                 }
@@ -98,20 +101,35 @@ instr         : declar { $$ = $1; }
               ;
 assign        : Id Assign exp
                 {
-                    Type type = Type.Unknown;
-                    if(!currentScope.TryGetType($1, ref type))
+                    VariableDeclaration declar = null;
+                    if(!currentScope.TryGetVariable($1, ref declar))
                     {
                         Error("Variable {0} not declared.", $1);
+                        return;
                     }
-                    // TODO: Must check final type of expression and collect childrent to assign
+                    
+                    var expType = $3.Type;
+                    // TODO: Retrieve this automatically
+                    var token = Token.Assign;
+                    if(!Operator.CanUse(token, declar.Type, expType))
+                    {
+                        Error("Cannot assign {0} to {1}.", expType, declar.Type);
+                        return;
+                    }
+                    
+                    var oper = Operator.Create(token, declar.Type, expType, Loc);
+                    oper.Left = new VariableReference(declar, @1);
+                    oper.Right = $3;
                 }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declarKey Id Colon
                 {
-                    if($1 != Type.Unknown && currentScope.AddToScope($2, $1))
+                    if($1 != Type.Unknown && currentScope.IsPresent($2))
                     {
-                        $$ = new VariableDeclaration($2, currentScope, $1, Loc);
+                        var declare = new VariableDeclaration($2, currentScope, $1, Loc);
+                        currentScope.AddToScope(declare);
+                        $$ = declare;
                     }
                     else if($1 == Type.Unknown)
                     {

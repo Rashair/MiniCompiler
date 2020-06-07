@@ -1,14 +1,16 @@
 ﻿using QUT.Gppg;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniCompiler.Syntax.General
 {
-    class EmptyNode : SyntaxNode
+    public class EmptyNode : SyntaxNode
     {
-        public EmptyNode(LexLocation loc = null) : base(loc) { }
+        public EmptyNode(LexLocation loc = null) : base(loc)
+        {
+        }
+
+        public override SyntaxNode this[int i] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public override int Count => 0;
     }
 }

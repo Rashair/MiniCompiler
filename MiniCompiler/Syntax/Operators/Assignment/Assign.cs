@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MiniCompiler.Syntax.Variables;
 
 namespace MiniCompiler.Syntax.Operators.Assignment
 {
@@ -17,6 +13,11 @@ namespace MiniCompiler.Syntax.Operators.Assignment
             }
 
             return typeA == typeB;
+        }
+
+        public override Type GetResultTypeBinary(Type typeA, Type typeB)
+        {
+            return typeA;
         }
     }
 }

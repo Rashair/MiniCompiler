@@ -1,28 +1,28 @@
 ﻿using MiniCompiler.Extensions;
 using QUT.Gppg;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace MiniCompiler.Syntax
 {
     public abstract class SyntaxNode :
-        IEquatable<SyntaxNode>,
-        IEnumerable<SyntaxNode>
+        IEquatable<SyntaxNode>
     {
         protected SyntaxNode parent;
         protected LexLocation location;
+
         // TODO
         protected List<Token> TokensBefore;
-        protected List<SyntaxNode> children;
+
         // TODO
         protected List<Token> TokensAfter;
 
         public SyntaxNode(LexLocation loc = null)
         {
-            children = new List<SyntaxNode>();
-            this.location = loc?.Copy() ?? new LexLocation();
+            Location = loc;
         }
+
+        public SyntaxNode Parent { private get; set; }
 
         public SyntaxTree Tree { get; set; }
 
@@ -31,28 +31,13 @@ namespace MiniCompiler.Syntax
             get => location;
             set
             {
-                location = value.Copy();
+                location = value?.Copy() ?? new LexLocation();
             }
         }
 
-        public int Count => children.Count;
+        public abstract int Count { get; }
 
-        public SyntaxNode this[int i] => children[i];
-
-        public bool Equals(SyntaxNode other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-
-            if (GetType() == other.GetType())
-            {
-                return children.Count == other.children.Count;
-            }
-
-            return false;
-        }
+        public abstract SyntaxNode this[int i] { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -64,24 +49,29 @@ namespace MiniCompiler.Syntax
             return false;
         }
 
+        public bool Equals(SyntaxNode other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (GetType() == other.GetType())
+            {
+                return Count == other.Count && parent.GetType() == other.parent.GetType();
+            }
+
+            return false;
+        }
+
         public override int GetHashCode()
         {
-            return 19 * this.GetType().GetHashCode() + 31 * children.Count;
-        }
-
-        public IEnumerator<SyntaxNode> GetEnumerator()
-        {
-            return children.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return children.GetEnumerator();
+            return 19 * this.GetType().GetHashCode();
         }
 
         public bool IsLeaf()
         {
-            return children.Count == 0;
+            return Count == 0;
         }
 
         public void AddBefore(Token token)
@@ -89,23 +79,9 @@ namespace MiniCompiler.Syntax
             TokensBefore.Add(token);
         }
 
-        public SyntaxNode Add(SyntaxNode node)
-        {
-            node.parent = this;
-            node.Tree = Tree;
-            children.Add(node);
-
-            return this;
-        }
-
         public void AddAfter(Token token)
         {
             TokensAfter.Add(token);
-        }
-
-        public void SetChildren(List<SyntaxNode> children)
-        {
-            this.children = children;
         }
     }
 }

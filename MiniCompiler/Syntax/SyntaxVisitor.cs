@@ -1,5 +1,4 @@
 ﻿using MiniCompiler.Syntax.General;
-using static MiniCompiler.Compiler;
 
 namespace MiniCompiler.Syntax
 {

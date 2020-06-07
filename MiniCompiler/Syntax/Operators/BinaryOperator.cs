@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniCompiler.Syntax.Operators
 {
@@ -12,5 +8,17 @@ namespace MiniCompiler.Syntax.Operators
         {
             return false;
         }
+
+        public override Type GetResultType(Type typeA, Type typeB = Type.Unknown)
+        {
+            if (typeA == Type.Unknown || typeB == Type.Unknown)
+            {
+                throw new ArgumentException("You can't use this operator on this types.");
+            }
+
+            return GetResultTypeBinary(typeA, typeB);
+        }
+
+        public abstract Type GetResultTypeBinary(Type typeA, Type typeB);
     }
 }

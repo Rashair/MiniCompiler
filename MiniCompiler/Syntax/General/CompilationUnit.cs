@@ -1,20 +1,13 @@
-﻿using QUT.Gppg;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MiniCompiler.Syntax.Abstract;
+using QUT.Gppg;
 
 namespace MiniCompiler.Syntax.General
 {
-    public class CompilationUnit : SyntaxNode
+    public class CompilationUnit : SingleChildNode
     {
-        public CompilationUnit()
+        public CompilationUnit(LexLocation location = null)
         {
-        }
-
-        public CompilationUnit(LexLocation location) : base(location)
-        {
+            Location = location;
         }
 
         public CompilationUnit(SyntaxTree tree, LexLocation location = null) :

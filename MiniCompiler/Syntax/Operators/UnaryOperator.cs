@@ -1,4 +1,6 @@
-﻿namespace MiniCompiler.Syntax.Operators
+﻿using System;
+
+namespace MiniCompiler.Syntax.Operators
 {
     public abstract class UnaryOperator : Operator
     {
@@ -6,5 +8,17 @@
         {
             return false;
         }
+
+        public override Type GetResultType(Type typeA, Type typeB = Type.Unknown)
+        {
+            if (typeB != Type.Unknown || typeA == Type.Unknown)
+            {
+                throw new ArgumentException("You can't use this operator on this types.");
+            }
+
+            return GetResultType(typeA);
+        }
+
+        public abstract Type GetResultType(Type type);
     }
 }

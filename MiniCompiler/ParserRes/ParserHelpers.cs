@@ -1,7 +1,8 @@
 ﻿using MiniCompiler.Syntax;
-using MiniCompiler.Syntax.Declaration.Scopes;
+using MiniCompiler.Syntax.Variables.Scopes;
 using MiniCompiler.Syntax.General;
 using QUT.Gppg;
+using MiniCompiler.Syntax.Variables;
 using System;
 
 namespace MiniCompiler

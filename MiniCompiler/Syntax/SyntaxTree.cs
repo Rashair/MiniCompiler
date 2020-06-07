@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniCompiler.Syntax
 {
@@ -12,7 +11,7 @@ namespace MiniCompiler.Syntax
         IEquatable<SyntaxTree>,
         IEnumerable<List<SyntaxNode>>
     {
-        public static readonly string defaultStringIndent = new string (' ', 4);
+        public static readonly string defaultStringIndent = new string(' ', 4);
         private readonly List<List<SyntaxNode>> levels;
         private CompilationUnit compilationUnit;
 
@@ -75,7 +74,7 @@ namespace MiniCompiler.Syntax
 
         public override bool Equals(object obj)
         {
-            if(obj is SyntaxTree other)
+            if (obj is SyntaxTree other)
             {
                 return Equals(other);
             }

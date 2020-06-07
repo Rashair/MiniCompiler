@@ -1,8 +1,9 @@
-﻿using QUT.Gppg;
+﻿using MiniCompiler.Syntax.Abstract;
+using QUT.Gppg;
 
 namespace MiniCompiler.Syntax.General
 {
-    public class Block : SyntaxNode
+    public class Block : BigParentNode
     {
         public Block()
         {

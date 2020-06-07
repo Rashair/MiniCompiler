@@ -8,9 +8,17 @@
             {
                 case Type.Int:
                     return true;
+
+                case Type.Double:
+                    return true;
             }
 
             return false;
+        }
+
+        public override Type GetResultType(Type type)
+        {
+            return type;
         }
     }
 }

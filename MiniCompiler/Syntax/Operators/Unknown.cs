@@ -11,5 +11,10 @@
         {
             return false;
         }
+
+        public override Type GetResultType(Type typeA, Type typeB = Type.Unknown)
+        {
+            return Type.Unknown;
+        }
     }
 }
