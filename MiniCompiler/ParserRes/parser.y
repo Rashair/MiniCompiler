@@ -127,9 +127,7 @@ declar        : declarKey Id Colon
                 {
                     if($1 != Type.Unknown && !currentScope.IsPresent($2))
                     {
-                        var declare = new VariableDeclaration($2, currentScope, $1, Loc);
-                        currentScope.AddToScope(declare);
-                        $$ = declare;
+                        $$ = new VariableDeclaration($2, currentScope, $1, Loc);
                     }
                     else if($1 == Type.Unknown)
                     {

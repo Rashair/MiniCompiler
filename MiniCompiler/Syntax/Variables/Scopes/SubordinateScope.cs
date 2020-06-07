@@ -32,5 +32,20 @@ namespace MiniCompiler.Syntax.Variables.Scopes
         {
             return parentScope;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is SubordinateScope scope && variables.Count == scope.variables.Count
+                && parentScope.Equals(scope.parentScope);
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            hash = hash * 23 + variables.Count;
+            hash = hash * 23 + parentScope.GetHashCode();
+
+            return hash;
+        }
     }
 }

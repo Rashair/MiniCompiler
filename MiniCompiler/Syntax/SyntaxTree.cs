@@ -67,7 +67,7 @@ namespace MiniCompiler.Syntax
         // https://stackoverflow.com/a/8567550
         public static void PrintTree(StringBuilder builder, SyntaxNode node, string indent, bool last)
         {
-            builder.AppendLine($"{indent}+- {node.GetType().Name}({node.Location?.StartLine}..{node.Location?.EndLine})");
+            builder.AppendLine($"{indent}+- {node}");
             indent += last ? defaultStringIndent : $"|{defaultStringIndent}";
 
             for (int i = 0; i < node.Count; ++i)

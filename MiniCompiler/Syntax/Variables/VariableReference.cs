@@ -19,5 +19,21 @@ namespace MiniCompiler.Syntax.Variables.Scopes
             get => Declaration.Type;
             protected set => throw new InvalidOperationException("You cannot set type of declared variable");
         }
+
+        protected override bool IsNodeEqual(SyntaxNode node)
+        {
+            if (base.IsNodeEqual(node))
+            {
+                var other = (VariableReference)node;
+                return Declaration.Equals(other.Declaration);
+            }
+
+            return false;
+        }
+
+        protected override int GetNodeHash()
+        {
+            return CombineHashCode(base.GetNodeHash(), Declaration);
+        }
     }
 }

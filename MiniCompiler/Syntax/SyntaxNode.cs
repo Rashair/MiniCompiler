@@ -5,8 +5,7 @@ using System.Collections.Generic;
 
 namespace MiniCompiler.Syntax
 {
-    public abstract class SyntaxNode :
-        IEquatable<SyntaxNode>
+    public abstract class SyntaxNode
     {
         protected SyntaxNode parent;
         protected LexLocation location;
@@ -43,23 +42,23 @@ namespace MiniCompiler.Syntax
         {
             if (obj is SyntaxNode other)
             {
-                return Equals(other);
+                return IsNodeEqual(other);
             }
 
             return false;
         }
 
-        public bool Equals(SyntaxNode other)
+        protected virtual bool IsNodeEqual(SyntaxNode node)
         {
-            if (other == null)
+            if (node == null)
             {
                 return false;
             }
 
-            if (GetType() == other.GetType())
+            if (GetType() == node.GetType())
             {
-                return Count == other.Count && 
-                    parent?.GetType() == other.parent?.GetType();
+                return Count == node.Count &&
+                    parent?.GetType() == node.parent?.GetType();
             }
 
             return false;
@@ -67,7 +66,27 @@ namespace MiniCompiler.Syntax
 
         public override int GetHashCode()
         {
-            return 19 * this.GetType().GetHashCode();
+            return GetNodeHash();
+        }
+
+        protected virtual int GetNodeHash()
+        {
+            int hash = 17;
+            hash = CombineHashCode(hash, GetType(), Count);
+            hash = CombineHashCode(hash, parent?.GetType());
+            return hash;
+        }
+
+        public static int CombineHashCode(int start, object b, object c = null)
+        {
+            int hash = start * 23 + b?.GetHashCode() ?? 0;
+            hash = hash * c?.GetHashCode() ?? 0;
+            return hash;
+        }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name}({Location?.StartLine}..{Location?.EndLine})";
         }
 
         public bool IsLeaf()

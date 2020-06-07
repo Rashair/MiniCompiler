@@ -13,8 +13,30 @@ namespace MiniCompiler.Syntax.Variables
         {
             Name = name;
             Scope = scope;
+            scope.AddToScope(this);
             Type = type;
             Location = loc;
+        }
+
+        protected override bool IsNodeEqual(SyntaxNode node)
+        {
+            if (base.IsNodeEqual(node))
+            {
+                var other = (VariableDeclaration)node;
+                return Name == other.Name && Scope.Equals(other.Scope);
+            }
+
+            return false;
+        }
+
+        protected override int GetNodeHash()
+        {
+            return CombineHashCode(base.GetNodeHash(), Name, Scope);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $": {Type, -8} {Name};";
         }
     }
 }

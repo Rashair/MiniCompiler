@@ -30,7 +30,7 @@ namespace MiniCompiler.Syntax.Abstract
 
         public override int GetHashCode()
         {
-            return base.GetHashCode() + 31 * children.Count;
+            return CombineHashCode(base.GetHashCode(), children.Count);
         }
 
         public IEnumerator<SyntaxNode> GetEnumerator()
@@ -45,7 +45,7 @@ namespace MiniCompiler.Syntax.Abstract
 
         public SyntaxNode Add(SyntaxNode node)
         {
-            if(node == null)
+            if (node == null)
             {
                 throw new ArgumentNullException(nameof(node), "You cannot add null child.");
             }

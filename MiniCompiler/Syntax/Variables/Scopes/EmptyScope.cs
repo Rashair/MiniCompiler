@@ -20,5 +20,15 @@
         {
             return this;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is EmptyScope;
+        }
+
+        public override int GetHashCode()
+        {
+            return typeof(EmptyScope).GetHashCode();
+        }
     }
 }
