@@ -1,8 +1,11 @@
 ﻿using MiniCompiler.Syntax;
 using MiniCompiler.Syntax.General;
+using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -53,6 +56,17 @@ namespace MiniCompilerTests
             {
                 Child = mainBlock
             });
+        }
+
+        public static List<SubordinateScope> GenerateScopes(IScope ParentScope, int count)
+        {
+            var result = new List<SubordinateScope>(count);
+            for (int i = 0; i < count; ++i)
+            {
+                result.Add(new SubordinateScope(ParentScope));
+            }
+
+            return result;
         }
     }
 }
