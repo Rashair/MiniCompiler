@@ -157,14 +157,11 @@ assign        : Id Assign exp
               ;
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
                 /* TODO */
-exp           : Minus exp
-                {
-                    $$ = TryCreateOperator($1.token, $2);
-                }
-              | Negation exp
-              | BitNegation exp
-              | OpenPar IntKey ClosePar exp
-              | OpenPar DoubleKey ClosePar exp
+exp           : Minus exp    { $$ = TryCreateOperator($1.token, $2); }
+              | Negation exp {  $$ = TryCreateOperator($1.token, $2); }
+              | BitNegation exp {  $$ = TryCreateOperator($1.token, $2); }
+              | OpenPar IntKey ClosePar exp    {  $$ = TryCreateOperator($2.token, $4); }
+              | OpenPar DoubleKey ClosePar exp {  $$ = TryCreateOperator($2.token, $4); }
               | assign
               | factor
               ;

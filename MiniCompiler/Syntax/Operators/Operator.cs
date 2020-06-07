@@ -57,11 +57,23 @@ public abstract class Operator : TypeNode
         {
             switch (op)
             {
-                case OperatorEnum.Assign:
-                    return new Assign();
-
                 case OperatorEnum.UnaryMinus:
                     return new UnaryMinus();
+
+                case OperatorEnum.BitNegation:
+                    return new BitNegation();
+
+                case OperatorEnum.LogicNegation:
+                    return new LogicNegation();
+
+                case OperatorEnum.IntCast:
+                    return new IntCast();
+
+                case OperatorEnum.DoubleCast:
+                    return new DoubleCast();
+
+                case OperatorEnum.Assign:
+                    return new Assign();
             }
 
             return new UnknownOperator();

@@ -54,6 +54,16 @@
     <Compile Include="AssignmentTests\AssignmentValidTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="DoubleCastTests\DoubleCastNotValidTests.cs" />
+    <Compile Include="DoubleCastTests\DoubleCastValidTests.cs" />
+    <Compile Include="LogicNegationTests\LogicNegationNotValidTests.cs" />
+    <Compile Include="LogicNegationTests\LogicNegationValidTests.cs" />
+    <Compile Include="IntCastTests\IntCastNotValidTests.cs" />
+    <Compile Include="IntCastTests\IntCastValidTests.cs" />
+    <Compile Include="BitNegationTests\BitNegationNotValidTests.cs" />
+    <Compile Include="BitNegationTests\BitNegationValidTests.cs" />
+    <Compile Include="UnaryMinusTests\UnaryMinusNotValidTests.cs" />
+    <Compile Include="UnaryMinusTests\UnaryMinusValidTests.cs" />
     <Compile Include="ValidTests.cs" />
     <Compile Include="BracesTests\BracesNotValidTests.cs" />
     <Compile Include="BracesTests\BracesValidTests.cs" />
@@ -129,6 +139,16 @@
     <Content Include="BracesTests\Valid\NestedEmptyBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\ManySemicolons.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
+    <Content Include="DoubleCastTests\NotValid\InvalidType.txt" />
+    <Content Include="DoubleCastTests\Valid\OneLineProgram.txt" />
+    <Content Include="LogicNegationTests\NotValid\InvalidType.txt" />
+    <Content Include="LogicNegationTests\Valid\OneLineProgram.txt" />
+    <Content Include="IntCastTests\NotValid\InvalidType.txt" />
+    <Content Include="IntCastTests\Valid\OneLineProgram.txt" />
+    <Content Include="BitNegationTests\NotValid\InvalidType.txt" />
+    <Content Include="BitNegationTests\Valid\OneLineProgram.txt" />
+    <Content Include="UnaryMinusTests\NotValid\InvalidType.txt" />
+    <Content Include="UnaryMinusTests\Valid\OneLineProgram.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
