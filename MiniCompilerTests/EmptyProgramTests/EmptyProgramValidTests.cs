@@ -14,7 +14,7 @@ namespace MiniCompilerTests
             ExpectedTree = new SyntaxTree(
                 new CompilationUnit()
                 {
-                    new Block(),
+                    Child = new Block(),
                 });
         }
 

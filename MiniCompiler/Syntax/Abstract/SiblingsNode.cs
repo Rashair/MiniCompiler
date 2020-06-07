@@ -13,16 +13,7 @@ namespace MiniCompiler.Syntax.Abstract
             get => secondChild;
             set
             {
-                if (secondChild == null && value != null)
-                {
-                    ++count;
-                }
-                else if (secondChild != null && value == null)
-                {
-                    --count;
-                }
-
-                secondChild = value;
+                SetChild(ref secondChild, value);
             }
         }
 

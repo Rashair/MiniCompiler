@@ -12,17 +12,24 @@ namespace MiniCompiler.Syntax.Abstract
             get => child;
             set
             {
-                if (child == null && value != null)
-                {
-                    ++count;
-                }
-                else if (child != null && value == null)
-                {
-                    --count;
-                }
-
-                child = value;
+                SetChild(ref child, value);
             }
+        }
+
+        protected void SetChild(ref SyntaxNode childToSet, SyntaxNode value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value), "You cannot set child to null.");
+            }
+
+            if (childToSet == null && value != null)
+            {
+                ++count;
+            }
+
+            childToSet = value;
+            childToSet.Parent = this;
         }
 
         public override int Count => count;
@@ -41,5 +48,6 @@ namespace MiniCompiler.Syntax.Abstract
                 throw new ArgumentOutOfRangeException("You cannot give me what I seek.");
             }
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using QUT.Gppg;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -23,6 +24,7 @@ namespace MiniCompiler.Syntax.Abstract
             set
             {
                 children[i] = value;
+                children[i].Parent = this;
             }
         }
 
@@ -43,6 +45,11 @@ namespace MiniCompiler.Syntax.Abstract
 
         public SyntaxNode Add(SyntaxNode node)
         {
+            if(node == null)
+            {
+                throw new ArgumentNullException(nameof(node), "You cannot add null child.");
+            }
+
             node.Parent = this;
             node.Tree = Tree;
             children.Add(node);
@@ -50,9 +57,12 @@ namespace MiniCompiler.Syntax.Abstract
             return this;
         }
 
-        public void SetChildren(List<SyntaxNode> children)
+        public void AddChildren(List<SyntaxNode> children)
         {
-            this.children = children;
+            foreach (var child in children)
+            {
+                Add(child);
+            }
         }
     }
 }

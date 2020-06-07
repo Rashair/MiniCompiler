@@ -48,6 +48,7 @@ namespace MiniCompiler
             ++Compiler.errors;
             yyerrok();
             CurrentSemanticValue.node = new EmptyNode(Loc);
+            CurrentSemanticValue.typeNode = new EmptyTypeNode(Loc);
             CurrentSemanticValue.type = Type.Unknown;
         }
     }

@@ -69,7 +69,7 @@ block         : OpenBrace
                     LeaveScope();
 
                     var newBlock = new Block(Loc);
-                    newBlock.SetChildren($3);
+                    newBlock.AddChildren($3);
                     $$ = newBlock;
                 }
               | OpenBrace error Eof
@@ -125,7 +125,7 @@ assign        : Id Assign exp
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declarKey Id Colon
                 {
-                    if($1 != Type.Unknown && currentScope.IsPresent($2))
+                    if($1 != Type.Unknown && !currentScope.IsPresent($2))
                     {
                         var declare = new VariableDeclaration($2, currentScope, $1, Loc);
                         currentScope.AddToScope(declare);

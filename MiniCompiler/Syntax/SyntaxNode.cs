@@ -22,7 +22,7 @@ namespace MiniCompiler.Syntax
             Location = loc;
         }
 
-        public SyntaxNode Parent { private get; set; }
+        public SyntaxNode Parent { private get => parent; set => parent = value; }
 
         public SyntaxTree Tree { get; set; }
 
@@ -58,7 +58,8 @@ namespace MiniCompiler.Syntax
 
             if (GetType() == other.GetType())
             {
-                return Count == other.Count && parent.GetType() == other.parent.GetType();
+                return Count == other.Count && 
+                    parent?.GetType() == other.parent?.GetType();
             }
 
             return false;

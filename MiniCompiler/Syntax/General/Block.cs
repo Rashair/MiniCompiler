@@ -5,11 +5,7 @@ namespace MiniCompiler.Syntax.General
 {
     public class Block : BigParentNode
     {
-        public Block()
-        {
-        }
-
-        public Block(LexLocation location) : base(location)
+        public Block(LexLocation location = null) : base(location)
         {
         }
     }

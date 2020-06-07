@@ -44,6 +44,10 @@ namespace MiniCompiler.Syntax
                         levels.Add(new List<SyntaxNode>());
                     }
 
+                    if (node == null)
+                    {
+                        throw new ArgumentNullException(nameof(node), "SyntaxTree cannot have null nodes.");
+                    }
                     levels[lev].Add(node);
                     node.Tree = this;
                 });
@@ -74,7 +78,7 @@ namespace MiniCompiler.Syntax
 
         public override bool Equals(object obj)
         {
-            if (obj is SyntaxTree other)
+            if (obj != null && obj is SyntaxTree other)
             {
                 return Equals(other);
             }

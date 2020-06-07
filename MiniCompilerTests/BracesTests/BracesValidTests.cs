@@ -13,7 +13,7 @@ namespace MiniCompilerTests
             ExpectedTree = new SyntaxTree(
                 new CompilationUnit()
                 {
-                    new Block()
+                    Child = new Block()
                     {
                         new Block(),
                         new Block()
@@ -42,7 +42,7 @@ namespace MiniCompilerTests
             ExpectedTree = new SyntaxTree(
                 new CompilationUnit()
                 {
-                    new Block()
+                    Child = new Block()
                     {
                         new Block(),
                         new Block(),
@@ -66,7 +66,7 @@ namespace MiniCompilerTests
             ExpectedTree = new SyntaxTree(
                 new CompilationUnit()
                 {
-                    new Block()
+                    Child = new Block()
                     {
                         new Block(),
                         new Block()

@@ -4,10 +4,11 @@ using System;
 
 namespace MiniCompiler.Syntax.General
 {
-    public class EmptyNode : SyntaxNode
+    public class EmptyTypeNode : TypeNode
     {
-        public EmptyNode(LexLocation loc = null) : base(loc)
+        public EmptyTypeNode(LexLocation loc = null)
         {
+            Location = loc;
         }
 
         public override SyntaxNode this[int i] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
