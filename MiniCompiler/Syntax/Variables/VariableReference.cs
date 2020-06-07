@@ -35,5 +35,11 @@ namespace MiniCompiler.Syntax.Variables.Scopes
         {
             return CombineHashCode(base.GetNodeHash(), Declaration);
         }
+
+        public override string ToString()
+        {
+
+            return $"{base.ToString()}: {Declaration.Name}";
+        }
     }
 }

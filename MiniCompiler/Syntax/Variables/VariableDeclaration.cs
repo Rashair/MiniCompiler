@@ -36,7 +36,7 @@ namespace MiniCompiler.Syntax.Variables
 
         public override string ToString()
         {
-            return $"{base.ToString()}: {Type, -6} {Name};";
+            return $"{base.ToString()}: {Type} {Name};";
         }
     }
 }

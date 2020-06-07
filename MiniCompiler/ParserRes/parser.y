@@ -120,6 +120,7 @@ assign        : Id Assign exp
                     var oper = Operator.Create(token, declar.Type, expType, Loc);
                     oper.Left = new VariableReference(declar, @1);
                     oper.Right = $3;
+                    $$ = oper;
                 }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
@@ -162,7 +163,11 @@ declarKey     : IntKey  { $$ = Type.Int; }
 
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
                 /* TODO */
-exp           : Plus Minus Divides
+exp           : IntVal
+                {
+                    $$ = new Value(Type.Int, $1, Loc);
+                }
+              | assign { $$ = $1; }
               ;
 
 /* ERRORS  ---------------------------------------------------------------------------------------------- */ 
