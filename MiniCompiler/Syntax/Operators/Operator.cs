@@ -3,7 +3,6 @@ using MiniCompiler.Syntax.Abstract;
 using MiniCompiler.Syntax.Operators;
 using MiniCompiler.Syntax.Operators.Assignment;
 using MiniCompiler.Syntax.Operators.Unary;
-using MiniCompiler.Syntax.Variables;
 using QUT.Gppg;
 
 public abstract class Operator : TypeNode

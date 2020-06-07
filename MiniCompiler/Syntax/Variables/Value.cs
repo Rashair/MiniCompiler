@@ -29,5 +29,10 @@ namespace MiniCompiler.Syntax.Variables
         {
             return CombineHashCode(base.GetNodeHash(), Val);
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + ": " + Val;
+        }
     }
 }
