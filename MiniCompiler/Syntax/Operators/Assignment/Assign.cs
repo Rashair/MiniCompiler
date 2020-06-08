@@ -1,6 +1,4 @@
-﻿using MiniCompiler.Syntax.Variables;
-
-namespace MiniCompiler.Syntax.Operators.Assignment
+﻿namespace MiniCompiler.Syntax.Operators.Assignment
 {
     public class Assign : BinaryOperator
     {

@@ -8,7 +8,9 @@ using QUT.Gppg;
 
 public abstract class Operator : TypeNode
 {
-    protected Operator() { }
+    protected Operator()
+    {
+    }
 
     public OperatorEnum Token { get; private set; }
 
@@ -55,28 +57,7 @@ public abstract class Operator : TypeNode
 
         private static Operator CreateFromToken(OperatorEnum op)
         {
-            switch (op)
-            {
-                case OperatorEnum.UnaryMinus:
-                    return new UnaryMinus();
-
-                case OperatorEnum.BitNegation:
-                    return new BitNegation();
-
-                case OperatorEnum.LogicNegation:
-                    return new LogicNegation();
-
-                case OperatorEnum.IntCast:
-                    return new IntCast();
-
-                case OperatorEnum.DoubleCast:
-                    return new DoubleCast();
-
-                case OperatorEnum.Assign:
-                    return new Assign();
-            }
-
-            return new UnknownOperator();
+            return op.CreateOperator();
         }
 
         public static Operator Create(Token token, Type typeA, Type typeB, LexLocation location = null)

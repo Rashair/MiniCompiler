@@ -31,7 +31,7 @@
 %token <val> True False IntVal DoubleVal Id
 %token Assign Or And BitOr BitAnd Negation BitNegation
 %token Equals NotEquals Greater GreaterOrEqual Less LessOrEqual
-%token Plus Minus Multiplies Divides OpenPar ClosePar 
+%token Add Minus Multiplies Divides OpenPar ClosePar 
 %token Colon Eof Error 
 
 %type <orphans> content

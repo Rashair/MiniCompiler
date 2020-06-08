@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\LexLocationExtensions.cs" />
+    <Compile Include="Extensions\OperatorEnumExtensions.cs" />
     <Compile Include="Extensions\SiblingsNodeExtensions.cs" />
     <Compile Include="Extensions\TokenExtensions.cs" />
     <Compile Include="Main.cs" />
@@ -78,6 +79,20 @@
     <Compile Include="Syntax\Abstract\SingleChildNode.cs" />
     <Compile Include="Syntax\Abstract\TypeNode.cs" />
     <Compile Include="Syntax\General\EmptyTypeNode.cs" />
+    <Compile Include="Syntax\Operators\Bitwise\BitAnd.cs" />
+    <Compile Include="Syntax\Operators\Bitwise\BitOr.cs" />
+    <Compile Include="Syntax\Operators\Logical\And.cs" />
+    <Compile Include="Syntax\Operators\Logical\Or.cs" />
+    <Compile Include="Syntax\Operators\Math\Divides.cs" />
+    <Compile Include="Syntax\Operators\Math\Subtract.cs" />
+    <Compile Include="Syntax\Operators\Math\Multiplies.cs" />
+    <Compile Include="Syntax\Operators\Math\Add.cs" />
+    <Compile Include="Syntax\Operators\Relation\Equals.cs" />
+    <Compile Include="Syntax\Operators\Relation\Greater.cs" />
+    <Compile Include="Syntax\Operators\Relation\GreaterOrEqual.cs" />
+    <Compile Include="Syntax\Operators\Relation\Less.cs" />
+    <Compile Include="Syntax\Operators\Relation\LessOrEqual.cs" />
+    <Compile Include="Syntax\Operators\Relation\NotEquals.cs" />
     <Compile Include="Syntax\Operators\Unary\LogicNegation.cs" />
     <Compile Include="Syntax\Operators\Unary\IntCast.cs" />
     <Compile Include="Syntax\Operators\Unary\DoubleCast.cs" />
@@ -137,11 +152,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Syntax\Operators\Bitwise\" />
-    <Folder Include="Syntax\Operators\Logical\" />
-    <Folder Include="Syntax\Operators\Math\" />
-    <Folder Include="Syntax\Operators\Relation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
