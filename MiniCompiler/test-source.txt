@@ -11,4 +11,7 @@ program
 
 	int mm;
 	mm = 3 + (int)(b1 || b2 && b3);
+
+	int k;
+	k = 5 - 2 - 3;
 }

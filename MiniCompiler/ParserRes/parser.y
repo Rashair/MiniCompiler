@@ -147,65 +147,65 @@ declar_key    : IntKey  { $$ = Type.Int; }
               ;
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
 
-exp           : Id Assign mult_endl exp
+exp           : logic_exp Assign mult_endl exp
                 {
-                    var exp  = $4;
-                    var name = $1;
-                    if(exp.Type == Type.Unknown)
+                    var lhs = $1;
+                    var rhs = $4;
+                    if(rhs.Type == Type.Unknown)
                     {
-                        $$ = exp;
-                        return;
+                        $$ = rhs;
                     }
-
-                    VariableDeclaration declar = null;
-                    if(!currentScope.TryGetVariable(name, ref declar))
+                    else if(lhs.Type == Type.Unknown)
                     {
-                        Error("Variable {0} not declared.", name);
-                        return;
+                        $$ = lhs;
                     }
-
-                    var tok = $2;
-                    var reference = new VariableReference(declar, @1);
-                    $$ = TryCreateOperator(tok.token, reference, exp);
+                    else if(lhs is VariableReference reference)
+                    {
+                         $$ = TryCreateOperator($2.token, reference, rhs);
+                    }
+                    else
+                    {
+                        Error("Can't assign to non-variable.");
+                    }
                 }
-              | logic_exp
+              | logic_exp 
               ;
-logic_exp     : logic_exp Or  relat_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | logic_exp And relat_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+logic_exp     : logic_exp Or  mult_endl relat_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | logic_exp And mult_endl relat_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
               | relat_exp
               ;
-relat_exp     : relat_exp Equals         addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | relat_exp NotEquals      addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | relat_exp Greater        addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | relat_exp GreaterOrEqual addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | relat_exp Less           addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | relat_exp LessOrEqual    addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+relat_exp     : relat_exp Equals         mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | relat_exp NotEquals      mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | relat_exp Greater        mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | relat_exp GreaterOrEqual mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | relat_exp Less           mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | relat_exp LessOrEqual    mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
               | addit_exp
               ;
-addit_exp     : addit_exp Add   mult_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | addit_exp Minus mult_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+addit_exp     : addit_exp Add   mult_endl mult_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | addit_exp Minus mult_endl mult_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
               | mult_exp
               ;
-mult_exp      : mult_exp Multiplies bit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | mult_exp Divides    bit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+mult_exp      : mult_exp Multiplies mult_endl bit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | mult_exp Divides    mult_endl bit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
               | bit_exp
               ;
-bit_exp       : bit_exp BitOr  unary_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
-              | bit_exp BitAnd unary_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+bit_exp       : bit_exp BitOr  mult_endl unary_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+              | bit_exp BitAnd mult_endl unary_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
               | unary_exp
               ;
-unary_exp     : Minus                      factor_exp { $$ = TryCreateOperator($1.token, $2); }
-              | Negation                   factor_exp { $$ = TryCreateOperator($1.token, $2); }
-              | BitNegation                factor_exp { $$ = TryCreateOperator($1.token, $2); }
-              | OpenPar IntKey ClosePar    factor_exp { $$ = TryCreateOperator($2.token, $4); }
-              | OpenPar DoubleKey ClosePar factor_exp { $$ = TryCreateOperator($2.token, $4); }
+unary_exp     : Minus                      mult_endl factor_exp { $$ = TryCreateOperator($1.token, $3); }
+              | Negation                   mult_endl factor_exp { $$ = TryCreateOperator($1.token, $3); }
+              | BitNegation                mult_endl factor_exp { $$ = TryCreateOperator($1.token, $3); }
+              | OpenPar IntKey ClosePar    mult_endl factor_exp { $$ = TryCreateOperator($2.token, $5); }
+              | OpenPar DoubleKey ClosePar mult_endl factor_exp { $$ = TryCreateOperator($2.token, $5); }
               | factor_exp
               ;
 factor_exp    : IntVal    { $$ = CreateValue(); }
               | DoubleVal { $$ = CreateValue(); }
               | True      { $$ = CreateValue(); }
               | False     { $$ = CreateValue(); }
-              | OpenPar exp ClosePar { $$ = $2; }
+              | OpenPar mult_endl exp ClosePar { $$ = $3; }
               | Id 
                 {
                     VariableDeclaration declar = null;

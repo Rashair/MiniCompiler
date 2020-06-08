@@ -9,6 +9,7 @@ namespace MiniCompiler.Syntax.General
         public EmptyTypeNode(LexLocation loc = null)
         {
             Location = loc;
+            Type = Type.Unknown;
         }
 
         public override SyntaxNode this[int i] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
