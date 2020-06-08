@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiniCompiler;
 
-namespace MiniCompilerTests.Operators
+namespace MiniCompilerTests.Operators.Unary 
 {
     [TestClass]
-    public class DoubleCastNotValidTests : OperatorsNotValidTests
+    public class UnaryMinusNotValidTests : UnaryNotValidTests
     {
         [TestMethod]
         public void TestInvalidType()

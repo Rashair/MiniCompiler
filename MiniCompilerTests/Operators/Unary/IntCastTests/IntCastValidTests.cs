@@ -1,11 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MiniCompiler.Syntax;
-using MiniCompiler.Syntax.General;
 
-namespace MiniCompilerTests.Operators
+namespace MiniCompilerTests.Operators.Unary 
 {
     [TestClass]
-    public class LogicNegationValidTests : OperatorsValidTests
+    public class IntCastValidTests : UnaryValidTests
     {
         [TestMethod]
         public void TestOneLineProgram()
@@ -15,6 +13,12 @@ namespace MiniCompilerTests.Operators
 
         [TestMethod]
         public void TestMultilineStatement()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestUsedManyTimesInRow()
         {
             Invoke();
         }

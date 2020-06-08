@@ -2,10 +2,10 @@
 using MiniCompiler.Syntax;
 using MiniCompiler.Syntax.General;
 
-namespace MiniCompilerTests.Operators
+namespace MiniCompilerTests.Operators.Unary 
 {
     [TestClass]
-    public class BitNegationValidTests : OperatorsValidTests
+    public class BitNegationValidTests : UnaryValidTests
     {
         [TestMethod]
         public void TestOneLineProgram()
@@ -15,6 +15,12 @@ namespace MiniCompilerTests.Operators
 
         [TestMethod]
         public void TestMultilineStatement()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestUsedManyTimesInRow()
         {
             Invoke();
         }
