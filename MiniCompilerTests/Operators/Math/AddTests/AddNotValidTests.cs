@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MiniCompilerTests.Operators
+namespace MiniCompilerTests.Operators.Math
 {
     [TestClass]
-    public class AddNotValidTests : OperatorsNotValidTests
+    public class AddNotValidTests : MathNotValidTests
     {
         [TestMethod]
         public void TestInvalidType()
