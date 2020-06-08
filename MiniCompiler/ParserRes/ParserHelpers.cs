@@ -1,11 +1,11 @@
-﻿using MiniCompiler.Syntax;
-using MiniCompiler.Syntax.Variables.Scopes;
-using MiniCompiler.Syntax.General;
-using QUT.Gppg;
-using MiniCompiler.Syntax.Variables;
-using System;
+﻿using MiniCompiler.Extensions;
+using MiniCompiler.Syntax;
 using MiniCompiler.Syntax.Abstract;
-using MiniCompiler.Extensions;
+using MiniCompiler.Syntax.General;
+using MiniCompiler.Syntax.Variables;
+using MiniCompiler.Syntax.Variables.Scopes;
+using QUT.Gppg;
+using System;
 
 namespace MiniCompiler
 {
@@ -64,7 +64,7 @@ namespace MiniCompiler
                 return Error("Cannot use {0} on {1}.", token, expType)
                        .typeNode;
             }
-                    
+
             return Operator.Create(token, expType, Loc)
                          .WithLeft(left);
         }
@@ -88,7 +88,7 @@ namespace MiniCompiler
             Type type = value.token.ConvertToType();
             string val = value.val;
 
-            if(type == Type.Unknown)
+            if (type == Type.Unknown)
             {
                 return Error("Cannot use provided type: {0}", value.token).typeNode;
             }

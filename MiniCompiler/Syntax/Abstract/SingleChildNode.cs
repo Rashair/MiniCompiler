@@ -48,6 +48,5 @@ namespace MiniCompiler.Syntax.Abstract
                 throw new ArgumentOutOfRangeException("You cannot give me what I seek.");
             }
         }
-
     }
 }

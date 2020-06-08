@@ -1,5 +1,4 @@
-﻿using MiniCompiler.Syntax.Abstract;
-using QUT.Gppg;
+﻿using QUT.Gppg;
 using System;
 
 namespace MiniCompiler.Syntax.General

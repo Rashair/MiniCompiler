@@ -1,6 +1,5 @@
 ﻿using MiniCompiler.Extensions;
 using QUT.Gppg;
-using System;
 using System.Collections.Generic;
 
 namespace MiniCompiler.Syntax

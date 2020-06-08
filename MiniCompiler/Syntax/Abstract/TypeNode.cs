@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MiniCompiler.Syntax.Abstract
+﻿namespace MiniCompiler.Syntax.Abstract
 {
     public abstract class TypeNode : SiblingsNode
     {

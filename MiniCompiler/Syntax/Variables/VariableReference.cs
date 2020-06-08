@@ -38,7 +38,6 @@ namespace MiniCompiler.Syntax.Variables.Scopes
 
         public override string ToString()
         {
-
             return $"{base.ToString()}: {Declaration.Name}";
         }
     }
