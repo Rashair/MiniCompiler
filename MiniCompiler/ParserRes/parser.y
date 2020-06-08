@@ -147,9 +147,9 @@ declar_key    : IntKey  { $$ = Type.Int; }
               ;
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
 
-exp           : Id Assign exp
+exp           : Id Assign mult_endl exp
                 {
-                    var exp  = $3;
+                    var exp  = $4;
                     var name = $1;
                     if(exp.Type == Type.Unknown)
                     {
