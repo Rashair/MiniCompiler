@@ -105,12 +105,12 @@ instr         : declar Colon { $$ = $1; }
               | exp Colon { $$ = $1; }
 
                 // Errors
-             // | declar error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-             // | declar_key error Endl { Error("Invalid declaration."); }
+                | declar error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+                | declar_key error Endl { Error("Invalid declaration."); }
 
-            //  | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
-            //  | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-            //  | exp error Colon { Error("Invalid statement."); }
+                | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
+                | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+                | exp error Colon { Error("Invalid statement."); }
                 | error Endl { Error("Invalid statement"); }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
@@ -195,23 +195,11 @@ unary_exp     : Minus                      factor_exp { $$ = TryCreateOperator($
               | OpenPar DoubleKey ClosePar factor_exp { $$ = TryCreateOperator($2.token, $4); }
               | factor_exp
               ;
-factor_exp    : OpenPar exp ClosePar { $$ = $2; }
-              | IntVal
-                {
-                    $$ = CreateValue();
-                }
-              | DoubleVal
-                {
-                    $$ = CreateValue();
-                }
-              | True
-                {
-                    $$ = CreateValue();
-                }
-              | False
-                {
-                    $$ = CreateValue();
-                }
+factor_exp    : IntVal    { $$ = CreateValue(); }
+              | DoubleVal { $$ = CreateValue(); }
+              | True      { $$ = CreateValue(); }
+              | False     { $$ = CreateValue(); }
+              | OpenPar exp ClosePar { $$ = $2; }
               | Id 
                 {
                     VariableDeclaration declar = null;

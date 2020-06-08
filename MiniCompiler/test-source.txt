@@ -7,5 +7,8 @@ program
 
 	bool b3;
 	b3 = true;
-	b3 = (b1 || b2) && b3;
+	b3 = (b1 || b2) && b3 ;
+
+	int mm;
+	mm = 3 + (int)(b1 || b2 && b3);
 }
