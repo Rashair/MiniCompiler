@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ParserRes\parser.conflicts" />
     <None Include="ParserRes\parser.y" />
     <None Include="ScannerRes\scanner.lex" />
   </ItemGroup>
@@ -129,11 +130,11 @@
     <Exec Command="ScannerRes\Gplex.exe ScannerRes\scanner.lex" ConsoleToMSBuild="true" ContinueOnError="False">
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
     </Exec>
-    <Exec Command="ParserRes\Gppg.exe /gplex /verbose ParserRes\parser.y" ConsoleToMSBuild="true" ContinueOnError="false">
+    <Exec Command="ParserRes\Gppg.exe /gplex /conflicts /verbose ParserRes\parser.y" ConsoleToMSBuild="true" ContinueOnError="false">
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
     </Exec>
-    <Copy SourceFiles="@(TestFile)" DestinationFolder=".\bin\Debug">
-    </Copy>
+    <Copy SourceFiles="@(TestFile)" DestinationFolder=".\bin\Debug" />
+    <Copy SourceFiles="parser.conflicts" DestinationFolder=".\ParserRes" />
   </Target>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

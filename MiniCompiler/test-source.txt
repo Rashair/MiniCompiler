@@ -2,5 +2,10 @@ program
 {
 	bool b1;
 	bool b2;
+	b1 = true;
+	b2 = false;
 
+	bool b3;
+	b3 = true;
+	b3 = (b1 || b2) && b3;
 }

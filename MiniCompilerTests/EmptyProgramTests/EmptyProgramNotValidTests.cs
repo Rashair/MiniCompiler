@@ -24,7 +24,7 @@ namespace MiniCompilerTests
             Invoke();
         }
 
-        [TestMethod]
+        [TestMethod, Timeout(DefaultTimeout)]
         public void TestProgramNoClosingBrace()
         {
             Invoke();

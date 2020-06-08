@@ -24,7 +24,7 @@ namespace MiniCompilerTests
             if (ExpectedErrors.HasValue)
             {
                 int actualErrors = Compiler.errors;
-                Assert.AreEqual(ExpectedErrors, actualErrors, "Errors count should match expected");
+                Assert.AreEqual(ExpectedErrors, actualErrors, "Errors count should match expected value.");
             }
         }
     }

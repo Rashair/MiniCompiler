@@ -32,18 +32,18 @@
 %token Assign Or And BitOr BitAnd Negation BitNegation
 %token Equals NotEquals Greater GreaterOrEqual Less LessOrEqual
 %token Add Minus Multiplies Divides OpenPar ClosePar 
-%token Colon Eof Error 
+%token Colon Endl Eof Error 
 
 %type <orphans> content
 %type <node> block none
 %type <node> instr 
-%type <typeNode> exp declar assign factor
-%type <type> declarKey 
-%type <type> unreconWord
+%type <typeNode> declar exp logic_exp relat_exp addit_exp mult_exp bit_exp unary_exp factor_exp
+%type <type> declar_key 
+%type <type> unrecon_word
 
 %%
 
-start         : Program block Eof
+start         : Program block mult_endl Eof
                 {
                     var unit = new CompilationUnit(Loc);
                     unit.Child = $2;
@@ -62,22 +62,27 @@ start         : Program block Eof
                     YYABORT;
                 }
               ;
-block         : OpenBrace
+block         : enter_scope
+                content leave_scope
                 {
-                     EnterScope(new SubordinateScope(currentScope));
-                }
-                content CloseBrace
-                {
-                    LeaveScope();
-
                     var newBlock = new Block(Loc);
-                    newBlock.AddChildren($3);
+                    newBlock.AddChildren($2);
                     $$ = newBlock;
                 }
-              | OpenBrace error Eof
+              | enter_scope content error Eof
                 {
                     Error("No brace matching.");
                     YYABORT;
+                }
+              ;
+enter_scope   : OpenBrace 
+                {
+                    EnterScope(new SubordinateScope(currentScope));
+                }
+              ;
+leave_scope   : CloseBrace
+                {
+                    LeaveScope();
                 }
               ;
 content       : none
@@ -94,19 +99,22 @@ content       : none
                     ($1).Add($2);
                     $$ = $1;
                 }
-              | content Colon
-              | Eof { Error("Unexpected end of file."); }
               ;
 instr         : declar Colon { $$ = $1; }
               | exp Colon { $$ = $1; }
-              | declar error end { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | instr Colon
+
+                // Errors
+              | declar error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | declar_key error Endl { Error("Invalid declaration."); }
+
               | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
-              | exp error endNoColon { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-              | exp error Colon {  Error("Invalid statement."); }
-              | declarKey error end { Error("Invalid declaration."); }
+              | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | exp error Colon { Error("Invalid statement."); }
+              | error Endl { Error("Invalid statement"); }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
-declar        : declarKey Id
+declar        : declar_key Id
                 {
                     if($1 != Type.Unknown && !currentScope.IsPresent($2))
                     {
@@ -125,16 +133,18 @@ declar        : declarKey Id
                 {
                     Error("Uncrecognized type.");
                 }
-              | declarKey unreconWord
+              | declar_key unrecon_word
                 {
                     Error("Identifier is restricted keyword or contains prohibited characters.");
                 }
               ;
-declarKey     : IntKey  { $$ = Type.Int; }
+declar_key    : IntKey  { $$ = Type.Int; }
               | BoolKey { $$ = Type.Bool; }
               | DoubleKey { $$ = Type.Double; }
-              ; 
-assign        : Id Assign exp
+              ;
+/* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
+
+exp           : Id Assign exp
                 {
                     if($3.Type == Type.Unknown)
                     {
@@ -148,22 +158,45 @@ assign        : Id Assign exp
                         Error("Variable {0} not declared.", $1);
                         return;
                     }
+
                     var reference = new VariableReference(declar, @1);
-            
                     $$ = TryCreateOperator($2.token, reference, $3);
                 }
+              | logic_exp
               ;
-/* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
-                /* TODO */
-exp           : Minus exp    { $$ = TryCreateOperator($1.token, $2); }
-              | Negation exp {  $$ = TryCreateOperator($1.token, $2); }
-              | BitNegation exp {  $$ = TryCreateOperator($1.token, $2); }
-              | OpenPar IntKey ClosePar exp    {  $$ = TryCreateOperator($2.token, $4); }
-              | OpenPar DoubleKey ClosePar exp {  $$ = TryCreateOperator($2.token, $4); }
-              | assign
-              | factor
+logic_exp     : logic_exp Or relat_exp   { $$ = TryCreateOperator($2.token, $3, $1); }
+              | logic_exp And relat_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | relat_exp
               ;
-factor        : IntVal
+relat_exp     : relat_exp Equals addit_exp
+              | relat_exp NotEquals addit_exp
+              | relat_exp Greater addit_exp
+              | relat_exp GreaterOrEqual addit_exp
+              | relat_exp Less addit_exp
+              | relat_exp LessOrEqual addit_exp
+              | addit_exp
+              ;
+addit_exp     : addit_exp Add mult_exp
+              | addit_exp Minus mult_exp
+              | mult_exp
+              ;
+mult_exp      : mult_exp Multiplies bit_exp
+              | mult_exp Divides bit_exp
+              | bit_exp
+              ;
+bit_exp       : bit_exp BitOr unary_exp
+              | bit_exp BitAnd unary_exp
+              | unary_exp
+              ;
+unary_exp     : Minus factor_exp    { $$ = TryCreateOperator($1.token, $2); }
+              | Negation factor_exp {  $$ = TryCreateOperator($1.token, $2); }
+              | BitNegation factor_exp {  $$ = TryCreateOperator($1.token, $2); }
+              | OpenPar IntKey ClosePar factor_exp    {  $$ = TryCreateOperator($2.token, $4); }
+              | OpenPar DoubleKey ClosePar factor_exp {  $$ = TryCreateOperator($2.token, $4); }
+              | factor_exp
+              ;
+factor_exp    : OpenPar exp ClosePar { $$ = $2; }
+              | IntVal
                 {
                     $$ = CreateValue();
                 }
@@ -189,25 +222,32 @@ factor        : IntVal
                     }
                     $$ = new VariableReference(declar, @1);
                 }
+              | Endl factor_exp { $$ = $2; }
               ;
 /* ERRORS  ---------------------------------------------------------------------------------------------- */ 
-unreconWord : Id Error
-            | Error
-            | unreconWord Error
-            | unreconWord Id
-            ;
+unrecon_word  : Id Error
+              | Error
+              | unrecon_word Error
+              | unrecon_word Id
+              ;
 /* OTHER  ---------------------------------------------------------------------------------------------- */ 
-// TODO: Discard 2 errors 
+mult_endl     : /* empty */
+              | mult_endl Endl
+              ;
 end           : Colon
-              | CloseBrace
-              | OpenBrace
+              | Endl
               | Eof
               ;
-endNoColon    : CloseBrace
-              | OpenBrace
+end_no_eof    : Colon
+              | Endl
+              ;
+end_no_colon  : Endl
               | Eof
               ;
-none          :       { $$ = null; }
+
+any_operator  : 
+              ;
+none          : { $$ = null; }
               ;
 
 

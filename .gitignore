@@ -237,6 +237,7 @@ _Pvt_Extensions
 *.tokens
 *.il
 *.lst
+*.conflicts
 
 **/Parser.cs
 **/Scanner.cs
