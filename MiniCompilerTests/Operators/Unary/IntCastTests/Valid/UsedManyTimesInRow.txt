@@ -7,4 +7,6 @@ program
 	  (int) true  + (int) 
 	    false;
 	; 
+
+	k = (int) (double) (int) 2.0;
 }

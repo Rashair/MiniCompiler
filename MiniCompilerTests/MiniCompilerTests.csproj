@@ -56,6 +56,10 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Operators\Bitwise\BitwiseNotValidTests.cs" />
     <Compile Include="Operators\Bitwise\BitwiseValidTests.cs" />
+    <Compile Include="Operators\Logical\OrTests\OrNotValidTests.cs" />
+    <Compile Include="Operators\Logical\OrTests\OrValidTests.cs" />
+    <Compile Include="Operators\Logical\AndTests\AndNotValidTests.cs" />
+    <Compile Include="Operators\Logical\AndTests\AndValidTests.cs" />
     <Compile Include="Operators\Logical\LogicalNotValidTests.cs" />
     <Compile Include="Operators\Logical\LogicalValidTests.cs" />
     <Compile Include="Operators\Math\CombinedTests\CombinedNotValidTests.cs" />
@@ -112,6 +116,7 @@
     <Content Include="AssignmentTests\NotValid\AssignWithDeclaration.txt" />
     <Content Include="AssignmentTests\NotValid\AssignToValue.txt" />
     <Content Include="AssignmentTests\NotValid\UndeclaredVariable.txt" />
+    <Content Include="AssignmentTests\Valid\WithCasting.txt" />
     <Content Include="AssignmentTests\Valid\MultilineStatement.txt" />
     <Content Include="AssignmentTests\Valid\VariableToVariable.txt" />
     <Content Include="AssignmentTests\Valid\IntToDouble.txt" />
@@ -164,6 +169,14 @@
     <Content Include="BracesTests\Valid\NestedEmptyBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\ManySemicolons.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
+    <Content Include="Operators\Logical\OrTests\NotValid\InvalidType.txt" />
+    <Content Include="Operators\Logical\OrTests\NotValid\MultipleUsage.txt" />
+    <Content Include="Operators\Logical\OrTests\Valid\MultilineStatement.txt" />
+    <Content Include="Operators\Logical\OrTests\Valid\OneLineProgram.txt" />
+    <Content Include="Operators\Logical\AndTests\NotValid\InvalidType.txt" />
+    <Content Include="Operators\Logical\AndTests\NotValid\MultipleUsage.txt" />
+    <Content Include="Operators\Logical\AndTests\Valid\MultilineStatement.txt" />
+    <Content Include="Operators\Logical\AndTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Math\AddTests\NotValid\MultipleUsage.txt" />
     <Content Include="Operators\Math\CombinedTests\NotValid\MultipleUsage.txt" />
     <Content Include="Operators\Math\CombinedTests\NotValid\InvalidType.txt" />

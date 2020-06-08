@@ -1,0 +1,10 @@
+program 
+{
+	true || ||  false;
+	 || true;
+	bool b;
+	bool b1;
+	b =  true || b1 || || false;
+
+	|| false;
+} 

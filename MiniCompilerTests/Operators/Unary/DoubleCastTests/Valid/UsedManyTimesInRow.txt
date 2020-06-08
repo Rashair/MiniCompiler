@@ -6,5 +6,5 @@ program
 	  (double)(double)
 	  (double)
 	    5  // Now I am double for sure
-	; 
+	;
 }

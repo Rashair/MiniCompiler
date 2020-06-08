@@ -83,5 +83,11 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestWithCasting()
+        {
+            Invoke();
+        }
     }
 }
