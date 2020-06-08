@@ -3,16 +3,16 @@
 namespace MiniCompilerTests.Operators.Math
 {
     [TestClass]
-    public class AddNotValidTests : MathNotValidTests
+    public class DividesValidTests :  MathValidTests
     {
         [TestMethod]
-        public void TestInvalidType()
+        public void TestOneLineProgram()
         {
             Invoke();
         }
 
         [TestMethod]
-        public void TestMultipleUsage()
+        public void TestMultilineStatement()
         {
             Invoke();
         }

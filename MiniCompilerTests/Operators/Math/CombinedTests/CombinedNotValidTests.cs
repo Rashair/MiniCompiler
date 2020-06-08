@@ -3,7 +3,7 @@
 namespace MiniCompilerTests.Operators.Math
 {
     [TestClass]
-    public class AddNotValidTests : MathNotValidTests
+    public class CombinedNotValidTests : MathNotValidTests
     {
         [TestMethod]
         public void TestInvalidType()
