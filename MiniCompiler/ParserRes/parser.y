@@ -43,14 +43,14 @@
 
 %%
 
-start         : Program block mult_endl Eof
+start         : mult_endl Program mult_endl block mult_endl Eof
                 {
                     var unit = new CompilationUnit(Loc);
-                    unit.Child = $2;
+                    unit.Child = $4;
                     GenerateCode(unit);
                     YYACCEPT;
                 }
-              | Program error Eof
+              | mult_endl Program error Eof
                 {
                     Error("Braces expected.");
                     YYABORT;
@@ -74,7 +74,7 @@ block         : enter_scope content leave_scope
                     YYABORT;
                 }
               ;
-enter_scope   : mult_endl OpenBrace 
+enter_scope   : OpenBrace 
                 {
                     EnterScope(new SubordinateScope(currentScope));
                 }
@@ -88,7 +88,7 @@ content       : none
                 {
                     $$ = new List<SyntaxNode>();
                 }
-              | content instr 
+              | content instr
                 {
                     ($1).Add($2);
                     $$ = $1;
@@ -98,19 +98,20 @@ content       : none
                     ($1).Add($2);
                     $$ = $1;
                 }
+              | content Endl 
+              | content Colon
               ;
 instr         : declar Colon { $$ = $1; }
               | exp Colon { $$ = $1; }
-              | instr Colon
 
                 // Errors
-              | declar error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-              | declar_key error Endl { Error("Invalid declaration."); }
+             // | declar error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+             // | declar_key error Endl { Error("Invalid declaration."); }
 
-              | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
-              | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-              | exp error Colon { Error("Invalid statement."); }
-              | error Endl { Error("Invalid statement"); }
+            //  | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
+            //  | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+            //  | exp error Colon { Error("Invalid statement."); }
+            //  | error Endl { Error("Invalid statement"); }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declar_key Id
