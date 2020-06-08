@@ -111,7 +111,7 @@ instr         : declar Colon { $$ = $1; }
             //  | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
             //  | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
             //  | exp error Colon { Error("Invalid statement."); }
-            //  | error Endl { Error("Invalid statement"); }
+                | error Endl { Error("Invalid statement"); }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declar_key Id
