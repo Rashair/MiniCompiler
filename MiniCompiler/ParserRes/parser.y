@@ -100,7 +100,9 @@ content       : none
 instr         : declar Colon { $$ = $1; }
               | exp Colon { $$ = $1; }
               | declar error end { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-              | exp error end { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
+              | exp error endNoColon { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | exp error Colon {  Error("Invalid statement."); }
               | declarKey error end { Error("Invalid declaration."); }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
@@ -126,10 +128,6 @@ declar        : declarKey Id
               | declarKey unreconWord
                 {
                     Error("Identifier is restricted keyword or contains prohibited characters.");
-                }
-              | Id Error
-                {
-                    Error("Identifier contains unexpected character.");
                 }
               ;
 declarKey     : IntKey  { $$ = Type.Int; }
@@ -202,6 +200,10 @@ unreconWord : Id Error
 // TODO: Discard 2 errors 
 end           : Colon
               | CloseBrace
+              | OpenBrace
+              | Eof
+              ;
+endNoColon    : CloseBrace
               | OpenBrace
               | Eof
               ;

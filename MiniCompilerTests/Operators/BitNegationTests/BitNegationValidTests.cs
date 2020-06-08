@@ -2,10 +2,10 @@
 using MiniCompiler.Syntax;
 using MiniCompiler.Syntax.General;
 
-namespace MiniCompilerTests
+namespace MiniCompilerTests.Operators
 {
     [TestClass]
-    public class LogicNegationValidTests : ValidTests
+    public class BitNegationValidTests : OperatorsValidTests
     {
         [TestMethod]
         public void TestOneLineProgram()

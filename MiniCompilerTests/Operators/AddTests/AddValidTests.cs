@@ -1,13 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MiniCompiler;
 
-namespace MiniCompilerTests
+namespace MiniCompilerTests.Operators
 {
     [TestClass]
-    public class DoubleCastNotValidTests : NotValidTests
+    public class AddValidTests : OperatorsValidTests
     {
         [TestMethod]
-        public void TestInvalidType()
+        public void TestOneLineProgram()
         {
             Invoke();
         }

@@ -22,10 +22,12 @@ namespace MiniCompilerTests
 
             string namePrefix = derriviedClassName.Substring(0, derriviedClassName.Length - suffixLength);
             string realTypeName = GetType().Name;
-            this.testsPath = Path.Combine("..", "..",
+            this.testsPath = Path.Combine("..", "..", PathSuffix,
                 GetTestFolderName(realTypeName, namePrefix.Length),
                 namePrefix);
         }
+
+        protected virtual string PathSuffix => "";
 
         protected abstract void AssertCorrect();
 

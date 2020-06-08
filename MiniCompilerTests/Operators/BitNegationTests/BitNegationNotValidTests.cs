@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiniCompiler;
 
-namespace MiniCompilerTests
+namespace MiniCompilerTests.Operators
 {
     [TestClass]
-    public class IntCastNotValidTests : NotValidTests
+    public class BitNegationNotValidTests : OperatorsNotValidTests
     {
         [TestMethod]
         public void TestInvalidType()

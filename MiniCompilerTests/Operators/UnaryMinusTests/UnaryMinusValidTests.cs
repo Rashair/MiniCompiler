@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MiniCompilerTests
+namespace MiniCompilerTests.Operators
 {
     [TestClass]
-    public class IntCastValidTests : ValidTests
+    public class UnaryMinusValidTests : OperatorsValidTests
     {
         [TestMethod]
         public void TestOneLineProgram()
