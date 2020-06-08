@@ -62,8 +62,7 @@ start         : Program block mult_endl Eof
                     YYABORT;
                 }
               ;
-block         : enter_scope
-                content leave_scope
+block         : enter_scope content leave_scope
                 {
                     var newBlock = new Block(Loc);
                     newBlock.AddChildren($2);
@@ -75,7 +74,7 @@ block         : enter_scope
                     YYABORT;
                 }
               ;
-enter_scope   : OpenBrace 
+enter_scope   : mult_endl OpenBrace 
                 {
                     EnterScope(new SubordinateScope(currentScope));
                 }
@@ -89,7 +88,7 @@ content       : none
                 {
                     $$ = new List<SyntaxNode>();
                 }
-              | content instr
+              | content instr 
                 {
                     ($1).Add($2);
                     $$ = $1;
@@ -222,7 +221,7 @@ factor_exp    : OpenPar exp ClosePar { $$ = $2; }
                     }
                     $$ = new VariableReference(declar, @1);
                 }
-              | Endl factor_exp { $$ = $2; }
+              /* | factor_exp { $$ = $1; } */
               ;
 /* ERRORS  ---------------------------------------------------------------------------------------------- */ 
 unrecon_word  : Id Error
