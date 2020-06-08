@@ -11,6 +11,7 @@ program {
 
 	double d1; 
 	d1 = 555.05;
+	d1 = 5.00000000;
 
 	double d2;
 	d2 = 0.002662;

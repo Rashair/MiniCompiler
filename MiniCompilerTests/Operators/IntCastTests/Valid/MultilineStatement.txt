@@ -1,0 +1,11 @@
+program 
+{ 
+	double d;
+	d = 22.555555;
+
+	int k;
+	k = 
+	 (int)
+	 true + (int)d
+	;
+}

@@ -33,5 +33,12 @@ namespace MiniCompilerTests
             ExpectedErrors = 9;
             Invoke();
         }
+
+        [TestMethod, Timeout(2 * DefaultTimeout)]
+        public void TestInvalidValueFormat()
+        {
+            ExpectedErrors = 7;
+            Invoke();
+        }
     }
 }

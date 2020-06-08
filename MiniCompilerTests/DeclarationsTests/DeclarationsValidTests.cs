@@ -223,7 +223,7 @@ namespace MiniCompilerTests
         }
 
         [TestMethod]
-        public void TestMultiLineStatement()
+        public void TestMultilineStatement()
         {
             Invoke();
         }
