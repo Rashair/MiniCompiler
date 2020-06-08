@@ -164,35 +164,35 @@ exp           : Id Assign exp
                 }
               | logic_exp
               ;
-logic_exp     : logic_exp Or relat_exp   { $$ = TryCreateOperator($2.token, $3, $1); }
+logic_exp     : logic_exp Or  relat_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
               | logic_exp And relat_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
               | relat_exp
               ;
-relat_exp     : relat_exp Equals addit_exp
-              | relat_exp NotEquals addit_exp
-              | relat_exp Greater addit_exp
-              | relat_exp GreaterOrEqual addit_exp
-              | relat_exp Less addit_exp
-              | relat_exp LessOrEqual addit_exp
+relat_exp     : relat_exp Equals         addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | relat_exp NotEquals      addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | relat_exp Greater        addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | relat_exp GreaterOrEqual addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | relat_exp Less           addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | relat_exp LessOrEqual    addit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
               | addit_exp
               ;
-addit_exp     : addit_exp Add mult_exp
-              | addit_exp Minus mult_exp
+addit_exp     : addit_exp Add   mult_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | addit_exp Minus mult_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
               | mult_exp
               ;
-mult_exp      : mult_exp Multiplies bit_exp
-              | mult_exp Divides bit_exp
+mult_exp      : mult_exp Multiplies bit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | mult_exp Divides    bit_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
               | bit_exp
               ;
-bit_exp       : bit_exp BitOr unary_exp
-              | bit_exp BitAnd unary_exp
+bit_exp       : bit_exp BitOr  unary_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
+              | bit_exp BitAnd unary_exp  { $$ = TryCreateOperator($2.token, $3, $1); }
               | unary_exp
               ;
-unary_exp     : Minus factor_exp    { $$ = TryCreateOperator($1.token, $2); }
-              | Negation factor_exp {  $$ = TryCreateOperator($1.token, $2); }
-              | BitNegation factor_exp {  $$ = TryCreateOperator($1.token, $2); }
-              | OpenPar IntKey ClosePar factor_exp    {  $$ = TryCreateOperator($2.token, $4); }
-              | OpenPar DoubleKey ClosePar factor_exp {  $$ = TryCreateOperator($2.token, $4); }
+unary_exp     : Minus                      factor_exp { $$ = TryCreateOperator($1.token, $2); }
+              | Negation                   factor_exp { $$ = TryCreateOperator($1.token, $2); }
+              | BitNegation                factor_exp { $$ = TryCreateOperator($1.token, $2); }
+              | OpenPar IntKey ClosePar    factor_exp { $$ = TryCreateOperator($2.token, $4); }
+              | OpenPar DoubleKey ClosePar factor_exp { $$ = TryCreateOperator($2.token, $4); }
               | factor_exp
               ;
 factor_exp    : OpenPar exp ClosePar { $$ = $2; }
@@ -222,7 +222,6 @@ factor_exp    : OpenPar exp ClosePar { $$ = $2; }
                     }
                     $$ = new VariableReference(declar, @1);
                 }
-              /* | factor_exp { $$ = $1; } */
               ;
 /* ERRORS  ---------------------------------------------------------------------------------------------- */ 
 unrecon_word  : Id Error
