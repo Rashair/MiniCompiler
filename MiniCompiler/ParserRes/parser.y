@@ -104,21 +104,22 @@ content       : none
 instr         : declar Colon { $$ = $1; }
               | exp Colon { $$ = $1; }
 
-                // Errors
-                | declar error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-                | declar_key error Endl { Error("Invalid declaration."); }
-
-                | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
-                | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-                | exp error Colon { Error("Invalid statement."); }
-                | error Endl { Error("Invalid statement"); }
+              // Errors
+              | declar error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | declar_key error Endl { Error("Invalid declaration."); }
+             
+              | exp Error { Error("Invalid token at col: {0}", @2.EndColumn); }
+              | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | exp error Colon { Error("Invalid statement."); }
+              | error Endl { Error("Invalid statement"); }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declar_key Id
                 {
-                    if($1 != Type.Unknown && !currentScope.IsPresent($2))
+                    var name = $2;
+                    if($1 != Type.Unknown && !currentScope.IsPresent(name))
                     {
-                        $$ = new VariableDeclaration($2, currentScope, $1, Loc);
+                        $$ = new VariableDeclaration(name, currentScope, $1, Loc);
                     }
                     else if($1 == Type.Unknown)
                     {
@@ -126,7 +127,7 @@ declar        : declar_key Id
                     }
                     else
                     {
-                        Error("Variable '{0}' was already declared in this scope.", $2);
+                        Error("Variable '{0}' was already declared in this scope.", name);
                     }
                 }
               | Id Id
@@ -137,30 +138,35 @@ declar        : declar_key Id
                 {
                     Error("Identifier is restricted keyword or contains prohibited characters.");
                 }
+              | declar Endl
               ;
 declar_key    : IntKey  { $$ = Type.Int; }
               | BoolKey { $$ = Type.Bool; }
               | DoubleKey { $$ = Type.Double; }
+              | declar_key Endl
               ;
 /* ARITHEMITIC ---------------------------------------------------------------------------------------------- */ 
 
 exp           : Id Assign exp
                 {
-                    if($3.Type == Type.Unknown)
+                    var exp  = $3;
+                    var name = $1;
+                    if(exp.Type == Type.Unknown)
                     {
-                        $$ = $3;
+                        $$ = exp;
                         return;
                     }
 
                     VariableDeclaration declar = null;
-                    if(!currentScope.TryGetVariable($1, ref declar))
+                    if(!currentScope.TryGetVariable(name, ref declar))
                     {
-                        Error("Variable {0} not declared.", $1);
+                        Error("Variable {0} not declared.", name);
                         return;
                     }
 
+                    var tok = $2;
                     var reference = new VariableReference(declar, @1);
-                    $$ = TryCreateOperator($2.token, reference, $3);
+                    $$ = TryCreateOperator(tok.token, reference, exp);
                 }
               | logic_exp
               ;
@@ -210,6 +216,7 @@ factor_exp    : IntVal    { $$ = CreateValue(); }
                     }
                     $$ = new VariableReference(declar, @1);
                 }
+              | factor_exp Endl
               ;
 /* ERRORS  ---------------------------------------------------------------------------------------------- */ 
 unrecon_word  : Id Error

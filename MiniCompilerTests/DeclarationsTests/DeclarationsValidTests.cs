@@ -167,7 +167,7 @@ namespace MiniCompilerTests
                         new VariableDeclaration("aa", scopes[0], Type.Int),
                         new VariableDeclaration("bb", scopes[0], Type.Int),
                     },
-                    new Block 
+                    new Block
                     {
                         new VariableDeclaration("bb", scopes[1], Type.Bool),
                         new VariableDeclaration("aa", scopes[1], Type.Double),
@@ -208,18 +208,24 @@ namespace MiniCompilerTests
             );
 
             Invoke();
-    }
+        }
 
-    [TestMethod]
-    public void TestDifferentNames()
-    {
-        Invoke();
-    }
+        [TestMethod]
+        public void TestDifferentNames()
+        {
+            Invoke();
+        }
 
-    [TestMethod]
-    public void TestCommentAfterDeclaration()
-    {
-        Invoke();
+        [TestMethod]
+        public void TestCommentAfterDeclaration()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestMultiLineStatement()
+        {
+            Invoke();
+        }
     }
-}
 }

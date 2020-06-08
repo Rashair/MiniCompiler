@@ -76,6 +76,12 @@ namespace MiniCompilerTests
         public void TestVariableToVariable()
         {
             Invoke();
-        }      
+        }
+
+        [TestMethod]
+        public void TestMultiLineStatement()
+        {
+            Invoke();
+        }
     }
 }

@@ -10,5 +10,11 @@ namespace MiniCompilerTests.Operators
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestMultiLineStatement()
+        {
+            Invoke();
+        }
     }
 }

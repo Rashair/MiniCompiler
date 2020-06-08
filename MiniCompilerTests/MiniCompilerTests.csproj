@@ -93,6 +93,7 @@
     <Content Include="AssignmentTests\NotValid\AssignWithDeclaration.txt" />
     <Content Include="AssignmentTests\NotValid\AssignToValue.txt" />
     <Content Include="AssignmentTests\NotValid\UndeclaredVariable.txt" />
+    <Content Include="AssignmentTests\Valid\MultiLineStatement.txt" />
     <Content Include="AssignmentTests\Valid\VariableToVariable.txt" />
     <Content Include="AssignmentTests\Valid\IntToDouble.txt" />
     <Content Include="AssignmentTests\Valid\MultipleTypes.txt" />
@@ -115,6 +116,7 @@
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseStart.txt" />
     <Content Include="DeclarationsTests\Valid\CommentAfterDeclaration.txt" />
     <Content Include="DeclarationsTests\Valid\DifferentNames.txt" />
+    <Content Include="DeclarationsTests\Valid\MultiLineStatement.txt" />
     <Content Include="DeclarationsTests\Valid\SameNamesDifferentScope.txt" />
     <Content Include="DeclarationsTests\Valid\ManyVariablesInManyScopes.txt" />
     <Content Include="DeclarationsTests\Valid\SameNamesDifferentCase.txt" />
@@ -143,6 +145,7 @@
     <Content Include="BracesTests\Valid\NestedEmptyBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\ManySemicolons.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
+    <Content Include="Operators\AddTests\Valid\MultiLineStatement.txt" />
     <Content Include="Operators\DoubleCastTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\DoubleCastTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\LogicNegationTests\NotValid\InvalidType.txt" />
