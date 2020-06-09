@@ -24,5 +24,11 @@ namespace MiniCompilerTests.Operators.Unary
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestMultilineParentheses()
+        {
+            Invoke();
+        }
     }
 }

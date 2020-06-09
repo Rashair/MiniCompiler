@@ -197,8 +197,8 @@ bit_exp       : bit_exp BitOr  mult_endl unary_exp  { $$ = TryCreateOperator($2.
 unary_exp     : Minus                      mult_endl unary_exp { $$ = TryCreateOperator($1.token, $3); }
               | Negation                   mult_endl unary_exp { $$ = TryCreateOperator($1.token, $3); }
               | BitNegation                mult_endl unary_exp { $$ = TryCreateOperator($1.token, $3); }
-              | OpenPar IntKey ClosePar    mult_endl unary_exp { $$ = TryCreateOperator($2.token, $5); }
-              | OpenPar DoubleKey ClosePar mult_endl unary_exp { $$ = TryCreateOperator($2.token, $5); }
+              | OpenPar mult_endl IntKey    mult_endl ClosePar mult_endl unary_exp { $$ = TryCreateOperator($3.token, $7); }
+              | OpenPar mult_endl DoubleKey mult_endl ClosePar mult_endl unary_exp { $$ = TryCreateOperator($3.token, $7); }
               | factor_exp
               ;
 factor_exp    : IntVal    { $$ = CreateValue(); }

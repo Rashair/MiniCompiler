@@ -236,9 +236,11 @@
     <Content Include="Operators\Unary\BitNegationTests\Valid\UsedManyTimesInRow.txt" />
     <Content Include="Operators\Unary\BitNegationTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Unary\DoubleCastTests\NotValid\InvalidType.txt" />
+    <Content Include="Operators\Unary\DoubleCastTests\Valid\MultilineParentheses.txt" />
     <Content Include="Operators\Unary\DoubleCastTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Unary\DoubleCastTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Unary\DoubleCastTests\Valid\UsedManyTimesInRow.txt" />
+    <Content Include="Operators\Unary\IntCastTests\Valid\MultilineParentheses.txt" />
     <Content Include="Operators\Unary\IntCastTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Unary\IntCastTests\Valid\UsedManyTimesInRow.txt" />
     <Content Include="Operators\Unary\LogicNegationTests\NotValid\InvalidType.txt" />
