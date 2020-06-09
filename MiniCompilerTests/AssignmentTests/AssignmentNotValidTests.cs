@@ -40,5 +40,11 @@ namespace MiniCompilerTests
             ExpectedErrors = 7;
             Invoke();
         }
+
+        [TestMethod]
+        public void TestWithCasting()
+        {
+            Invoke();
+        }
     }
 }
