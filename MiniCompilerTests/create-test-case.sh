@@ -31,12 +31,12 @@ if [[ $1 ]]; then
     # Add namespace
 	sed -i "s/MiniCompilerTests/MiniCompilerTests.$1/g" TemplateValidTests.cs
 	sed -i "s/MiniCompilerTests/MiniCompilerTests.$1/g" TemplateNotValidTests.cs
-	echo "X"
+
 	# Change base class
 	sed -i "s/: ValidTests/: ${ARR[-1]}ValidTests/g" TemplateValidTests.cs
 	sed -i "s/: NotValidTests/: ${ARR[-1]}NotValidTests/g" TemplateNotValidTests.cs
 fi
-echo "X"
+
 # Change class names
 sed -i "s/TemplateValidTests/${2}ValidTests/g" TemplateValidTests.cs
 sed -i "s/TemplateNotValidTests/${2}NotValidTests/g" TemplateNotValidTests.cs

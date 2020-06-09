@@ -1,4 +1,6 @@
-﻿namespace MiniCompilerTests.Template
+﻿using System.IO;
+
+namespace MiniCompilerTests
 {
     public class TemplateNotValidTests : NotValidTests 
     {
