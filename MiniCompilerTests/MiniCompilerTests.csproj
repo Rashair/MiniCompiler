@@ -72,6 +72,8 @@
     <Compile Include="Operators\Math\SubtractTests\SubtractValidTests.cs" />
     <Compile Include="Operators\Math\MathNotValidTests.cs" />
     <Compile Include="Operators\Math\MathValidTests.cs" />
+    <Compile Include="Operators\PriorityTests\PriorityNotValidTests.cs" />
+    <Compile Include="Operators\PriorityTests\PriorityValidTests.cs" />
     <Compile Include="Operators\Relation\RelationNotValidTests.cs" />
     <Compile Include="Operators\Relation\RelationValidTests.cs" />
     <Compile Include="Operators\Unary\DoubleCastTests\DoubleCastNotValidTests.cs" />
@@ -116,6 +118,7 @@
     <Content Include="AssignmentTests\NotValid\AssignWithDeclaration.txt" />
     <Content Include="AssignmentTests\NotValid\AssignToValue.txt" />
     <Content Include="AssignmentTests\NotValid\UndeclaredVariable.txt" />
+    <Content Include="AssignmentTests\NotValid\WithCasting.txt" />
     <Content Include="AssignmentTests\Valid\WithCasting.txt" />
     <Content Include="AssignmentTests\Valid\MultilineStatement.txt" />
     <Content Include="AssignmentTests\Valid\VariableToVariable.txt" />
@@ -195,6 +198,9 @@
     <Content Include="Operators\Math\SubtractTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Math\SubtractTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Math\AddTests\Valid\MultilineStatement.txt" />
+    <Content Include="Operators\PriorityTests\NotValid\MissingParentheses.txt" />
+    <Content Include="Operators\PriorityTests\NotValid\BitAndLogic.txt" />
+    <Content Include="Operators\PriorityTests\Valid\InvalidTypeWhenPriorityWrong.txt" />
     <Content Include="Operators\Unary\BitNegationTests\Valid\UsedManyTimesInRow.txt" />
     <Content Include="Operators\Unary\BitNegationTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Unary\DoubleCastTests\NotValid\InvalidType.txt" />
@@ -218,9 +224,7 @@
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\UsedManyTimesInRow.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Operators\Priority\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

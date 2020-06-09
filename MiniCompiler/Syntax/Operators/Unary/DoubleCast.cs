@@ -4,7 +4,7 @@
     {
         public override bool CanUse(Type typeA)
         {
-            return true;
+            return typeA != Type.Unknown;
         }
 
         public override Type GetResultType(Type type)
