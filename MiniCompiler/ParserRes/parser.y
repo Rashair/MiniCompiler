@@ -32,7 +32,10 @@
 %token Assign Or And BitOr BitAnd Negation BitNegation
 %token Equals NotEquals Greater GreaterOrEqual Less LessOrEqual
 %token Add Minus Multiplies Divides OpenPar ClosePar 
-%token Colon Endl Eof Error 
+%token Eof  
+%nonassoc Endl
+%nonassoc Colon
+%nonassoc Error
 
 %type <orphans> content
 %type <node> block none
@@ -105,13 +108,15 @@ instr         : declar Colon { $$ = $1; }
               | exp Colon { $$ = $1; }
 
               // Errors
-              | declar error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | declar error Endl { if($1.Type != Type.Unknown) Error("Missing semicolon at col: {0}", @1.EndColumn); }
+              | declar error Colon { if($1.Type != Type.Unknown) Error("Invalid declaration."); }
+              | declar_key error Colon { Error("Invalid declaration."); }
               | declar_key error Endl { Error("Invalid declaration."); }
              
-              | exp error Error { Error("Invalid token at col: {0}", @2.EndColumn); }
+              | exp great_err error Colon { Error("Invalid tokens at col: {0}", @2.StartColumn); }
               | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-              | exp error Colon { Error("Invalid statement."); }
-              | error Endl { Error("Invalid statement"); }
+              | exp error Colon { Error("Invalid statement"); }
+              | error Colon { Error("Invalid statement."); }
               ;
 /* IDENTIFIERS -----------------------------------------------------------------------------------------------*/
 declar        : declar_key Id
@@ -228,6 +233,8 @@ unrecon_word  : Id Error
 mult_endl     : /* empty */
               | mult_endl Endl
               ;
+great_err     : Error
+              | great_err Error;
 end           : Colon
               | Endl
               | Eof

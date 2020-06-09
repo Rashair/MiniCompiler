@@ -129,7 +129,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AssignmentTests\NotValid\InvalidValueFormat.txt" />
+    <Content Include="AssignmentTests\NotValid\InvalidValueFormatDoubleZeros.txt" />
+    <Content Include="AssignmentTests\NotValid\InvalidValueFormatDoubleDots.txt" />
+    <Content Include="AssignmentTests\NotValid\InvalidValueFormatInt.txt" />
     <Content Include="AssignmentTests\NotValid\UnmatchingTypes.txt" />
     <Content Include="AssignmentTests\NotValid\AssignWithDeclaration.txt" />
     <Content Include="AssignmentTests\NotValid\AssignToValue.txt" />
@@ -221,7 +223,9 @@
     <Content Include="Operators\PriorityTests\NotValid\MissingParentheses.txt" />
     <Content Include="Operators\PriorityTests\NotValid\BitAndLogic.txt" />
     <Content Include="Operators\PriorityTests\Valid\InvalidTypeWhenPriorityWrong.txt" />
+    <Content Include="Operators\Relation\EqualsTests\NotValid\MultilineExpression.txt" />
     <Content Include="Operators\Relation\EqualsTests\NotValid\InvalidType.txt" />
+    <Content Include="Operators\Relation\EqualsTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Relation\EqualsTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Relation\GreaterOrEqualTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Relation\GreaterOrEqualTests\Valid\OneLineProgram.txt" />
