@@ -6,7 +6,7 @@ namespace MiniCompilerTests.Operators.Relation
     public class EqualsNotValidTests : RelationNotValidTests
     {
         [TestMethod]
-        public void TestNoSemicolon()
+        public void TestInvalidType()
         {
             Invoke();
         }

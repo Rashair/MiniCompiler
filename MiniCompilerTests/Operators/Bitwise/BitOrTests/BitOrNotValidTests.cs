@@ -6,7 +6,7 @@ namespace MiniCompilerTests.Operators.Bitwise
     public class BitOrNotValidTests : BitwiseNotValidTests
     {
         [TestMethod]
-        public void TestNoSemicolon()
+        public void TestInvalidType()
         {
             Invoke();
         }
