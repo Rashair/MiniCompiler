@@ -8,5 +8,7 @@ namespace MiniCompiler.Syntax.General
         {
             Location = loc;
         }
+
+        public override bool ShouldInclude => true;
     }
 }

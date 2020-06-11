@@ -33,6 +33,8 @@ namespace MiniCompiler.Syntax
             }
         }
 
+        public virtual bool ShouldInclude => true;
+
         public abstract int Count { get; }
 
         public abstract SyntaxNode this[int i] { get; set; }

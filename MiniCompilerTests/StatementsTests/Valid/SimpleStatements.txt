@@ -1,0 +1,11 @@
+program { 
+	int a;
+	a = 5;
+	read a;
+
+	write a;
+	write "\n";
+
+	write a + 5;
+	write "\n";
+}

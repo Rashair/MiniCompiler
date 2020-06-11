@@ -11,6 +11,8 @@ namespace MiniCompiler.Syntax.IOStream
             Location = loc;
         }
 
+        public override bool ShouldInclude => true;
+
         public string Value { get; }
     }
 }

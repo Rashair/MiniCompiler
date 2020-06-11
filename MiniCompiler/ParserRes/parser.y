@@ -102,15 +102,17 @@ content_declar  : content_declar declar_colon
                 ;
 content         : content instr
                   {
-                      ($1).Add($2);
-                      $$ = $1;
+                     if($2.ShouldInclude)
+                     {
+                        ($1).Add($2);
+                     }
+                     $$ = $1;
                   }
                 | content block
                   {
                       ($1).Add($2);
                       $$ = $1;
                   }
-                | content Colon { $$ = $1; }
                 | content_declar { $$ = $1;}
                 ;
 instr           : exp Colon { $$ = $1; }
@@ -119,6 +121,7 @@ instr           : exp Colon { $$ = $1; }
                 | read Colon 
                 | write Colon
                 | Return Colon { $$ = new Return(Loc); }
+                | Colon { $$ = new EmptyNode(Loc); }
                 
                 // Errors
                 | exp great_err error Colon { Error("Invalid tokens at col: {0}", @2.StartColumn); }

@@ -56,6 +56,8 @@
     <Compile Include="FullProgramTests\FullProgramNotValidTests.cs" />
     <Compile Include="FullProgramTests\FullProgramValidTests.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="IfElseTests\IfElseNotValidTests.cs" />
+    <Compile Include="IfElseTests\IfElseValidTests.cs" />
     <Compile Include="IOStream\IOStreamNotValidTests.cs" />
     <Compile Include="IOStream\IOStreamValidTests.cs" />
     <Compile Include="IOStream\ReadTests\ReadNotValidTests.cs" />
@@ -118,6 +120,8 @@
     <Compile Include="Operators\Unary\UnaryMinusTests\UnaryMinusValidTests.cs" />
     <Compile Include="Operators\Unary\UnaryNotValidTests.cs" />
     <Compile Include="Operators\Unary\UnaryValidTests.cs" />
+    <Compile Include="StatementsTests\StatementsNotValidTests.cs" />
+    <Compile Include="StatementsTests\StatementsValidTests.cs" />
     <Compile Include="ValidTests.cs" />
     <Compile Include="BracesTests\BracesNotValidTests.cs" />
     <Compile Include="BracesTests\BracesValidTests.cs" />
@@ -210,6 +214,8 @@
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
     <Content Include="FullProgramTests\NotValid\VariableNotDeclaredInCompilacatedCondition.txt" />
     <Content Include="FullProgramTests\Valid\PrintAllPrimeNumbers.txt" />
+    <Content Include="IfElseTests\NotValid\NoParenth.txt" />
+    <Content Include="IfElseTests\Valid\OneLineProgram.txt" />
     <Content Include="IOStream\ReadTests\NotValid\ReadUndeclaredVariable.txt" />
     <Content Include="IOStream\ReadTests\Valid\OneLineProgram.txt" />
     <Content Include="IOStream\WriteTests\NotValid\WriteUndeclaredVariable.txt" />
@@ -299,6 +305,8 @@
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\UsedManyTimesInRow.txt" />
+    <Content Include="StatementsTests\NotValid\WrongCase.txt" />
+    <Content Include="StatementsTests\Valid\SimpleStatements.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

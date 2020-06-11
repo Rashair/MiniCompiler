@@ -12,5 +12,7 @@ namespace MiniCompiler.Syntax.General
         public override SyntaxNode this[int i] { get => throw new NotImplementedException(); set { } }
 
         public override int Count => 0;
+
+        public override bool ShouldInclude => false;
     }
 }
