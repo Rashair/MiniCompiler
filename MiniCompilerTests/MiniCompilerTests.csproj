@@ -54,6 +54,12 @@
     <Compile Include="AssignmentTests\AssignmentValidTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="IOStream\IOStreamNotValidTests.cs" />
+    <Compile Include="IOStream\IOStreamValidTests.cs" />
+    <Compile Include="IOStream\ReadTests\ReadNotValidTests.cs" />
+    <Compile Include="IOStream\ReadTests\ReadValidTests.cs" />
+    <Compile Include="IOStream\WriteTests\WriteNotValidTests.cs" />
+    <Compile Include="IOStream\WriteTests\WriteValidTests.cs" />
     <Compile Include="Operators\Bitwise\BitAndTests\BitAndNotValidTests.cs" />
     <Compile Include="Operators\Bitwise\BitAndTests\BitAndValidTests.cs" />
     <Compile Include="Operators\Bitwise\BitOrTests\BitOrNotValidTests.cs" />
@@ -194,6 +200,10 @@
     <Content Include="BracesTests\Valid\NestedEmptyBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\ManySemicolons.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
+    <Content Include="IOStream\ReadTests\NotValid\ReadUndeclaredVariable.txt" />
+    <Content Include="IOStream\ReadTests\Valid\OneLineProgram.txt" />
+    <Content Include="IOStream\WriteTests\NotValid\WriteUndeclaredVariable.txt" />
+    <Content Include="IOStream\WriteTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Bitwise\BitAndTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Bitwise\BitAndTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Bitwise\BitAndTests\Valid\OneLineProgram.txt" />

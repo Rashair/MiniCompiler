@@ -6,7 +6,7 @@ namespace MiniCompilerTests.IOStream
     public class WriteNotValidTests : IOStreamNotValidTests
     {
         [TestMethod]
-        public void TestNoSemicolon()
+        public void TestWriteUndeclaredVariable()
         {
             Invoke();
         }

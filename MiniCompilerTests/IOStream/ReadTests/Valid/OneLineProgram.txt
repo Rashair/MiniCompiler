@@ -1,1 +1,1 @@
-program { }
+program { int a; read a; }
