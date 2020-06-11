@@ -1,7 +1,7 @@
 program { 
 	int b = 5555;
 
-	bool b = false;
+	bool x = false;
 	bool c = true;
 
 	double d1 = 555.05;

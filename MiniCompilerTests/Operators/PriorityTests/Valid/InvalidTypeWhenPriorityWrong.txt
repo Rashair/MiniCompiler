@@ -3,10 +3,10 @@ program
     
     int num;
     double real;
+    bool b;
 
     num = (int)real / 2;
 
-    bool b;
     b = num * 5 == real / 2.0;
     b = ~1 == (int)2.0;
 

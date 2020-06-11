@@ -25,42 +25,47 @@
     public List<SyntaxNode> orphans;
 }
 
-%token Program OpenBrace CloseBrace Return 
-%token If Else While Read Write
-%token IntKey DoubleKey BoolKey
+
+%nonassoc If Else While Read Write
+%nonassoc Else
 %token <val> True False IntVal DoubleVal Id
 %token Assign Or And BitOr BitAnd Negation BitNegation
 %token Equals NotEquals Greater GreaterOrEqual Less LessOrEqual
 %token Add Minus Multiplies Divides OpenPar ClosePar 
-%token Eof  
+%nonassoc Eof  
 %nonassoc Endl
-%nonassoc Colon
 %nonassoc Error
+%nonassoc Colon
+
+%token IntKey DoubleKey BoolKey
+%token OpenBrace CloseBrace Return 
+%token Program 
+
 
 %type <orphans> content content_declar
 %type <node> block none
-%type <node> instr
 %type <typeNode> declar_colon declar
+%type <node> instr
 %type <typeNode> exp logic_exp relat_exp addit_exp mult_exp bit_exp unary_exp factor_exp
 %type <type> declar_key 
 %type <type> unrecon_word
 
 %%
 
-start           : mult_endl Program mult_endl block mult_endl Eof
+start           : Program block Eof
                   {
                       var unit = new CompilationUnit(Loc);
-                      unit.Child = $4;
+                      unit.Child = $2;
                       GenerateCode(unit);
                       YYACCEPT;
                   }
-                | mult_endl Program error Eof
+                | Program error_eof
                   {
                       Error("Braces expected.");
                       YYABORT;
                   }
                 
-                | error Eof
+                | error_eof
                   {
                       Error("'program' statement required.");
                       YYABORT;
@@ -71,11 +76,6 @@ block           : enter_scope content leave_scope
                       var newBlock = new Block(Loc);
                       newBlock.AddChildren($2);
                       $$ = newBlock;
-                  }
-                | enter_scope content error Eof
-                  {
-                      Error("No brace matching.");
-                      YYABORT;
                   }
                 ;
 enter_scope     : OpenBrace 
@@ -92,15 +92,11 @@ content_declar  : content_declar declar_colon
                   { 
                         ($1).Add($2);
                         $$ = $1;
-                  }
-                | content_declar Endl
+                  }             
                 | none
                   {
                       $$ = new List<SyntaxNode>();
                   }
-                   // Errors
-           //   | content_declar declar error Endl { if($2.Type != Type.Unknown) Error("Missing semicolon at col: {0}", @1.EndColumn); }
-           //   | content_declar declar error Colon { if($2.Type != Type.Unknown) Error("Invalid declaration."); }
                 ;
 content         : content instr
                   {
@@ -112,28 +108,21 @@ content         : content instr
                       ($1).Add($2);
                       $$ = $1;
                   }
-                | content Endl { $$ = $1; }
                 | content Colon { $$ = $1; }
-                | content_declar
-                  {
-                      $$ = $1;
-                  }
+                | content_declar { $$ = $1;}
                 ;
 instr           : exp Colon { $$ = $1; }
-                
                 | exp great_err error Colon { Error("Invalid tokens at col: {0}", @2.StartColumn); }
-                | exp error Endl { Error("Missing semicolon at col: {0}", @1.EndColumn); }
-                | exp error Colon { Error("Invalid statement."); }
-                | error Colon { Error("Invalid statement starting at line: {0}", @1.StartLine); }
+                | error_colon { Error("Invalid statement.");  }
+                | error_eof { Error("Unexpected end of file.");  }
                 ;
 /* IDENTIFIERS  --------------------------------------------------------------------------------------------------*/
 declar_colon    : declar Colon
                   {
-                      Console.WriteLine("Type: " + $1.Type);
                       $$ = $1;
                   }
-                | declar_key error Colon { Error("Invalid declaration."); }
-                | declar_key error Endl { Error("Invalid declaration."); }
+                | declar error_colon { Error("Missing semicolon at {0}", @2.EndColumn); }
+                | declar_key error_eof { Error("Invalid declaration."); }
                 ;
 declar          : declar_key Id
                   {
@@ -151,16 +140,10 @@ declar          : declar_key Id
                           Error("Variable '{0}' was already declared in this scope.", name);
                       }
                   }
-                | declar_key unrecon_word
-                  {
-                      Error("Identifier is restricted keyword or contains prohibited characters.");
-                  }
-                | declar Endl
                 ;
 declar_key      : IntKey  { $$ = Type.Int; }
                 | BoolKey { $$ = Type.Bool; }
                 | DoubleKey { $$ = Type.Double; }
-                | declar_key Endl
                 ;
 /* ARITHEMITIC ------------------------------------------------------------------------------------------------ */ 
                 
@@ -236,6 +219,16 @@ factor_exp      : IntVal    { $$ = CreateValue(); }
                 | factor_exp Endl
                 ;
 /* ERRORS  ------------------------------------------------------------------------------------------------ */ 
+error_colon     : error Colon
+                  {
+                    lastErrorToken = $2.token;
+                  }
+                ;
+error_eof       : error Eof
+                  {
+                    lastErrorToken = $2.token;
+                  }
+                ;
 unrecon_word    : Id Error
                 | Error
                 | unrecon_word Error
@@ -248,19 +241,10 @@ mult_endl       : /* empty */
 great_err       : Error
                 | great_err Error;
 end             : Colon
-                | Endl
                 | Eof
                 ;
-end_no_eof      : Colon
-                | Endl
-                ;
-end_no_colon    : Endl
-                | Eof
-                ;
-                
-any_operator    : 
-                ;
-none            : { $$ = null; }
+none            : %prec Error 
+                    { $$ = null; }
                 ;
                 
                 

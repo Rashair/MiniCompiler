@@ -1,13 +1,14 @@
-program { 
+program {
+	bool b;
+	int k;
 	1 >
 	1 == true;
-	bool b;
+
 
 	b = 1 > 1
 	== true
 	== false;
 
-	int k;
 	k = (int) (
 			(1 
 				>

@@ -1,9 +1,10 @@
 program 
 { 
 	double d;
+	int k; 
+
 	d = 22.555555;
 
-	int k;
 	k = 
 	 (
 				int  // Oppa Gangnam style

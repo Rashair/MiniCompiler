@@ -1,1 +1,11 @@
-program { double a; { int a; int b; int c; } }
+program {
+    bool ,;
+    double _____;
+    int ((()));
+
+    double -=+;
+    double 1$;
+    int 5!;
+    double &;
+    int &&
+}

@@ -1,7 +1,7 @@
 program { 
+	bool b;
 	1 == 
 	1 == true;
-	bool b;
 
 	b = 1 == 1
 	== true

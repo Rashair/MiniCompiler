@@ -12,6 +12,7 @@ namespace MiniCompiler
     public partial class Parser
     {
         private IScope currentScope;
+        private Token lastErrorToken;
 
         public Parser(Scanner scanner) : base(scanner)
         {
@@ -49,9 +50,15 @@ namespace MiniCompiler
             Console.WriteLine($"  line {Loc.StartLine,3}: {string.Format(msg, pars)}");
             ++Compiler.errors;
             yyerrok();
+
             CurrentSemanticValue.node = new EmptyNode(Loc);
             CurrentSemanticValue.typeNode = new EmptyTypeNode(Loc);
             CurrentSemanticValue.type = Type.Unknown;
+
+            if (lastErrorToken == Token.Eof)
+            {
+                YYAbort();
+            }
 
             return CurrentSemanticValue;
         }

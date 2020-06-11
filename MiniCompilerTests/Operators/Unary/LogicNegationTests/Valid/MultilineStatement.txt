@@ -1,8 +1,9 @@
 program 
 { 
 	bool b;
-	b = false;
 	bool a;
+
+	b = false;
 	a = 
 	  !
 					b // I was scared of exclamation mark so I went right

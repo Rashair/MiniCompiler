@@ -5,7 +5,7 @@ namespace MiniCompilerTests
     [TestClass]
     public class DeclarationsNotValidTests : NotValidTests
     {
-        [TestMethod, Timeout(DefaultTimeout)]
+        [TestMethod, Timeout(DefaultTimeout * 3)]
         public void TestWithoutSemicolon()
         {
             Invoke();

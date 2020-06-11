@@ -1,9 +1,9 @@
 program 
 { 
 	bool b;
-	b = true;
-
 	bool k;
+
+	b = true;
 	k =
 	  !!!!!
 	  !!!!!
