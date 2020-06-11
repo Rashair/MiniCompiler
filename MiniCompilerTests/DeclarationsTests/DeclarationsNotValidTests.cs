@@ -90,5 +90,29 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestWithoutSemicolonInTheMiddle()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestWithoutSemicolonAfterOtherErrors()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestWithoutSemicolonMany()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestWrongIdentifiers()
+        {
+            Invoke();
+        }
     }
 }

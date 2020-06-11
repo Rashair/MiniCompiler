@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MiniCompilerTests
+namespace MiniCompilerTests.Operators.Relation
 {
     [TestClass]
-    public class FullProgramValidTests : ValidTests
+    public class CombinedValidTests : RelationValidTests
     {
         [TestMethod]
-        public void TestPrintAllPrimeNumbers()
+        public void TestAssignToVariable()
         {
             Invoke();
         }

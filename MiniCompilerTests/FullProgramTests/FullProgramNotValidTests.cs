@@ -6,7 +6,7 @@ namespace MiniCompilerTests
     public class FullProgramNotValidTests : NotValidTests
     {
         [TestMethod]
-        public void TestNoSemicolon()
+        public void TestVariableNotDeclaredInCompilacatedCondition()
         {
             Invoke();
         }

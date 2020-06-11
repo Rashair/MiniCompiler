@@ -10,5 +10,11 @@ namespace MiniCompilerTests.Operators.Bitwise
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestInvalidTypeWithVariable()
+        {
+            Invoke();
+        }
     }
 }
