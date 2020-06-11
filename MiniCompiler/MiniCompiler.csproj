@@ -75,11 +75,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScannerRes\Scanner.cs" />
     <Compile Include="Syntax\Abstract\BigParentNode.cs" />
+    <Compile Include="Syntax\Abstract\TrinityNode.cs" />
     <Compile Include="Syntax\Abstract\SiblingsNode.cs" />
     <Compile Include="Syntax\Abstract\SingleChildNode.cs" />
     <Compile Include="Syntax\Abstract\TypeNode.cs" />
+    <Compile Include="Syntax\General\ElseCond.cs" />
     <Compile Include="Syntax\General\EmptyTypeNode.cs" />
+    <Compile Include="Syntax\General\IfCond.cs" />
     <Compile Include="Syntax\General\Return.cs" />
+    <Compile Include="Syntax\General\WhileLoop.cs" />
     <Compile Include="Syntax\IOStream\Read.cs" />
     <Compile Include="Syntax\IOStream\SimpleString.cs" />
     <Compile Include="Syntax\IOStream\Write.cs" />

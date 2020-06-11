@@ -13,6 +13,7 @@ namespace MiniCompiler
     {
         private IScope currentScope;
         private Token lastErrorToken;
+        private bool recovering;
 
         public Parser(Scanner scanner) : base(scanner)
         {
@@ -45,10 +46,23 @@ namespace MiniCompiler
             currentScope = currentScope.GetParentScope();
         }
 
+        private void StartRecovery()
+        {
+            recovering = true;
+        }
+
+        private void EndRecovery()
+        {
+            recovering = false;
+        }
+
         private ValueType Error(string msg, params object[] pars)
         {
-            Console.WriteLine($"  line {Loc.StartLine,3}: {string.Format(msg, pars)}");
-            ++Compiler.errors;
+            if (!recovering)
+            {
+                Console.WriteLine($"  line {Loc.StartLine,3}: {string.Format(msg, pars)}");
+                ++Compiler.errors;
+            }
             yyerrok();
 
             CurrentSemanticValue.node = new EmptyNode(Loc);
@@ -65,28 +79,40 @@ namespace MiniCompiler
 
         private TypeNode TryCreateOperator(Token token, TypeNode left)
         {
+            TypeNode result;
             var expType = left.Type;
             if (!Operator.CanUse(token, expType))
             {
-                return Error("Cannot use {0} on {1}.", token, expType)
+                result = Error("Cannot use {0} on {1}.", token, expType)
                        .typeNode;
+                StartRecovery();
+            }
+            else
+            {
+                result = Operator.Create(token, expType, Loc)
+                         .WithLeft(left);
             }
 
-            return Operator.Create(token, expType, Loc)
-                         .WithLeft(left);
+            return result;
         }
 
         private TypeNode TryCreateOperator(Token token, TypeNode left, TypeNode right)
         {
+            TypeNode result;
             if (!Operator.CanUse(token, left.Type, right.Type))
             {
-                return Error("Cannot {0} {1} and {2}.", token, left.Type, right.Type.ToString())
+                result = Error("Cannot {0} {1} and {2}.", token, left.Type, right.Type.ToString())
                        .typeNode;
+                StartRecovery();
             }
-
-            return Operator.Create(token, left.Type, right.Type, Loc)
+            else
+            {
+                result = Operator.Create(token, left.Type, right.Type, Loc)
                          .WithLeft(left)
                          .WithRight(right);
+            }
+
+            return result;
         }
 
         private TypeNode CreateValue()
@@ -95,23 +121,35 @@ namespace MiniCompiler
             Type type = value.token.ConvertToType();
             string val = value.val;
 
+            TypeNode result;
             if (type == Type.Unknown)
             {
-                return Error("Cannot use provided type: {0}", value.token).typeNode;
+                result = Error("Cannot use provided type: {0}", value.token).typeNode;
+                StartRecovery();
+            }
+            else
+            {
+                result = new Value(type, val, CurrentLocationSpan);
             }
 
-            return new Value(type, val, CurrentLocationSpan);
+            return result;
         }
 
         private TypeNode TryCreateVariableReference(string id, LexLocation loc = null)
         {
             VariableDeclaration declar = null;
+            TypeNode result;
             if (!currentScope.TryGetVariable(id, ref declar))
             {
-                return Error("Variable {0} not declared.", id).typeNode;
+                result = Error("Variable {0} not declared.", id).typeNode;
+                StartRecovery();
+            }
+            else
+            {
+                result = new VariableReference(declar, loc);
             }
 
-            return new VariableReference(declar, loc);
+            return result;
         }
     }
 }

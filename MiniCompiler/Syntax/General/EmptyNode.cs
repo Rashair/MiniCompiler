@@ -9,7 +9,7 @@ namespace MiniCompiler.Syntax.General
         {
         }
 
-        public override SyntaxNode this[int i] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override SyntaxNode this[int i] { get => throw new NotImplementedException(); set { } }
 
         public override int Count => 0;
     }

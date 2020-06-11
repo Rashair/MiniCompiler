@@ -44,8 +44,10 @@ namespace MiniCompiler.Syntax.Abstract
                 {
                     Child = value;
                 }
-
-                throw new ArgumentOutOfRangeException("You cannot give me what I seek.");
+                else
+                {
+                    throw new ArgumentOutOfRangeException("You cannot give me what I seek.");
+                }
             }
         }
     }
