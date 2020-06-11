@@ -1,11 +1,7 @@
 program {
-    bool ,;
-    double _____;
-    int ((()));
+    double doublE;
+    int Int;
+    bool Bool;
 
-    double -=+;
-    double 1$;
-    int 5!;
-    double &;
-    int &&
+    Bool ;
 }
