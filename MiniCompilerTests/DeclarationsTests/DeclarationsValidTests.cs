@@ -233,5 +233,17 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestNameSameAsTypeDifferentCase()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestNameSameAsKeywordDifferentCase()
+        {
+            Invoke();
+        }
     }
 }

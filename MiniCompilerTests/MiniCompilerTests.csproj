@@ -162,6 +162,8 @@
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseStart.txt" />
     <Content Include="DeclarationsTests\Valid\CommentAfterDeclaration.txt" />
     <Content Include="DeclarationsTests\Valid\DifferentNames.txt" />
+    <Content Include="DeclarationsTests\Valid\NameSameAsTypeDifferentCase.txt" />
+    <Content Include="DeclarationsTests\Valid\NameSameAsKeywordDifferentCase.txt" />
     <Content Include="DeclarationsTests\Valid\TwoScopes.txt" />
     <Content Include="DeclarationsTests\Valid\MultilineStatement.txt" />
     <Content Include="DeclarationsTests\Valid\SameNamesDifferentScope.txt" />
