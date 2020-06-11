@@ -8,6 +8,7 @@
 %using MiniCompiler.Syntax;
 %using MiniCompiler.Syntax.Abstract;
 %using MiniCompiler.Syntax.General;
+%using MiniCompiler.Syntax.IOStream;
 %using MiniCompiler.Syntax.Variables;
 %using MiniCompiler.Syntax.Variables.Scopes;
 %using MiniCompiler.Syntax.Operators;
@@ -25,17 +26,16 @@
     public List<SyntaxNode> orphans;
 }
 
-
-%nonassoc If Else While Read Write
+%token String
+%token While Read Write
+%nonassoc If 
 %nonassoc Else
 %token <val> True False IntVal DoubleVal Id
 %token Assign Or And BitOr BitAnd Negation BitNegation
 %token Equals NotEquals Greater GreaterOrEqual Less LessOrEqual
 %token Add Minus Multiplies Divides OpenPar ClosePar 
-%nonassoc Eof  
-%nonassoc Endl
-%nonassoc Error
-%nonassoc Colon
+%nonassoc Eof Endl Error Colon
+ 
 
 %token IntKey DoubleKey BoolKey
 %token OpenBrace CloseBrace Return 
@@ -44,8 +44,9 @@
 
 %type <orphans> content content_declar
 %type <node> block none
-%type <typeNode> declar_colon declar
 %type <node> instr
+%type <node> read write
+%type <typeNode> declar_colon declar
 %type <typeNode> exp logic_exp relat_exp addit_exp mult_exp bit_exp unary_exp factor_exp
 %type <type> declar_key 
 %type <type> unrecon_word
@@ -112,6 +113,11 @@ content         : content instr
                 | content_declar { $$ = $1;}
                 ;
 instr           : exp Colon { $$ = $1; }
+                | read Colon 
+                | write Colon
+                | Return Colon { $$ = new Return(Loc); }
+                
+                // Errors
                 | exp great_err error Colon { Error("Invalid tokens at col: {0}", @2.StartColumn); }
                 | error_colon { Error("Invalid statement.");  }
                 | error_eof { Error("Unexpected end of file.");  }
@@ -147,6 +153,17 @@ declar_key      : IntKey  { $$ = Type.Int; }
                 | BoolKey { $$ = Type.Bool; }
                 | DoubleKey { $$ = Type.Double; }
                 ;
+/* Output  --------------------------------------------------------------------------------------------------*/
+read            : Read Id 
+                  {
+                    var variable = TryCreateVariableReference($2, @2);
+                    $$ = new Read(@1) { Child = variable };
+                  }
+                ;
+write           : Write exp     { $$ = new Write(@1) { Child = $2 }; }
+                | Write String  { $$ = new Write(@1) { Child = new SimpleString($2.val , @2) }; }
+                ;
+
 /* ARITHEMITIC ------------------------------------------------------------------------------------------------ */ 
                 
 exp             : logic_exp Assign mult_endl exp
@@ -210,13 +227,7 @@ factor_exp      : IntVal    { $$ = CreateValue(); }
                 | OpenPar mult_endl exp ClosePar { $$ = $3; }
                 | Id 
                   {
-                      VariableDeclaration declar = null;
-                      if(!currentScope.TryGetVariable($1, ref declar))
-                      {
-                          Error("Variable {0} not declared.", $1);
-                          return;
-                      }
-                      $$ = new VariableReference(declar, @1);
+                      $$ = TryCreateVariableReference($1, @1);
                   }
                 | factor_exp Endl
                 ;

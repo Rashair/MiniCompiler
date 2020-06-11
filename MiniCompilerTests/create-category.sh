@@ -8,7 +8,6 @@ fi;
 
 echo $1;
 path=`realpath ./Template`;
-echo $path;
 
 IFS='.' read -ra ARR <<< "$1"
 namespace=""
@@ -39,6 +38,8 @@ for dir in "${ARR[@]}"; do
 		# Change file names
 		mv TemplateValidTests.cs "${dir}ValidTests.cs"
 		mv TemplateNotValidTests.cs "${dir}NotValidTests.cs"
+		
+		echo $dir;
 	else
 		cd $dir;
 	fi

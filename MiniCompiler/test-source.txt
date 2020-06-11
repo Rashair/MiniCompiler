@@ -1,7 +1,10 @@
 program {
-    double doublE;
-    int Int;
-    bool Bool;
+    int a;
+    a = 5;
 
-    Bool ;
+    write a;
+
+    write "abracadabra53453674756723%@##$^%^&*&(&*(##GFDBVCBSRWERZXCSDTRT";
+
+    read a;
 }

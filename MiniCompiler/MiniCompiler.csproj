@@ -79,6 +79,10 @@
     <Compile Include="Syntax\Abstract\SingleChildNode.cs" />
     <Compile Include="Syntax\Abstract\TypeNode.cs" />
     <Compile Include="Syntax\General\EmptyTypeNode.cs" />
+    <Compile Include="Syntax\General\Return.cs" />
+    <Compile Include="Syntax\IOStream\Read.cs" />
+    <Compile Include="Syntax\IOStream\SimpleString.cs" />
+    <Compile Include="Syntax\IOStream\Write.cs" />
     <Compile Include="Syntax\Operators\Bitwise\BitAnd.cs" />
     <Compile Include="Syntax\Operators\Bitwise\BitOr.cs" />
     <Compile Include="Syntax\Operators\Logical\And.cs" />

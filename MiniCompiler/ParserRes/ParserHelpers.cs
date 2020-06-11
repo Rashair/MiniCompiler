@@ -102,5 +102,16 @@ namespace MiniCompiler
 
             return new Value(type, val, CurrentLocationSpan);
         }
+
+        private TypeNode TryCreateVariableReference(string id, LexLocation loc = null)
+        {
+            VariableDeclaration declar = null;
+            if (!currentScope.TryGetVariable(id, ref declar))
+            {
+                return Error("Variable {0} not declared.", id).typeNode;
+            }
+
+            return new VariableReference(declar, loc);
+        }
     }
 }

@@ -85,7 +85,12 @@ namespace MiniCompiler.Syntax
 
         public override string ToString()
         {
-            return $"{GetType().Name}({Location?.StartLine}..{Location?.EndLine})";
+            var result = GetType().Name;
+            if (Location != null)
+            {
+                result += $"({Location.StartLine}..{Location.EndLine}) ({Location.StartColumn}..{Location.EndColumn})";
+            }
+            return result;
         }
 
         public bool IsLeaf()

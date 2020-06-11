@@ -53,6 +53,7 @@ Endl               (\r\n|\n)
 "("           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.token = Token.OpenPar; return (int) Token.OpenPar; }
 ")"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.token = Token.ClosePar; return (int) Token.ClosePar; }
 {Id}          { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.val=yytext; yylval.token = Token.Id; return (int) Token.Id; }
+{String}	  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.val=yytext; yylval.token = Token.String; return (int) Token.String; }
 ";"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.token = Token.Colon; return (int) Token.Colon; }
 {Endl}		  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); }
 <<EOF>>       { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.token = Token.Eof; return (int) Token.Eof; }
