@@ -84,5 +84,11 @@ namespace MiniCompilerTests
             ExpectedErrors = 9;
             Invoke();
         }
+
+        [TestMethod]
+        public void TestDeclarationAfterInstruction()
+        {
+            Invoke();
+        }
     }
 }

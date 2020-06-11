@@ -146,6 +146,7 @@
     <Content Include="AssignmentTests\Valid\OneLineProgram.txt" />
     <Content Include="BracesTests\Valid\NestedBracesComments.txt" />
     <Content Include="BracesTests\Valid\NestedBracesSemicolons.txt" />
+    <Content Include="DeclarationsTests\NotValid\DeclarationAfterInstruction.txt" />
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseMiddle.txt" />
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseEnd.txt" />
     <Content Include="DeclarationsTests\NotValid\NameSameAsKeyword.txt" />
