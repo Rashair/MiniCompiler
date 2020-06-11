@@ -228,10 +228,12 @@ exp             : logic_exp Assign mult_endl exp
                       if(rhs.Type == Type.Unknown)
                       {
                           $$ = rhs;
+                          EndRecovery();
                       }
                       else if(lhs.Type == Type.Unknown)
                       {
                           $$ = lhs;
+                          EndRecovery();
                       }
                       else if(lhs is VariableReference reference)
                       {
