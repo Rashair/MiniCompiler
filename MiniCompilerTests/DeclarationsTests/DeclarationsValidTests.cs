@@ -162,6 +162,8 @@ namespace MiniCompilerTests
                 new Block
                 {
                     new VariableDeclaration("aa", mainScope, Type.Int),
+                    new VariableDeclaration("ee", mainScope, Type.Int),
+                    new VariableDeclaration("bbbb", mainScope, Type.Int),
                     new Block
                     {
                         new VariableDeclaration("aa", scopes[0], Type.Int),
@@ -172,12 +174,10 @@ namespace MiniCompilerTests
                         new VariableDeclaration("bb", scopes[1], Type.Bool),
                         new VariableDeclaration("aa", scopes[1], Type.Double),
                     },
-                    new VariableDeclaration("bbbb", mainScope, Type.Int),
                     new Block
                     {
                         new VariableDeclaration("bbbb", scopes[2], Type.Int),
                     },
-                    new VariableDeclaration("ee", mainScope, Type.Int),
                     new Block
                     {
                         new VariableDeclaration("ee", scopes[3], Type.Double),
@@ -224,6 +224,12 @@ namespace MiniCompilerTests
 
         [TestMethod]
         public void TestMultilineStatement()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestTwoScopes()
         {
             Invoke();
         }

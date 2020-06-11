@@ -1,15 +1,1 @@
-program { 
-    double d;
-    d = 1..2;
-    d = 2. ;
-    d = .5 ;
-    
-    d = 0.
-    0;
-    d = 000
-    .05;
-    d = 
-    .004;
-    d = 0.
-    .5;
-}
+program { double a; { int a; int b; int c; } }
