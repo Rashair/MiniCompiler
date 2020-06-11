@@ -122,7 +122,7 @@ declar_colon    : declar Colon
                       $$ = $1;
                   }
                 | declar error_colon { Error("Missing semicolon at {0}", @2.EndColumn); }
-                | declar_key error_eof { Error("Invalid declaration."); }
+                | declar error_eof { Error("Invalid declaration."); }
                 ;
 declar          : declar_key Id
                   {
