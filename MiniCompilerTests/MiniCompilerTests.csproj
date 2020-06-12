@@ -240,7 +240,7 @@
     <Content Include="Operators\Bitwise\BitOrTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Bitwise\BitOrTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Logical\CombinedTests\NotValid\InvalidType.txt" />
-    <Content Include="Operators\Logical\CombinedTests\Valid\OneLineProgram.txt" />
+    <Content Include="Operators\Logical\CombinedTests\Valid\ManyCombinations.txt" />
     <Content Include="Operators\Logical\OrTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Logical\OrTests\NotValid\MultipleUsage.txt" />
     <Content Include="Operators\Logical\OrTests\Valid\MultilineStatement.txt" />

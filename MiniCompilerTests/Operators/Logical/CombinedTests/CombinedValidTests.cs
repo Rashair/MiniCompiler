@@ -6,7 +6,7 @@ namespace MiniCompilerTests.Operators.Logical
     public class CombinedValidTests : LogicalValidTests
     {
         [TestMethod]
-        public void TestOneLineProgram()
+        public void TestManyCombinations()
         {
             Invoke();
         }
