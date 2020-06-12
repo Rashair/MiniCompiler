@@ -1,24 +1,26 @@
 program 
 { 
 	int k;
-	int b;
 	double d;
 	bool a;
+	bool b;
+	
+	
+	a = true;
+	k = 5;
+	d = 0.5;
 
-	d = 5;
-	{
-		int k;
-		write "First k: ";
-		write k;
+
+
+	if(a) {
 		write "\n";
-
-		k = 2;
-		write "Second k: ";
-		write k;
+		write d;
 		write "\n";
 	}
-
-	write "First d: ";
-	write d;
-	write "\n";
+	
+	if(b){
+	
+	}
+	else
+		write k;
 }

@@ -22,20 +22,18 @@ namespace SyntaxAnalysis
             a = 5;
             c = 1.0;
 
-            Test();
+            //  Test();
             Console.WriteLine(a);
+            a = a / 2;
 
-            bool b;
-            b = true;
-
-            if(b || false)
+            if(a == 5)
             {
                 double d;
                 d = 5.55;
                 Console.Write(string.Format(CultureInfo.InvariantCulture, "{0:0.000000}", 5.5 + d / 2.0));
             }
 
-            Console.WriteLine(b);
+            Console.WriteLine(true);
             Console.WriteLine(c);
         }
     }

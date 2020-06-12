@@ -30,7 +30,7 @@ namespace MiniCompiler.Extensions
                 case Type.Double:
                     return "r8";
                 case Type.Bool:
-                    return "BOOLEAN";
+                    return "i4";
             }
 
             return null;

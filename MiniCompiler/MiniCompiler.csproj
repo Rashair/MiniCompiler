@@ -162,6 +162,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SyntaxAnalysis\SyntaxAnalysis.csproj">
+      <Project>{8897c28a-cae7-4ffc-adc0-62f3f610f508}</Project>
+      <Name>SyntaxAnalysis</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

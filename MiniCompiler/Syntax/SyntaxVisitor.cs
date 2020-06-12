@@ -18,11 +18,15 @@ namespace MiniCompiler.Syntax
     public class SyntaxVisitor
     {
         private readonly SyntaxTree tree;
+        
         private const string TTY = "[mscorlib]System.Console";
         private readonly string PrintStr = $"call void {TTY}::Write(string)";
         private readonly string PrintInt = $"call void {TTY}::Write({Type.Int.ToCil()})";
         private readonly string PrintBool = $"call void {TTY}::Write({Type.Bool.ToCil()})";
         private readonly string PrintDouble = $"call void {TTY}::Write({Type.Double.ToCil()})";
+
+        private int ifCount;
+
 
 
         public SyntaxVisitor(SyntaxTree tree)
@@ -151,12 +155,25 @@ namespace MiniCompiler.Syntax
 
         public void Visit(IfCond ifCond)
         {
-
+            ifCond.Left.Visit(this);
+            if (ifCond.HasElse)
+            {
+                EmitCode($"brfalse ELSE_{ifCount}");
+                ifCond.Middle.Visit(this);
+                ifCond.Right.Visit(this);
+            }
+            else
+            {
+                EmitCode($"brfalse OUT_IF_ELSE_{ifCount}");
+                ifCond.Middle.Visit(this);
+            }
+            EmitCode($"OUT_IF_ELSE_{ifCount++}: ");
         }
 
         public void Visit(ElseCond elseCond)
         {
-
+            EmitCode($"ELSE_{ifCount}: ");
+            elseCond.Child.Visit(this);
         }
 
         public void Visit(And and)

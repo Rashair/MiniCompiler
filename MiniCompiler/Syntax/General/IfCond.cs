@@ -10,6 +10,8 @@ namespace MiniCompiler.Syntax.General
             Location = loc;
         }
 
+        public bool HasElse => Count > 2;
+
         public override void Visit(SyntaxVisitor visitor)
         {
             visitor.Visit(this);
