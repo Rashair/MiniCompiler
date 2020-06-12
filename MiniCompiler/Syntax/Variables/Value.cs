@@ -34,5 +34,10 @@ namespace MiniCompiler.Syntax.Variables
         {
             return base.ToString() + ": " + Val;
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

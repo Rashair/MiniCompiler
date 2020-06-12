@@ -16,5 +16,9 @@
         {
             return Type.Unknown;
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+        }
     }
 }

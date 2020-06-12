@@ -133,5 +133,10 @@ namespace MiniCompiler.Syntax
         {
             levels.Clear();
         }
+
+        public void Visit(SyntaxVisitor visitor)
+        {
+            compilationUnit.Visit(visitor);
+        }
     }
 }

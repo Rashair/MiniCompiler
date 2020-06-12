@@ -20,5 +20,10 @@
         {
             return type;
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

@@ -11,5 +11,10 @@
         {
             return Type.Double;
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

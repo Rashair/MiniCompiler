@@ -14,5 +14,9 @@ namespace MiniCompiler.Syntax.General
         public override int Count => 0;
 
         public override bool ShouldInclude => false;
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+        }
     }
 }

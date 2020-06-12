@@ -8,5 +8,10 @@ namespace MiniCompiler.Syntax.General
         public Block(LexLocation location = null) : base(location)
         {
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

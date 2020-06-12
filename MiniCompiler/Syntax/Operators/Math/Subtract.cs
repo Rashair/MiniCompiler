@@ -20,5 +20,10 @@
         {
             return typeA == Type.Double || typeB == Type.Double ? Type.Double : Type.Int;
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

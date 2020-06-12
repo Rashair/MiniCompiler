@@ -39,6 +39,8 @@ namespace MiniCompiler.Syntax
 
         public abstract SyntaxNode this[int i] { get; set; }
 
+        public abstract void Visit(SyntaxVisitor visitor);
+
         public override bool Equals(object obj)
         {
             if (obj is SyntaxNode other)

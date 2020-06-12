@@ -40,5 +40,10 @@ namespace MiniCompiler.Syntax.Variables.Scopes
         {
             return $"{base.ToString()}: {Declaration.Name}";
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

@@ -20,5 +20,10 @@
         {
             return Type.Bool;
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

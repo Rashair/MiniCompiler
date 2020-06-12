@@ -15,5 +15,10 @@ namespace MiniCompiler.Syntax.General
         {
             this.Tree = tree;
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

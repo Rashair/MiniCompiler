@@ -9,5 +9,10 @@ namespace MiniCompiler.Syntax.IOStream
         {
             Location = loc;
         }
+
+        public override void Visit(SyntaxVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }
