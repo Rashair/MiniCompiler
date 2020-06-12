@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiniCompiler;
 using MiniCompiler.Extensions;
+using MiniCompiler.Syntax.Abstract;
 using MiniCompiler.Syntax.General;
 using MiniCompiler.Syntax.Operators.Assignment;
 using MiniCompiler.Syntax.Variables;
@@ -21,8 +22,8 @@ namespace MiniCompilerTests
                 {
                     declare,
                     Operator.Create(Token.Assign, Type.Int, Type.Int)
-                    .WithLeft(new VariableReference(declare))
-                    .WithRight(new Value(Type.Int, "5"))
+                    .WithLeft<Operator, TypeNode>(new VariableReference(declare))
+                    .WithRight<Operator, TypeNode>(new Value(Type.Int, "5"))
                 }
             );
 
@@ -43,14 +44,14 @@ namespace MiniCompilerTests
                     declare1,
                     declare2,
                     Operator.Create(Token.Assign, Type.Int, Type.Int)
-                    .WithLeft(new VariableReference(declare1))
-                    .WithRight(
+                    .WithLeft<Operator, TypeNode>(new VariableReference(declare1))
+                    .WithRight<Operator, TypeNode>(
                         Operator.Create(Token.Assign, Type.Int, Type.Int)
-                         .WithLeft(new VariableReference(declare0))
-                         .WithRight(
+                         .WithLeft<Operator, TypeNode>(new VariableReference(declare0))
+                         .WithRight<Operator, TypeNode>(
                             Operator.Create(Token.Assign, Type.Int, Type.Int)
-                            .WithLeft( new VariableReference(declare2))
-                            .WithRight( new Value(Type.Int, "0"))
+                            .WithLeft<Operator, TypeNode>( new VariableReference(declare2))
+                            .WithRight<Operator, TypeNode>( new Value(Type.Int, "0"))
 
                          )
                     )
