@@ -3,7 +3,7 @@ using QUT.Gppg;
 
 namespace MiniCompiler.Syntax.IOStream
 {
-    public class Read : SingleChildNode
+    public class Read : SingleChildNode<TypeNode>
     {
         public Read(LexLocation loc = null)
         {

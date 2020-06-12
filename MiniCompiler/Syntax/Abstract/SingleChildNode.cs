@@ -2,12 +2,13 @@
 
 namespace MiniCompiler.Syntax.Abstract
 {
-    public abstract class SingleChildNode : SyntaxNode
+    public abstract class SingleChildNode<T> : SyntaxNode
+        where T : SyntaxNode
     {
-        private SyntaxNode child;
+        private T child;
         protected int count = 0;
 
-        public SyntaxNode Child
+        public T Child
         {
             get => child;
             set
@@ -16,7 +17,8 @@ namespace MiniCompiler.Syntax.Abstract
             }
         }
 
-        protected void SetChild(ref SyntaxNode childToSet, SyntaxNode value)
+        protected void SetChild<TSet>(ref TSet childToSet, TSet value)
+            where TSet : SyntaxNode
         {
             if (value == null)
             {
@@ -42,7 +44,7 @@ namespace MiniCompiler.Syntax.Abstract
             {
                 if (i == 0)
                 {
-                    Child = value;
+                    Child = (T)value;
                 }
                 else
                 {

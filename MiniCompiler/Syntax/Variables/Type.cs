@@ -6,4 +6,5 @@ public enum Type
     Int = Token.IntKey,
     Bool = Token.BoolKey,
     Double = Token.DoubleKey,
+    String = Token.String * -1,
 }

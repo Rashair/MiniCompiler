@@ -1,6 +1,6 @@
 ﻿namespace MiniCompiler.Syntax.Abstract
 {
-    public abstract class TypeNode : SiblingsNode
+    public abstract class TypeNode : SiblingsNode<TypeNode, TypeNode>
     {
         public virtual Type Type { get; protected set; }
 

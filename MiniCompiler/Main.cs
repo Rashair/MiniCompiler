@@ -10,6 +10,7 @@ namespace MiniCompiler
         private static StreamWriter sourceWriter;
         public static Scanner scanner;
         public static Parser parser;
+        public static string file;
 
         public static int errors = 0;
         public static List<string> sourceLines;
@@ -20,7 +21,7 @@ namespace MiniCompiler
         {
             Console.WriteLine("\nMini Compiler - Gardens Point");
 
-            string file = args.FirstOrDefault();
+            file = args.FirstOrDefault();
             if (file == null)
             {
                 Console.Write("\nsource file:  ");
@@ -49,9 +50,7 @@ namespace MiniCompiler
                 Console.WriteLine();
 
                 sourceWriter = new StreamWriter(file + ".il");
-                GenProlog();
                 parser.Parse();
-                GenEpilog();
 
                 sourceWriter.Close();
             }
@@ -76,35 +75,6 @@ namespace MiniCompiler
         public static void EmitCode(string instr, params object[] args)
         {
             sourceWriter.WriteLine(instr, args);
-        }
-
-        private static void GenProlog()
-        {
-            EmitCode(".assembly extern mscorlib { }");
-            EmitCode(".assembly MiniCompiler { }");
-            EmitCode(".method static void main()");
-            EmitCode("{");
-            EmitCode(".entrypoint");
-            EmitCode(".try");
-            EmitCode("{");
-            EmitCode();
-
-            EmitCode("// prolog");
-            EmitCode();
-        }
-
-        private static void GenEpilog()
-        {
-            EmitCode("leave EndMain");
-            EmitCode("}");
-            EmitCode("catch [mscorlib]System.Exception");
-            EmitCode("{");
-            EmitCode("callvirt instance string [mscorlib]System.Exception::get_Message()");
-            EmitCode("call void [mscorlib]System.Console::WriteLine(string)");
-            EmitCode("leave EndMain");
-            EmitCode("}");
-            EmitCode("EndMain: ret");
-            EmitCode("}");
         }
     }
 }

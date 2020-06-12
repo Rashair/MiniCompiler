@@ -68,6 +68,7 @@
     <Compile Include="Extensions\LexLocationExtensions.cs" />
     <Compile Include="Extensions\OperatorEnumExtensions.cs" />
     <Compile Include="Extensions\SiblingsNodeExtensions.cs" />
+    <Compile Include="Extensions\EnumToCilExtensions.cs" />
     <Compile Include="Extensions\TokenExtensions.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ParserRes\Parser.cs" />

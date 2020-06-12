@@ -1,4 +1,6 @@
-﻿using MiniCompiler.Syntax.General;
+﻿using MiniCompiler.Extensions;
+using MiniCompiler.Syntax.Abstract;
+using MiniCompiler.Syntax.General;
 using MiniCompiler.Syntax.IOStream;
 using MiniCompiler.Syntax.Operators.Assignment;
 using MiniCompiler.Syntax.Operators.Bitwise;
@@ -8,13 +10,19 @@ using MiniCompiler.Syntax.Operators.Relation;
 using MiniCompiler.Syntax.Operators.Unary;
 using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
-using System;
+using static MiniCompiler.Compiler;
 
 namespace MiniCompiler.Syntax
 {
     public class SyntaxVisitor
     {
         private readonly SyntaxTree tree;
+        private const string TTY = "[mscorlib]System.Console";
+        private readonly string PrintStr = $"void {TTY}::Write(string)";
+        private readonly string PrintInt = $"void {TTY}::Write({Type.Int.ToCil()})";
+        private readonly string PrintBool = $"void {TTY}::Write({Type.Bool.ToCil()})";
+        private readonly string PrintDouble = $"void {TTY}::Write({Type.Double.ToCil()})";
+
 
         public SyntaxVisitor(SyntaxTree tree)
         {
@@ -23,17 +31,109 @@ namespace MiniCompiler.Syntax
 
         public void Visit()
         {
+            GenProlog();
             tree.Visit(this);
+            GenEpilog();
         }
+
+        private static void GenProlog()
+        {
+            EmitCode(".assembly extern mscorlib { auto }");
+            EmitCode(".assembly MiniCompiler { }");
+            EmitCode($".module MiniCompiler.exe");
+
+            /* From Expert .NET 2.0 IL Assembler */
+        }
+
+        private static void GenEpilog()
+        {
+        }
+
 
         public void Visit(CompilationUnit compilationUnit)
         {
-            Compiler.EmitCode("ldstr \"\\nEnd of execution\\n\"");
-            Compiler.EmitCode("call void [mscorlib]System.Console::WriteLine(string)");
-            Compiler.EmitCode("");
+            EmitCode(".method static void Program()");
+            EmitCode("{");
+            EmitCode(".entrypoint");
+
+            EmitCode(".try");
+            EmitCode("{");
+            EmitCode();
+
 
             compilationUnit.Child.Visit(this);
+
+            EmitCode("ldstr \"\\nEnd of Program execution\\n\"");
+            EmitCode("call {0}", PrintStr);
+            EmitCode("");
+
+            EmitCode("leave Return");
+            EmitCode("}");
+
+            EmitCode("catch [mscorlib]System.Exception");
+            EmitCode("{");
+            EmitCode("callvirt instance string [mscorlib]System.Exception::get_Message()");
+            EmitCode("call {0}", PrintStr);
+            EmitCode("leave Return");
+            EmitCode("}");
+
+            EmitCode("Return: ret");
+            EmitCode("}");
         }
+
+
+        public void Visit(Block block)
+        {
+            EmitCode("{");
+
+            for (int i = 0; i < block.Count; ++i)
+            {
+                block[i].Visit(this);
+            }
+
+            EmitCode("}");
+        }
+
+        public void Visit(VariableDeclaration declare)
+        {
+            EmitCode(".locals init ({0} {1})", declare.Type.ToCil(), declare.Name);
+        }
+
+
+        public void Visit(Write write)
+        {
+            var node = write.Child;
+            node.Visit(this);
+            EmitCode(PrintByType(node.Type.ToCil()));
+        }
+
+        private string PrintByType(string type)
+        {
+            return $"call void {TTY}::Write({type})";
+        }
+
+        public void Visit(SimpleString simpleString)
+        {
+            EmitCode("ldstr {0}", simpleString.Value);
+        }
+
+        public void Visit(VariableReference variableReference)
+        {
+            EmitCode("ldloc {0}", variableReference.Declaration.Name);
+        }
+
+        public void Visit(Assign assign)
+        {
+            assign.Right.Visit(this);
+            var left = assign.Left as VariableReference;
+            EmitCode("stloc {0}", left.Declaration.Name);
+        }
+
+        public void Visit(Value value)
+        {
+            EmitCode("ldc.{0} {1}", value.Type.ToPrimitive(), value.Val);
+        }
+
 
         public void Visit(UnaryMinus unaryMinus)
         {
@@ -60,22 +160,8 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(Value value)
-        {
-
-        }
-
-        public void Visit(VariableReference variableReference)
-        {
-
-        }
 
         public void Visit(NotEquals notEquals)
-        {
-
-        }
-
-        public void Visit(VariableDeclaration variableDeclaration)
         {
 
         }
@@ -135,11 +221,6 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(Assign assign)
-        {
-
-        }
-
         public void Visit(Read read)
         {
 
@@ -150,17 +231,7 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(Block blocks)
-        {
-
-        }
-
         public void Visit(WhileLoop whileLoop)
-        {
-
-        }
-
-        public void Visit(Write write)
         {
 
         }
@@ -185,10 +256,7 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(SimpleString simpleString)
-        {
 
-        }
 
         private void VisitAllChildren(SyntaxNode node)
         {

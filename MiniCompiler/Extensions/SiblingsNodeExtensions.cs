@@ -5,15 +5,17 @@ namespace MiniCompiler.Extensions
 {
     public static class SiblingsNodeExtensions
     {
-        public static T WithLeft<T>(this T obj, SyntaxNode left)
-            where T : SiblingsNode
+        public static TObj WithLeft<TObj, TChild>(this TObj obj, TChild left)
+            where TObj : SiblingsNode<TChild, TChild>
+            where TChild : SyntaxNode
         {
             obj.Left = left;
             return obj;
         }
 
-        public static T WithRight<T>(this T obj, SyntaxNode right)
-            where T : SiblingsNode
+        public static TObj WithRight<TObj, TChild>(this TObj obj, TChild right)
+            where TObj : SiblingsNode<TChild, TChild>
+            where TChild : SyntaxNode
         {
             obj.Right = right;
             return obj;

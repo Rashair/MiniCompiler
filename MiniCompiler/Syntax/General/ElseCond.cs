@@ -3,7 +3,7 @@ using QUT.Gppg;
 
 namespace MiniCompiler.Syntax.General
 {
-    public class ElseCond : SingleChildNode
+    public class ElseCond : SingleChildNode<SyntaxNode>
     {
         public ElseCond(LexLocation loc = null)
         {

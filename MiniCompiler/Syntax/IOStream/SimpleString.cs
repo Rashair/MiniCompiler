@@ -1,17 +1,16 @@
-﻿using MiniCompiler.Syntax.General;
+﻿using MiniCompiler.Syntax.Abstract;
 using QUT.Gppg;
 
 namespace MiniCompiler.Syntax.IOStream
 {
-    public class SimpleString : EmptyNode
+    public class SimpleString : TypeNode
     {
         public SimpleString(string value, LexLocation loc = null)
         {
             Value = value;
+            Type = Type.String;
             Location = loc;
         }
-
-        public override bool ShouldInclude => true;
 
         public string Value { get; }
 

@@ -3,7 +3,7 @@ using QUT.Gppg;
 
 namespace MiniCompiler.Syntax.General
 {
-    public class CompilationUnit : SingleChildNode
+    public class CompilationUnit : SingleChildNode<SyntaxNode>
     {
         public CompilationUnit(LexLocation location = null)
         {

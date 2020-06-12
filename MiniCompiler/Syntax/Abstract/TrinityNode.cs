@@ -2,11 +2,12 @@
 
 namespace MiniCompiler.Syntax.Abstract
 {
-    public abstract class TrinityNode : SiblingsNode
+    public abstract class TrinityNode<T1, T2, T3> : SiblingsNode<T1, T3>
+        where T1 : SyntaxNode where T2 : SyntaxNode where T3 : SyntaxNode
     {
-        private SyntaxNode middleChild;
+        private T2 middleChild;
 
-        public SyntaxNode Middle
+        public T2 Middle
         {
             get => middleChild;
             set
@@ -21,7 +22,7 @@ namespace MiniCompiler.Syntax.Abstract
             {
                 if (i < count)
                 {
-                    return i == 0 ? Left : i == 1 ? Middle : Right;
+                    return i == 0 ? Left : i == 1 ? Middle : (SyntaxNode)Right;
                 }
 
                 throw new ArgumentOutOfRangeException("I cannot give you what you seek.");
@@ -30,15 +31,15 @@ namespace MiniCompiler.Syntax.Abstract
             {
                 if (i == 0)
                 {
-                    Left = value;
+                    Left = (T1)value;
                 }
                 else if (i == 1)
                 {
-                    Middle = value;
+                    Middle = (T2)value;
                 }
                 else if (i == 2)
                 {
-                    Right = value;
+                    Right = (T3)value;
                 }
                 else
                 {

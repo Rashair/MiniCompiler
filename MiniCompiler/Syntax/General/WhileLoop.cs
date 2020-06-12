@@ -3,7 +3,7 @@ using QUT.Gppg;
 
 namespace MiniCompiler.Syntax.General
 {
-    public class WhileLoop : SiblingsNode
+    public class WhileLoop : SiblingsNode<TypeNode, SyntaxNode>
     {
         public WhileLoop(LexLocation loc = null)
         {
