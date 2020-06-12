@@ -10,6 +10,7 @@ using MiniCompiler.Syntax.Operators.Relation;
 using MiniCompiler.Syntax.Operators.Unary;
 using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
+using System.Globalization;
 using static MiniCompiler.Compiler;
 
 namespace MiniCompiler.Syntax
@@ -18,10 +19,10 @@ namespace MiniCompiler.Syntax
     {
         private readonly SyntaxTree tree;
         private const string TTY = "[mscorlib]System.Console";
-        private readonly string PrintStr = $"void {TTY}::Write(string)";
-        private readonly string PrintInt = $"void {TTY}::Write({Type.Int.ToCil()})";
-        private readonly string PrintBool = $"void {TTY}::Write({Type.Bool.ToCil()})";
-        private readonly string PrintDouble = $"void {TTY}::Write({Type.Double.ToCil()})";
+        private readonly string PrintStr = $"call void {TTY}::Write(string)";
+        private readonly string PrintInt = $"call void {TTY}::Write({Type.Int.ToCil()})";
+        private readonly string PrintBool = $"call void {TTY}::Write({Type.Bool.ToCil()})";
+        private readonly string PrintDouble = $"call void {TTY}::Write({Type.Double.ToCil()})";
 
 
         public SyntaxVisitor(SyntaxTree tree)
@@ -64,7 +65,7 @@ namespace MiniCompiler.Syntax
             compilationUnit.Child.Visit(this);
 
             EmitCode("ldstr \"\\nEnd of Program execution\\n\"");
-            EmitCode("call {0}", PrintStr);
+            EmitCode(PrintStr);
             EmitCode("");
 
             EmitCode("leave Return");
@@ -73,7 +74,7 @@ namespace MiniCompiler.Syntax
             EmitCode("catch [mscorlib]System.Exception");
             EmitCode("{");
             EmitCode("callvirt instance string [mscorlib]System.Exception::get_Message()");
-            EmitCode("call {0}", PrintStr);
+            EmitCode(PrintStr);
             EmitCode("leave Return");
             EmitCode("}");
 
@@ -103,13 +104,23 @@ namespace MiniCompiler.Syntax
         public void Visit(Write write)
         {
             var node = write.Child;
-            node.Visit(this);
-            EmitCode(PrintByType(node.Type.ToCil()));
-        }
+            if (node.Type == Type.Double)
+            {
+                EmitCode("call class [mscorlib]System.Globalization.CultureInfo " +
+                    "[mscorlib]System.Globalization.CultureInfo::get_InvariantCulture()");
+                EmitCode("ldstr \"{0:0.000000}\"");
 
-        private string PrintByType(string type)
-        {
-            return $"call void {TTY}::Write({type})";
+                node.Visit(this);
+
+                EmitCode("box [mscorlib]System.Double");
+                EmitCode("call string [mscorlib]System.String:" +
+                    ":Format(class [mscorlib]System.IFormatProvider, string, object)");
+                EmitCode(PrintStr);
+                return;
+            }
+
+            node.Visit(this);
+            EmitCode($"call void {TTY}::Write({node.Type.ToCil()})");
         }
 
         public void Visit(SimpleString simpleString)
@@ -126,6 +137,10 @@ namespace MiniCompiler.Syntax
         {
             assign.Right.Visit(this);
             var left = assign.Left as VariableReference;
+            if (left.Type == Type.Double && assign.Right.Type != Type.Double)
+            {
+                EmitCode("conv.r8");
+            }
             EmitCode("stloc {0}", left.Declaration.Name);
         }
 
@@ -134,6 +149,25 @@ namespace MiniCompiler.Syntax
             EmitCode("ldc.{0} {1}", value.Type.ToPrimitive(), value.Val);
         }
 
+        public void Visit(IfCond ifCond)
+        {
+
+        }
+
+        public void Visit(ElseCond elseCond)
+        {
+
+        }
+
+        public void Visit(And and)
+        {
+
+        }
+
+        public void Visit(Or or)
+        {
+
+        }
 
         public void Visit(UnaryMinus unaryMinus)
         {
@@ -146,11 +180,6 @@ namespace MiniCompiler.Syntax
         }
 
         public void Visit(LogicNegation logicNegation)
-        {
-
-        }
-
-        public void Visit(Or or)
         {
 
         }
@@ -171,10 +200,7 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(And and)
-        {
 
-        }
 
         public void Visit(Equals equals)
         {
@@ -211,22 +237,12 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(IfCond ifCond)
-        {
-
-        }
-
         public void Visit(BitAnd bitAnd)
         {
 
         }
 
         public void Visit(Read read)
-        {
-
-        }
-
-        public void Visit(ElseCond elseCond)
         {
 
         }
@@ -253,7 +269,7 @@ namespace MiniCompiler.Syntax
 
         public void Visit(Return @return)
         {
-
+            EmitCode("leave Return");
         }
 
 

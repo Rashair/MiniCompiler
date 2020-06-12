@@ -5,7 +5,7 @@ program
 	double d;
 	bool a;
 
-	k = 5;
+	d = 5;
 	{
 		int k;
 		write "First k: ";
@@ -18,7 +18,7 @@ program
 		write "\n";
 	}
 
-	write "Third k: ";
-	write k;
+	write "First d: ";
+	write d;
 	write "\n";
 }

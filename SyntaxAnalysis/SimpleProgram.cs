@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace SyntaxAnalysis
 {
@@ -26,6 +27,14 @@ namespace SyntaxAnalysis
 
             bool b;
             b = true;
+
+            if(b || false)
+            {
+                double d;
+                d = 5.55;
+                Console.Write(string.Format(CultureInfo.InvariantCulture, "{0:0.000000}", 5.5 + d / 2.0));
+            }
+
             Console.WriteLine(b);
             Console.WriteLine(c);
         }
