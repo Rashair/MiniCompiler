@@ -157,6 +157,7 @@ declar          : declar_key Id
                           Error("Variable '{0}' was already declared in this scope.", name);
                       }
                   }
+                | declar_key unrecon_word { Error("Invalid character at: ", @2.StartColumn); }
                 ;
 declar_key      : IntKey  { $$ = Type.Int; }
                 | BoolKey { $$ = Type.Bool; }

@@ -10,5 +10,11 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestManyBinaryConditions()
+        {
+            Invoke();
+        }
     }
 }

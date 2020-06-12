@@ -225,12 +225,16 @@
     <Content Include="FullProgramTests\NotValid\VariableNotDeclaredInCompilacatedCondition.txt" />
     <Content Include="FullProgramTests\Valid\PrintAllPrimeNumbers.txt" />
     <Content Include="IfElseTests\NotValid\NoParenth.txt" />
+    <None Include="IfElseTests\Valid\ManyBinaryConditions.out" />
+    <Content Include="IfElseTests\Valid\ManyBinaryConditions.txt" />
     <Content Include="IfElseTests\Valid\Nested.txt" />
     <Content Include="IOStream\ReadTests\NotValid\ReadUndeclaredVariable.txt" />
     <Content Include="IOStream\ReadTests\Valid\AllTypes.txt" />
     <Content Include="IOStream\WriteTests\NotValid\String.txt" />
     <Content Include="IOStream\WriteTests\NotValid\WriteUndeclaredVariable.txt" />
+    <None Include="IOStream\WriteTests\Valid\ManyCombinations.out" />
     <Content Include="IOStream\WriteTests\Valid\ManyCombinations.txt" />
+    <None Include="IOStream\WriteTests\Valid\OneLineProgram.out" />
     <Content Include="IOStream\WriteTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Bitwise\BitAndTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Bitwise\BitAndTests\Valid\MultilineStatement.txt" />

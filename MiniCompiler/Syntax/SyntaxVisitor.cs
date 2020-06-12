@@ -1,6 +1,7 @@
 ﻿using MiniCompiler.Extensions;
 using MiniCompiler.Syntax.Abstract;
 using MiniCompiler.Syntax.General;
+using MiniCompiler.Syntax.HelperClasses;
 using MiniCompiler.Syntax.IOStream;
 using MiniCompiler.Syntax.Operators.Assignment;
 using MiniCompiler.Syntax.Operators.Bitwise;
@@ -10,6 +11,7 @@ using MiniCompiler.Syntax.Operators.Relation;
 using MiniCompiler.Syntax.Operators.Unary;
 using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
+using System.Collections.Generic;
 using System.Globalization;
 using static MiniCompiler.Compiler;
 
@@ -18,20 +20,28 @@ namespace MiniCompiler.Syntax
     public class SyntaxVisitor
     {
         private readonly SyntaxTree tree;
-        
+
         private const string TTY = "[mscorlib]System.Console";
         private readonly string PrintStr = $"call void {TTY}::Write(string)";
         private readonly string PrintInt = $"call void {TTY}::Write({Type.Int.ToCil()})";
         private readonly string PrintBool = $"call void {TTY}::Write({Type.Bool.ToCil()})";
         private readonly string PrintDouble = $"call void {TTY}::Write({Type.Double.ToCil()})";
 
-        private int ifCount;
 
+        private const string tmpPrefix = "@_tmp";
+        private readonly Dictionary<Type, Usage> tmpVariables;
+        private int ifCount;
 
 
         public SyntaxVisitor(SyntaxTree tree)
         {
             this.tree = tree;
+            tmpVariables = new Dictionary<Type, Usage>
+            {
+                { Type.Int,    new Usage{ Used = 0, Max = 0} },
+                { Type.Double, new Usage{ Used = 0, Max = 0}  },
+                { Type.Bool,   new Usage{ Used = 0, Max = 0}  }
+            };
         }
 
         public void Visit()
@@ -67,10 +77,6 @@ namespace MiniCompiler.Syntax
 
 
             compilationUnit.Child.Visit(this);
-
-            EmitCode("ldstr \"\\nEnd of Program execution\\n\"");
-            EmitCode(PrintStr);
-            EmitCode("");
 
             EmitCode("leave Return");
             EmitCode("}");
@@ -143,9 +149,10 @@ namespace MiniCompiler.Syntax
             var left = assign.Left as VariableReference;
             if (left.Type == Type.Double && assign.Right.Type != Type.Double)
             {
-                EmitCode("conv.r8");
+                EmitCode("conv." + Type.Double.ToPrimitive());
             }
             EmitCode("stloc {0}", left.Declaration.Name);
+            EmitCode("ldloc {0}", left.Declaration.Name);
         }
 
         public void Visit(Value value)
@@ -175,6 +182,47 @@ namespace MiniCompiler.Syntax
             EmitCode($"ELSE_{ifCount}: ");
             elseCond.Child.Visit(this);
         }
+
+        public void Visit(Read read)
+        {
+
+        }
+
+        public void Visit(WhileLoop whileLoop)
+        {
+
+        }
+
+        public void Visit(Equals equals)
+        {
+            var left = equals.Left;
+            equals.Left.Visit(this);
+            string tmpNameLeft = GetTmp(equals.Left.Type);
+            EmitCode("stloc {0}", tmpNameLeft);
+
+            var right = equals.Right;
+            equals.Right.Visit(this);
+            var tmpNameRight = GetTmp(equals.Right.Type);
+            EmitCode("stloc {0}", tmpNameRight);
+
+            EmitCode("ldloc {0}", tmpNameLeft);
+            FreeTmp(left.Type);
+            if (right.Type == Type.Double && left.Type != Type.Double)
+            {
+                EmitCode("conv." + Type.Double.ToPrimitive());
+            }
+            
+            EmitCode("ldloc {0}", tmpNameRight);
+            FreeTmp(right.Type);
+            if (left.Type == Type.Double && right.Type != Type.Double)
+            {
+                EmitCode("conv." + Type.Double.ToPrimitive());
+            }
+
+            EmitCode("ceq");
+        }
+
+
 
         public void Visit(And and)
         {
@@ -218,12 +266,6 @@ namespace MiniCompiler.Syntax
         }
 
 
-
-        public void Visit(Equals equals)
-        {
-
-        }
-
         public void Visit(Greater greater)
         {
 
@@ -259,15 +301,7 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(Read read)
-        {
 
-        }
-
-        public void Visit(WhileLoop whileLoop)
-        {
-
-        }
 
         public void Visit(IntCast intCast)
         {
@@ -289,7 +323,24 @@ namespace MiniCompiler.Syntax
             EmitCode("leave Return");
         }
 
+        private string GetTmp(Type type)
+        {
+            var usage = tmpVariables[type];
+            ++usage.Used;
+            var name = $"{tmpPrefix}_{type.ToCil()}_{usage.Used}";
+            if (usage.Used > usage.Max)
+            {
+                EmitCode(".locals init ({0} {1})", type.ToCil(), $"{name}");
+                ++usage.Max;
+            }
 
+            return name;
+        }
+
+        private void FreeTmp(Type type)
+        {
+            tmpVariables[type].Used -= 1;
+        }
 
         private void VisitAllChildren(SyntaxNode node)
         {

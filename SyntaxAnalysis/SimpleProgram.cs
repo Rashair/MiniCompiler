@@ -25,7 +25,9 @@ namespace SyntaxAnalysis
             //  Test();
             Console.WriteLine(a);
             a = a / 2;
-
+            int V_2;
+            V_2 = 1;
+            int V_3 = 2;
             if(a == 5)
             {
                 double d;

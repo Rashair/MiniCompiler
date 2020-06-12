@@ -85,6 +85,7 @@
     <Compile Include="Syntax\General\IfCond.cs" />
     <Compile Include="Syntax\General\Return.cs" />
     <Compile Include="Syntax\General\WhileLoop.cs" />
+    <Compile Include="Syntax\HelperClasses\Usage.cs" />
     <Compile Include="Syntax\IOStream\Read.cs" />
     <Compile Include="Syntax\IOStream\SimpleString.cs" />
     <Compile Include="Syntax\IOStream\Write.cs" />
@@ -126,7 +127,6 @@
     <Compile Include="Syntax\SyntaxNode.cs" />
     <Compile Include="Syntax\SyntaxTree.cs" />
     <Compile Include="Syntax\SyntaxTreeWalker.cs" />
-    <Compile Include="Syntax\SyntaxTrivia.cs" />
     <Compile Include="Syntax\SyntaxVisitor.cs" />
   </ItemGroup>
   <ItemGroup>

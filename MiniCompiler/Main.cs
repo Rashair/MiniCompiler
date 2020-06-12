@@ -65,6 +65,7 @@ namespace MiniCompiler
 
             Console.WriteLine(parser.SyntaxTree);
             Console.WriteLine("  compilation successful\n");
+            Console.Write("\n\n\r");
             return 0;
         }
 
