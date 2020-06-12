@@ -6,6 +6,12 @@ namespace MiniCompilerTests.Operators.Math
     public class CombinedNotValidTests : MathNotValidTests
     {
         [TestMethod]
+        public void TestInvalidTypeSimple()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
         public void TestInvalidType()
         {
             Invoke();

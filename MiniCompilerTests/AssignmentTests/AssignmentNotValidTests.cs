@@ -60,5 +60,12 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+
+        [TestMethod]
+        public void TestUndeclaredVariableMany()
+        {
+            Invoke();
+        }
     }
 }

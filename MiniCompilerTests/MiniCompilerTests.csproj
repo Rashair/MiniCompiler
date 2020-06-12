@@ -70,6 +70,8 @@
     <Compile Include="Operators\Bitwise\BitOrTests\BitOrValidTests.cs" />
     <Compile Include="Operators\Bitwise\BitwiseNotValidTests.cs" />
     <Compile Include="Operators\Bitwise\BitwiseValidTests.cs" />
+    <Compile Include="Operators\Logical\CombinedTests\CombinedNotValidTests.cs" />
+    <Compile Include="Operators\Logical\CombinedTests\CombinedValidTests.cs" />
     <Compile Include="Operators\Logical\OrTests\OrNotValidTests.cs" />
     <Compile Include="Operators\Logical\OrTests\OrValidTests.cs" />
     <Compile Include="Operators\Logical\AndTests\AndNotValidTests.cs" />
@@ -104,6 +106,8 @@
     <Compile Include="Operators\Relation\NotEqualsTests\NotEqualsValidTests.cs" />
     <Compile Include="Operators\Relation\RelationNotValidTests.cs" />
     <Compile Include="Operators\Relation\RelationValidTests.cs" />
+    <Compile Include="Operators\Unary\CombinedTests\CombinedNotValidTests.cs" />
+    <Compile Include="Operators\Unary\CombinedTests\CombinedValidTests.cs" />
     <Compile Include="Operators\Unary\DoubleCastTests\DoubleCastNotValidTests.cs" />
     <Compile Include="Operators\Unary\DoubleCastTests\DoubleCastValidTests.cs" />
     <Compile Include="Operators\Unary\LogicNegationTests\LogicNegationNotValidTests.cs" />
@@ -131,6 +135,8 @@
     <Compile Include="EmptyProgramTests\EmptyProgramValidTests.cs" />
     <Compile Include="NotValidTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WhileTests\WhileNotValidTests.cs" />
+    <Compile Include="WhileTests\WhileValidTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -146,6 +152,7 @@
     <Content Include="AssignmentTests\NotValid\InvalidValueFormatDoubleZeros.txt" />
     <Content Include="AssignmentTests\NotValid\InvalidValueFormatDoubleDots.txt" />
     <Content Include="AssignmentTests\NotValid\InvalidValueFormatInt.txt" />
+    <Content Include="AssignmentTests\NotValid\UndeclaredVariableMany.txt" />
     <Content Include="AssignmentTests\NotValid\UnmatchingTypes.txt" />
     <Content Include="AssignmentTests\NotValid\AssignWithDeclaration.txt" />
     <Content Include="AssignmentTests\NotValid\AssignToValue.txt" />
@@ -164,6 +171,7 @@
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseMiddle.txt" />
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseEnd.txt" />
     <Content Include="DeclarationsTests\NotValid\NameSameAsKeyword.txt" />
+    <Content Include="DeclarationsTests\NotValid\RedeclarationMany.txt" />
     <Content Include="DeclarationsTests\NotValid\StartNameWithNumber.txt" />
     <Content Include="DeclarationsTests\NotValid\WithoutSemicolonMany.txt" />
     <Content Include="DeclarationsTests\NotValid\WithoutSemicolonInTheMiddle.txt" />
@@ -196,6 +204,7 @@
     <Content Include="EmptyProgramTests\NotValid\CommentAtTheEndOfFile.txt" />
     <Content Include="EmptyProgramTests\NotValid\EmptyFile.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramCommentedBraces.txt" />
+    <Content Include="EmptyProgramTests\NotValid\ProgramOneTooManyBrace.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramWrongBraceOrder.txt" />
     <Content Include="EmptyProgramTests\NotValid\BracesBeforeProgram.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramNoBraces.txt" />
@@ -218,6 +227,7 @@
     <Content Include="IfElseTests\Valid\OneLineProgram.txt" />
     <Content Include="IOStream\ReadTests\NotValid\ReadUndeclaredVariable.txt" />
     <Content Include="IOStream\ReadTests\Valid\OneLineProgram.txt" />
+    <Content Include="IOStream\WriteTests\NotValid\String.txt" />
     <Content Include="IOStream\WriteTests\NotValid\WriteUndeclaredVariable.txt" />
     <Content Include="IOStream\WriteTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Bitwise\BitAndTests\NotValid\InvalidType.txt" />
@@ -227,6 +237,8 @@
     <Content Include="Operators\Bitwise\BitOrTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Bitwise\BitOrTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Bitwise\BitOrTests\Valid\OneLineProgram.txt" />
+    <Content Include="Operators\Logical\CombinedTests\NotValid\InvalidType.txt" />
+    <Content Include="Operators\Logical\CombinedTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Logical\OrTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Logical\OrTests\NotValid\MultipleUsage.txt" />
     <Content Include="Operators\Logical\OrTests\Valid\MultilineStatement.txt" />
@@ -236,6 +248,7 @@
     <Content Include="Operators\Logical\AndTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Logical\AndTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Math\AddTests\NotValid\MultipleUsage.txt" />
+    <Content Include="Operators\Math\CombinedTests\NotValid\InvalidTypeSimple.txt" />
     <Content Include="Operators\Math\CombinedTests\NotValid\MultipleUsage.txt" />
     <Content Include="Operators\Math\CombinedTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Math\CombinedTests\Valid\MultilineStatement.txt" />
@@ -283,6 +296,8 @@
     <Content Include="Operators\Relation\NotEqualsTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Unary\BitNegationTests\Valid\UsedManyTimesInRow.txt" />
     <Content Include="Operators\Unary\BitNegationTests\Valid\MultilineStatement.txt" />
+    <Content Include="Operators\Unary\CombinedTests\NotValid\InvalidType.txt" />
+    <Content Include="Operators\Unary\CombinedTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Unary\DoubleCastTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Unary\DoubleCastTests\Valid\MultilineParentheses.txt" />
     <Content Include="Operators\Unary\DoubleCastTests\Valid\MultilineStatement.txt" />
@@ -305,8 +320,11 @@
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\UsedManyTimesInRow.txt" />
+    <Content Include="StatementsTests\NotValid\MissingArgument.txt" />
     <Content Include="StatementsTests\NotValid\WrongCase.txt" />
     <Content Include="StatementsTests\Valid\SimpleStatements.txt" />
+    <Content Include="WhileTests\NotValid\InvalidFormat.txt" />
+    <Content Include="WhileTests\Valid\OneLineProgram.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
