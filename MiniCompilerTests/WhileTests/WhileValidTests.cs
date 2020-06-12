@@ -6,7 +6,7 @@ namespace MiniCompilerTests
     public class WhileValidTests : ValidTests
     {
         [TestMethod]
-        public void TestOneLineProgram()
+        public void TestManyDifferentConditions()
         {
             Invoke();
         }

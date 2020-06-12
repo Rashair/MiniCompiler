@@ -6,7 +6,7 @@ namespace MiniCompilerTests
     public class IfElseValidTests : ValidTests
     {
         [TestMethod]
-        public void TestOneLineProgram()
+        public void TestNested()
         {
             Invoke();
         }

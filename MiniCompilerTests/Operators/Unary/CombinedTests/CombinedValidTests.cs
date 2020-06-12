@@ -6,7 +6,7 @@ namespace MiniCompilerTests.Operators.Unary
     public class CombinedValidTests : UnaryValidTests
     {
         [TestMethod]
-        public void TestOneLineProgram()
+        public void TestManyPossibleTypes()
         {
             Invoke();
         }

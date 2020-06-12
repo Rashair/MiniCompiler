@@ -6,7 +6,7 @@ namespace MiniCompilerTests.IOStream
     public class ReadValidTests : IOStreamValidTests
     {
         [TestMethod]
-        public void TestOneLineProgram()
+        public void TestAllTypes()
         {
             Invoke();
         }

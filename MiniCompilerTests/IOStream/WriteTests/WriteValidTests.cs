@@ -10,5 +10,11 @@ namespace MiniCompilerTests.IOStream
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestManyCombinations()
+        {
+            Invoke();
+        }
     }
 }
