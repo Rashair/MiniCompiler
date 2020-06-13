@@ -27,11 +27,14 @@ namespace MiniCompiler.Syntax
         private readonly string PrintBool = $"call void {TTY}::Write({Type.Bool.ToCil()})";
         private readonly string PrintDouble = $"call void {TTY}::Write({Type.Double.ToCil()})";
 
-
         private const string tmpPrefix = "@_tmp";
         private readonly Dictionary<Type, Usage> tmpVariables;
-        private Stack<int> ifLabels;
-        private int lastLabel;
+        
+        private readonly Stack<int> ifLabels;
+        private int lastIfLabel;
+
+        private int lastWhileLabel;
+
 
 
         public SyntaxVisitor(SyntaxTree tree)
@@ -165,7 +168,7 @@ namespace MiniCompiler.Syntax
         public void Visit(IfCond ifCond)
         {
             ifCond.Left.Visit(this);
-            int label = lastLabel++;
+            int label = lastIfLabel++;
             if (ifCond.HasElse)
             {
                 ifLabels.Push(label);
@@ -174,12 +177,14 @@ namespace MiniCompiler.Syntax
                 ifCond.Middle.Visit(this);
                 PopIfHasValue(ifCond.Middle);
 
+                EmitCode($"br OUT_IF_ELSE_{label}");
                 ifCond.Right.Visit(this);
             }
             else
             {
                 EmitCode($"brfalse OUT_IF_ELSE_{label}");
                 ifCond.Middle.Visit(this);
+                PopIfHasValue(ifCond.Middle);
             }
             EmitCode($"OUT_IF_ELSE_{label}: ");
         }
@@ -191,12 +196,21 @@ namespace MiniCompiler.Syntax
             PopIfHasValue(elseCond.Child);
         }
 
-        public void Visit(Read read)
+        public void Visit(WhileLoop whileLoop)
         {
+            int label = lastWhileLabel++;
+            EmitCode($"WHILE_{label}: ");
+            whileLoop.Left.Visit(this);
 
+            EmitCode($"brfalse OUT_WHILE_{label}");
+            whileLoop.Right.Visit(this);
+            PopIfHasValue(whileLoop.Right);
+            EmitCode($"br WHILE_{label}");
+
+            EmitCode($"OUT_WHILE_{label}: ");
         }
 
-        public void Visit(WhileLoop whileLoop)
+        public void Visit(Read read)
         {
 
         }
@@ -254,8 +268,6 @@ namespace MiniCompiler.Syntax
             EmitCode("clt");
         }
 
-
-
         public void Visit(LessOrEqual bin)
         {
             var left = bin.Left;
@@ -266,6 +278,46 @@ namespace MiniCompiler.Syntax
             EmitCode("cgt");
         }
 
+
+        public void Visit(Add bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("add");
+        }
+
+        public void Visit(Subtract bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("sub");
+        }
+
+        public void Visit(Multiplies bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("mul");
+        }
+
+        public void Visit(Divides bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("div");
+        }
 
 
         public void Visit(And and)
@@ -289,31 +341,12 @@ namespace MiniCompiler.Syntax
 
         }
 
-
-        public void Visit(Subtract subtract)
-        {
-
-        }
-
-        public void Visit(Multiplies multiplies)
-        {
-
-        }
-
-        public void Visit(Divides divides)
-        {
-
-        }
-
         public void Visit(BitOr bitOr)
         {
 
         }
 
-        public void Visit(Add add)
-        {
 
-        }
 
         public void Visit(BitAnd bitAnd)
         {

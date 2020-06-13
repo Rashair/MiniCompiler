@@ -5,7 +5,7 @@ program
 
 	while(c < 4)
 	{
-		int k;
+		write "He is a man of focus, commitment and sheer fucking will.\n";
 		if(c == 0)
 			c = 1;
 		else if(c == 1)

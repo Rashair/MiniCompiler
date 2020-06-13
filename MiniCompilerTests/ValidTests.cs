@@ -93,6 +93,7 @@ namespace MiniCompilerTests
             }
             Console.WriteLine(result);
             Assert.AreEqual(0, exitCode, "Program should return 0");
+            // TODO output
         }
     }
 }

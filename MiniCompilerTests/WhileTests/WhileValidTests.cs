@@ -10,5 +10,17 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestWithoutAddition()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestDeclareInLoop()
+        {
+            Invoke();
+        }
     }
 }

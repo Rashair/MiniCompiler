@@ -333,6 +333,10 @@
     <Content Include="StatementsTests\NotValid\WrongCase.txt" />
     <Content Include="StatementsTests\Valid\SimpleStatements.txt" />
     <Content Include="WhileTests\NotValid\InvalidFormat.txt" />
+    <None Include="WhileTests\Valid\WithoutAddition.out" />
+    <None Include="WhileTests\Valid\ManyDifferentConditions.out" />
+    <Content Include="WhileTests\Valid\DeclareInLoop.txt" />
+    <Content Include="WhileTests\Valid\WithoutAddition.txt" />
     <Content Include="WhileTests\Valid\ManyDifferentConditions.txt" />
   </ItemGroup>
   <ItemGroup />
