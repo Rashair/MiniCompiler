@@ -7,7 +7,15 @@ program {
     read d;
     read b;
     
-    read x;
-    read d;
+    write x; write "\n"
+    write d; write "\n"
+    write b; write "\n"
+
     read b;
+    read d;
+    read x;
+
+    write b; write "\n"
+    write d; write "\n"
+    write x; write "\n"
 }

@@ -15,17 +15,11 @@ namespace SyntaxAnalysis
 
         static void Main(string[] args)
         {
-
-            int a = 5;
-            int b = 6;
-            int stloc;
-
-            stloc = 5;
-
-            if(a <= stloc)
-            {
-                Console.WriteLine("xx");
-            }
+            string val;
+            val = Console.ReadLine();
+            string[] values = val.Split();
+            int k = int.Parse(values[0]);
+            bool.Parse(values[1]);
         }
     }
 }

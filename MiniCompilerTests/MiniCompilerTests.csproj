@@ -140,6 +140,8 @@
     <Compile Include="WhileTests\WhileValidTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FullProgramTests\Valid\MonteCarlo.out" />
+    <None Include="IOStream\ReadTests\Valid\AllTypes.in" />
     <None Include="packages.config" />
     <None Include=".runsettings" />
   </ItemGroup>
@@ -227,6 +229,7 @@
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
     <Content Include="FullProgramTests\NotValid\VariableNotDeclaredInCompilacatedCondition.txt" />
     <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers.out" />
+    <Content Include="FullProgramTests\Valid\MonteCarlo.txt" />
     <Content Include="FullProgramTests\Valid\PrintAllPrimeNumbers.txt" />
     <Content Include="IfElseTests\NotValid\NoParenth.txt" />
     <None Include="IfElseTests\Valid\ManyBinaryConditions.out" />
@@ -235,6 +238,7 @@
     <Content Include="IfElseTests\Valid\UnbalancedStack.txt" />
     <Content Include="IfElseTests\Valid\Nested.txt" />
     <Content Include="IOStream\ReadTests\NotValid\ReadUndeclaredVariable.txt" />
+    <None Include="IOStream\ReadTests\Valid\AllTypes.out" />
     <Content Include="IOStream\ReadTests\Valid\AllTypes.txt" />
     <Content Include="IOStream\WriteTests\NotValid\String.txt" />
     <Content Include="IOStream\WriteTests\NotValid\WithEscapedQuotation.txt" />

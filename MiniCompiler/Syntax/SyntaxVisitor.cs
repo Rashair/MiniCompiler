@@ -22,12 +22,6 @@ namespace MiniCompiler.Syntax
 
         private const string TTY = "[mscorlib]System.Console";
         private readonly string PrintStr = $"call void {TTY}::Write(string)";
-        private readonly string PrintInt = $"call void {TTY}::Write({Type.Int.ToCil()})";
-        private readonly string PrintBool = $"call void {TTY}::Write({Type.Bool.ToCil()})";
-        private readonly string PrintDouble = $"call void {TTY}::Write({Type.Double.ToCil()})";
-
-        private const string tmpPrefix = "@_tmp";
-        private readonly Dictionary<Type, Usage> tmpVariables;
         
         private readonly Stack<int> ifLabels;
         private int lastIfLabel;
@@ -40,12 +34,6 @@ namespace MiniCompiler.Syntax
         public SyntaxVisitor(SyntaxTree tree)
         {
             this.tree = tree;
-            tmpVariables = new Dictionary<Type, Usage>
-            {
-                { Type.Int,    new Usage{ Used = 0, Max = 0} },
-                { Type.Double, new Usage{ Used = 0, Max = 0}  },
-                { Type.Bool,   new Usage{ Used = 0, Max = 0}  }
-            };
             ifLabels = new Stack<int>();
             ifLabels.Push(0);
         }
@@ -79,7 +67,6 @@ namespace MiniCompiler.Syntax
             EmitCode(".try");
             EmitCode("{");
             EmitCode();
-
 
             compilationUnit.Child.Visit(this);
 
@@ -426,35 +413,6 @@ namespace MiniCompiler.Syntax
 
             right.Visit(this);
             ConvertToDoubleIfNeeded(left.Type, right.Type);
-        }
-
-
-
-        private string GetTmp(Type type)
-        {
-            var usage = tmpVariables[type];
-            ++usage.Used;
-            var name = $"{tmpPrefix}_{type.ToCil()}_{usage.Used}";
-            if (usage.Used > usage.Max)
-            {
-                EmitCode(".locals init ({0} {1})", type.ToCil(), $"{name}");
-                ++usage.Max;
-            }
-
-            return name;
-        }
-
-        private void FreeTmp(Type type)
-        {
-            tmpVariables[type].Used -= 1;
-        }
-
-        private void VisitAllChildren(SyntaxNode node)
-        {
-            for (int i = 0; i < node.Count; ++i)
-            {
-                node[i].Visit(this);
-            }
         }
     }
 }
