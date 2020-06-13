@@ -1,9 +1,12 @@
 program {
-    int n;
-    n = 5;
-    while (n <= 100) {
-      write n; write "\n";
-      n = n + 1; 
-      return;
-    }
+	int n;
+	n = 0;
+	if(n != 0 && (5/0 == 0))
+	{
+		write "You failed.";
+	}
+	else
+	{
+		write "Good job.";
+	}
 }

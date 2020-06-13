@@ -16,27 +16,13 @@ namespace SyntaxAnalysis
         static void Main(string[] args)
         {
 
-            int a;
+            int a = 5;
+            int b = 6;
 
-            double c;
-            a = 5;
-            c = 1.0;
-
-            //  Test();
-            Console.WriteLine(a);
-            a = a / 2;
-            int V_2;
-            V_2 = 1;
-            int V_3 = 2;
-            if(a == 5)
+            if(a != b)
             {
-                double d;
-                d = 5.55;
-                Console.Write(string.Format(CultureInfo.InvariantCulture, "{0:0.000000}", 5.5 + d / 2.0));
+                Console.WriteLine("xx");
             }
-
-            Console.WriteLine(true);
-            Console.WriteLine(c);
         }
     }
 }

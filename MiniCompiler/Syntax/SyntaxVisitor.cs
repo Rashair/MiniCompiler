@@ -12,7 +12,6 @@ using MiniCompiler.Syntax.Operators.Unary;
 using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
 using System.Collections.Generic;
-using System.Globalization;
 using static MiniCompiler.Compiler;
 
 namespace MiniCompiler.Syntax
@@ -35,7 +34,8 @@ namespace MiniCompiler.Syntax
 
         private int lastWhileLabel;
 
-
+        private int lastAndLabel;
+        private int lastOrlabel;
 
         public SyntaxVisitor(SyntaxTree tree)
         {
@@ -231,6 +231,8 @@ namespace MiniCompiler.Syntax
             PrepareBinaryOperation(left, right);
 
             EmitCode("ceq");
+            EmitCode("ldc.{0} 0", Type.Bool.ToPrimitive());
+            EmitCode("ceq");
         }
 
 
@@ -368,12 +370,28 @@ namespace MiniCompiler.Syntax
 
         public void Visit(And and)
         {
+            and.Left.Visit(this);
+            int label = lastAndLabel++;
+            EmitCode("dup");
+            EmitCode($"brfalse AND_OUT_{label}");
+            
+            and.Right.Visit(this);
+            EmitCode("and");
 
+            EmitCode($"AND_OUT_{label}: ");
         }
 
         public void Visit(Or or)
         {
+            or.Left.Visit(this);
+            int label = lastOrlabel++;
+            EmitCode("dup");
+            EmitCode($"brtrue OR_OUT_{label}");
 
+            or.Right.Visit(this);
+            EmitCode("or");
+
+            EmitCode($"OR_OUT_{label}: ");
         }
 
         public void Visit(Return @return)
