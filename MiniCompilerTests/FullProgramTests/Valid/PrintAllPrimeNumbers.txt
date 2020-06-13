@@ -22,7 +22,7 @@ program
 			{
 				isPrime = true;
 			}
-			else if(num & 2 != 0 && (num/3)*3 != num)
+			else if(num & 1 != 0 && (num/3)*3 != num)
 			{
 				val = 5;
 				while(val * val <= num && val > 4)
@@ -42,8 +42,10 @@ program
 			}
 		// IsPrime function end
 		
-		if(isPrime)
+		if(isPrime) {
 			write i;
+			write "\n";
+		}
 		i = i + 1;
 	}
 }

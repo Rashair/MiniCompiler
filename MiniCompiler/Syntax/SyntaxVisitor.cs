@@ -251,9 +251,11 @@ namespace MiniCompiler.Syntax
             var left = bin.Left;
             var right = bin.Right;
 
-            PrepareBinaryOperation(right, left);
+            PrepareBinaryOperation(left, right);
 
             EmitCode("clt");
+            EmitCode("ldc.{0} 0", Type.Bool.ToPrimitive());
+            EmitCode("ceq");
         }
 
 
@@ -272,9 +274,11 @@ namespace MiniCompiler.Syntax
             var left = bin.Left;
             var right = bin.Right;
 
-            PrepareBinaryOperation(right, left);
+            PrepareBinaryOperation(left, right);
 
             EmitCode("cgt");
+            EmitCode("ldc.{0} 0", Type.Bool.ToPrimitive());
+            EmitCode("ceq");
         }
 
 

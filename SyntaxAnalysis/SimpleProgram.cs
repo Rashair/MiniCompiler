@@ -19,7 +19,7 @@ namespace SyntaxAnalysis
             int a = 5;
             int b = 6;
 
-            if(a != b)
+            if(a <= b)
             {
                 Console.WriteLine("xx");
             }
