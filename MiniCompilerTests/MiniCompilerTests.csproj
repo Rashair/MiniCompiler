@@ -192,6 +192,7 @@
     <Content Include="DeclarationsTests\Valid\DifferentNames.txt" />
     <Content Include="DeclarationsTests\Valid\NameSameAsTypeDifferentCase.txt" />
     <Content Include="DeclarationsTests\Valid\NameSameAsKeywordDifferentCase.txt" />
+    <Content Include="DeclarationsTests\Valid\AssemblerKeywords.txt" />
     <Content Include="DeclarationsTests\Valid\TwoScopes.txt" />
     <Content Include="DeclarationsTests\Valid\MultilineStatement.txt" />
     <Content Include="DeclarationsTests\Valid\SameNamesDifferentScope.txt" />
@@ -236,6 +237,8 @@
     <Content Include="IOStream\WriteTests\NotValid\String.txt" />
     <Content Include="IOStream\WriteTests\NotValid\WriteUndeclaredVariable.txt" />
     <None Include="IOStream\WriteTests\Valid\ManyCombinations.out" />
+    <None Include="IOStream\WriteTests\Valid\Escaping.out" />
+    <Content Include="IOStream\WriteTests\Valid\Escaping.txt" />
     <Content Include="IOStream\WriteTests\Valid\ManyCombinations.txt" />
     <None Include="IOStream\WriteTests\Valid\OneLineProgram.out" />
     <Content Include="IOStream\WriteTests\Valid\OneLineProgram.txt" />
@@ -247,6 +250,7 @@
     <Content Include="Operators\Bitwise\BitOrTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Bitwise\BitOrTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Logical\CombinedTests\NotValid\InvalidType.txt" />
+    <Content Include="Operators\Logical\CombinedTests\Valid\ShortCircutEvaluation.txt" />
     <Content Include="Operators\Logical\CombinedTests\Valid\ManyCombinations.txt" />
     <Content Include="Operators\Logical\OrTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Logical\OrTests\NotValid\MultipleUsage.txt" />

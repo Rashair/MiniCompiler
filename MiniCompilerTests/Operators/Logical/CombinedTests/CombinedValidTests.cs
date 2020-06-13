@@ -10,5 +10,11 @@ namespace MiniCompilerTests.Operators.Logical
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestShortCircutEvaluation()
+        {
+            Invoke();
+        }
     }
 }

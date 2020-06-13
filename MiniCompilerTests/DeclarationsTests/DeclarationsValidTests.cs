@@ -245,5 +245,11 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestAssemblerKeywords()
+        {
+            Invoke();
+        }
     }
 }

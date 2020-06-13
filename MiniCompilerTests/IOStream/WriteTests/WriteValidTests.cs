@@ -16,5 +16,11 @@ namespace MiniCompilerTests.IOStream
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestEscaping()
+        {
+            Invoke();
+        }
     }
 }

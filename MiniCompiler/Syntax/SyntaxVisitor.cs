@@ -112,7 +112,7 @@ namespace MiniCompiler.Syntax
 
         public void Visit(VariableDeclaration declare)
         {
-            EmitCode(".locals init ({0} {1})", declare.Type.ToCil(), declare.Name);
+            EmitCode(".locals init ({0} '{1}')", declare.Type.ToCil(), declare.Name);
         }
 
         public void Visit(Write write)
