@@ -240,6 +240,8 @@
     <Content Include="IOStream\WriteTests\NotValid\WriteUndeclaredVariable.txt" />
     <None Include="IOStream\WriteTests\Valid\ManyCombinations.out" />
     <None Include="IOStream\WriteTests\Valid\Escaping.out" />
+    <None Include="IOStream\WriteTests\Valid\DifferentNewLine.out" />
+    <Content Include="IOStream\WriteTests\Valid\DifferentNewLine.txt" />
     <Content Include="IOStream\WriteTests\Valid\Escaping.txt" />
     <Content Include="IOStream\WriteTests\Valid\ManyCombinations.txt" />
     <None Include="IOStream\WriteTests\Valid\OneLineProgram.out" />

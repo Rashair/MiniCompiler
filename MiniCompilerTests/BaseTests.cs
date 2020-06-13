@@ -7,6 +7,7 @@ namespace MiniCompilerTests
 {
     public abstract class BaseTests
     {
+        protected string extension = "txt";
         // Length(Base)
         private const int prefixLength = 4;
         // Length(Tests)
@@ -55,7 +56,7 @@ namespace MiniCompilerTests
         public string GetPath(string caller)
         {
             string testCaseName = GetCaseName(caller);
-            return Path.Combine(testsPath, $"{testCaseName}.txt");
+            return Path.Combine(testsPath, $"{testCaseName}.{extension}");
         }
 
         public static string GetCaseName(string methodName)

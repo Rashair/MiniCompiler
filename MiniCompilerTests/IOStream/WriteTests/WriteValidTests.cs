@@ -22,5 +22,11 @@ namespace MiniCompilerTests.IOStream
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestDifferentNewLine()
+        {
+            Invoke();
+        }
     }
 }

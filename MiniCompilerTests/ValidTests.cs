@@ -5,6 +5,7 @@ using MiniCompiler.Syntax;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace MiniCompilerTests
 {
@@ -12,10 +13,10 @@ namespace MiniCompilerTests
     {
         protected const int DefaultTimeout = 1000;
 
-        private readonly string ilasm = ToolLocationHelper.GetPathToDotNetFrameworkFile("ilasm.exe", 
+        private readonly string ilasm = ToolLocationHelper.GetPathToDotNetFrameworkFile("ilasm.exe",
             TargetDotNetFrameworkVersion.VersionLatest);
         private readonly string peverify = @"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.7 Tools\PEVerify.exe";
-        
+
         public ValidTests() :
             base(0, Helpers.Self())
         {
@@ -93,7 +94,27 @@ namespace MiniCompilerTests
             }
             Console.WriteLine(result);
             Assert.AreEqual(0, exitCode, "Program should return 0");
-            // TODO output
+
+            string outFile = testCasePath.Substring(0,
+                testCasePath.Length - extension.Length) + "out";
+            if (File.Exists(outFile))
+            {
+                string output = File.ReadAllText(outFile);
+                bool areEqual = output == result;
+
+                if (!areEqual)
+                {
+                    int index = output.Zip(result, (c1, c2) => c1 == c2).TakeWhile(b => b).Count() + 1;
+                    Console.WriteLine("Expected: " + (output.Length > index ?
+                        output[index].ToString() :
+                        "shorter result"));
+                    Console.WriteLine("Got: " + (result.Length > index ?
+                        result[index].ToString() :
+                        "result too short"));
+
+                    Assert.Fail();
+                }
+            }
         }
     }
 }
