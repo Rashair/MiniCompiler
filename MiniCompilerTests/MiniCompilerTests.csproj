@@ -347,7 +347,7 @@
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\UsedManyTimesInRow.txt" />
     <Content Include="StatementsTests\NotValid\MissingArgument.txt" />
     <Content Include="StatementsTests\NotValid\WrongCase.txt" />
-    <None Include="StatementsTests\Valid\SimpleStatements .out" />
+    <None Include="StatementsTests\Valid\SimpleStatements.out" />
     <Content Include="StatementsTests\Valid\SimpleStatements.txt" />
     <Content Include="WhileTests\NotValid\InvalidFormat.txt" />
     <None Include="WhileTests\Valid\WithoutAddition.out" />
