@@ -1,14 +1,17 @@
-program { 
-	int stloc;
-	int ldc;
-	bool ldloc;
-	double br;
-
-	stloc = 5;
-	ldloc = true;
-	ldc = -5;
-	br = 0.505;
-
-	stloc = stloc;
-	stloc = (int)ldloc;
+program {
+    int x;
+    x = "napis1";
+    
+    double y;
+    y = "napis2";
+    
+    bool z;
+    z = "napis3";
+    
+    write "unmatched;
+    
+    write unmatched";
+    
+    write "multiline
+           string";
 }

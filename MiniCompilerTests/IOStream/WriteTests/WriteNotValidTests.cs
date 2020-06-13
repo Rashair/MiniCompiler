@@ -10,5 +10,17 @@ namespace MiniCompilerTests.IOStream
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestString()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestWithEscapedQuotation()
+        {
+            Invoke();
+        }
     }
 }

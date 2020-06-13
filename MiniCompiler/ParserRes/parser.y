@@ -217,10 +217,29 @@ while           : While OpenPar exp ClosePar instr_block
 read            : Read Id 
                   {
                     var variable = TryCreateVariableReference($2, @2);
-                    $$ = new Read(@1) { Child = variable };
+                    if(variable.Type != Type.Unknown)
+                    {
+                        $$ = new Read(@1) { Child = variable };
+                    }
+                    else
+                    {
+                        $$ = new EmptyNode(@1);
+                        EndRecovery();
+                    }
                   }
                 ;
-write           : Write exp     { $$ = new Write(@1) { Child = $2 }; }
+write           : Write exp     
+                  { 
+                    if($2.Type != Type.Unknown)
+                    {
+                        $$ = new Write(@1) { Child = $2 };
+                    }
+                    else
+                    {
+                        $$ = new EmptyNode(@1);
+                        EndRecovery();
+                    } 
+                  }
                 | Write String  { $$ = new Write(@1) { Child = new SimpleString($2, @2) }; }
                 ;
 
