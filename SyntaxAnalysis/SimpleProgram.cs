@@ -18,8 +18,11 @@ namespace SyntaxAnalysis
 
             int a = 5;
             int b = 6;
+            int stloc;
 
-            if(a <= b)
+            stloc = 5;
+
+            if(a <= stloc)
             {
                 Console.WriteLine("xx");
             }

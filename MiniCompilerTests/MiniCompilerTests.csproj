@@ -159,6 +159,7 @@
     <Content Include="AssignmentTests\NotValid\AssignToValue.txt" />
     <Content Include="AssignmentTests\NotValid\UndeclaredVariable.txt" />
     <Content Include="AssignmentTests\NotValid\WithCasting.txt" />
+    <Content Include="AssignmentTests\Valid\AssemblerKeywords.txt" />
     <Content Include="AssignmentTests\Valid\WithCasting.txt" />
     <Content Include="AssignmentTests\Valid\MultilineStatement.txt" />
     <Content Include="AssignmentTests\Valid\VariableToVariable.txt" />
@@ -225,6 +226,7 @@
     <Content Include="EmptyProgramTests\Valid\ManySemicolons.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
     <Content Include="FullProgramTests\NotValid\VariableNotDeclaredInCompilacatedCondition.txt" />
+    <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers.out" />
     <Content Include="FullProgramTests\Valid\PrintAllPrimeNumbers.txt" />
     <Content Include="IfElseTests\NotValid\NoParenth.txt" />
     <None Include="IfElseTests\Valid\ManyBinaryConditions.out" />

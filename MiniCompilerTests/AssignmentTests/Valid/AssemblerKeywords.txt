@@ -8,7 +8,4 @@ program {
 	ldloc = true;
 	ldc = -5;
 	br = 0.505;
-
-	stloc = stloc;
-	stloc = (int)ldloc;
 }

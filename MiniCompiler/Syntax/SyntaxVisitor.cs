@@ -144,7 +144,7 @@ namespace MiniCompiler.Syntax
 
         public void Visit(VariableReference variableReference)
         {
-            EmitCode("ldloc {0}", variableReference.Declaration.Name);
+            EmitCode("ldloc '{0}'", variableReference.Declaration.Name);
         }
 
         public void Visit(Assign assign)
@@ -153,8 +153,8 @@ namespace MiniCompiler.Syntax
             var left = assign.Left as VariableReference;
             ConvertToDoubleIfNeeded(left.Type, assign.Right.Type);
 
-            EmitCode("stloc {0}", left.Declaration.Name);
-            EmitCode("ldloc {0}", left.Declaration.Name);
+            EmitCode("stloc '{0}'", left.Declaration.Name);
+            EmitCode("ldloc '{0}'", left.Declaration.Name);
         }
 
         public void Visit(Value value)

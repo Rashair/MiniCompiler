@@ -124,7 +124,8 @@ instr           : exp Colon { $$ = $1; }
                 | Colon { $$ = new EmptyNode(Loc); }
                 
                 // Errors
-                | exp great_err error Colon { Error("Invalid tokens at col: {0}", @2.StartColumn); }
+                | exp great_err error_colon { Error("Invalid tokens at col: {0}", @2.StartColumn); }
+                | exp error_colon { Error("Invalid expression"); }
                 | error_colon { Error("Invalid statement.");  }
                 | error_eof { Error("Unexpected end of file.");  }
                 ;
