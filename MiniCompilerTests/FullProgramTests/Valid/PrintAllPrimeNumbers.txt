@@ -22,7 +22,7 @@ program
 			{
 				isPrime = true;
 			}
-			else if((num/2)*2 != num && (num/3)*3 != num)
+			else if(num & 2 != 0 && (num/3)*3 != num)
 			{
 				val = 5;
 				while(val * val <= num && val > 4)

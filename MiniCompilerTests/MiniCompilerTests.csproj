@@ -264,6 +264,8 @@
     <Content Include="Operators\Math\CombinedTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Math\DividesTests\NotValid\InvalidType.txt" />
     <Content Include="Operators\Math\DividesTests\NotValid\MultipleUsage.txt" />
+    <None Include="Operators\Math\DividesTests\Valid\IntegerDivision.out" />
+    <Content Include="Operators\Math\DividesTests\Valid\IntegerDivision.txt" />
     <Content Include="Operators\Math\DividesTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Math\DividesTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Math\MultipliesTests\NotValid\InvalidType.txt" />
@@ -335,6 +337,8 @@
     <Content Include="WhileTests\NotValid\InvalidFormat.txt" />
     <None Include="WhileTests\Valid\WithoutAddition.out" />
     <None Include="WhileTests\Valid\ManyDifferentConditions.out" />
+    <None Include="WhileTests\Valid\ReturnInLoop.out" />
+    <Content Include="WhileTests\Valid\ReturnInLoop.txt" />
     <Content Include="WhileTests\Valid\DeclareInLoop.txt" />
     <Content Include="WhileTests\Valid\WithoutAddition.txt" />
     <Content Include="WhileTests\Valid\ManyDifferentConditions.txt" />

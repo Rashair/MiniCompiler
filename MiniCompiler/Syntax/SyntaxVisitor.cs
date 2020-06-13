@@ -70,7 +70,6 @@ namespace MiniCompiler.Syntax
         {
         }
 
-
         public void Visit(CompilationUnit compilationUnit)
         {
             EmitCode(".method static void Program()");
@@ -98,7 +97,6 @@ namespace MiniCompiler.Syntax
             EmitCode("}");
         }
 
-
         public void Visit(Block block)
         {
             EmitCode("{");
@@ -116,7 +114,6 @@ namespace MiniCompiler.Syntax
         {
             EmitCode(".locals init ({0} {1})", declare.Type.ToCil(), declare.Name);
         }
-
 
         public void Visit(Write write)
         {
@@ -319,6 +316,55 @@ namespace MiniCompiler.Syntax
             EmitCode("div");
         }
 
+        public void Visit(BitOr bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("or");
+        }
+        public void Visit(BitAnd bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("and");
+        }
+
+        public void Visit(UnaryMinus uno)
+        {
+            uno.Left.Visit(this);
+            EmitCode("neg");
+        }
+
+        public void Visit(LogicNegation uno)
+        {
+            uno.Left.Visit(this);
+            EmitCode("ldc.{0} 1", Type.Bool.ToPrimitive());
+            EmitCode("xor");
+        }
+
+        public void Visit(BitNegation uno)
+        {
+            uno.Left.Visit(this);
+            EmitCode("not");
+        }
+
+        public void Visit(IntCast uno)
+        {
+            uno.Left.Visit(this);
+            EmitCode("conv." + Type.Int.ToPrimitive());
+        }
+
+        public void Visit(DoubleCast uno)
+        {
+            uno.Left.Visit(this);
+            EmitCode("conv." + Type.Double.ToPrimitive());
+        }
 
         public void Visit(And and)
         {
@@ -326,46 +372,6 @@ namespace MiniCompiler.Syntax
         }
 
         public void Visit(Or or)
-        {
-
-        }
-
-        public void Visit(UnaryMinus unaryMinus)
-        {
-
-        }
-
-
-        public void Visit(LogicNegation logicNegation)
-        {
-
-        }
-
-        public void Visit(BitOr bitOr)
-        {
-
-        }
-
-
-
-        public void Visit(BitAnd bitAnd)
-        {
-
-        }
-
-
-
-        public void Visit(IntCast intCast)
-        {
-
-        }
-
-        public void Visit(BitNegation bitNegation)
-        {
-
-        }
-
-        public void Visit(DoubleCast doubleCast)
         {
 
         }
