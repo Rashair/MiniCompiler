@@ -30,7 +30,8 @@ namespace MiniCompiler.Syntax
 
         private const string tmpPrefix = "@_tmp";
         private readonly Dictionary<Type, Usage> tmpVariables;
-        private int ifCount;
+        private Stack<int> ifLabels;
+        private int lastLabel;
 
 
         public SyntaxVisitor(SyntaxTree tree)
@@ -42,6 +43,8 @@ namespace MiniCompiler.Syntax
                 { Type.Double, new Usage{ Used = 0, Max = 0}  },
                 { Type.Bool,   new Usage{ Used = 0, Max = 0}  }
             };
+            ifLabels = new Stack<int>();
+            ifLabels.Push(0);
         }
 
         public void Visit()
@@ -100,6 +103,7 @@ namespace MiniCompiler.Syntax
             for (int i = 0; i < block.Count; ++i)
             {
                 block[i].Visit(this);
+                PopIfHasValue(block[i]);
             }
 
             EmitCode("}");
@@ -147,10 +151,8 @@ namespace MiniCompiler.Syntax
         {
             assign.Right.Visit(this);
             var left = assign.Left as VariableReference;
-            if (left.Type == Type.Double && assign.Right.Type != Type.Double)
-            {
-                EmitCode("conv." + Type.Double.ToPrimitive());
-            }
+            ConvertToDoubleIfNeeded(left.Type, assign.Right.Type);
+
             EmitCode("stloc {0}", left.Declaration.Name);
             EmitCode("ldloc {0}", left.Declaration.Name);
         }
@@ -163,24 +165,30 @@ namespace MiniCompiler.Syntax
         public void Visit(IfCond ifCond)
         {
             ifCond.Left.Visit(this);
+            int label = lastLabel++;
             if (ifCond.HasElse)
             {
-                EmitCode($"brfalse ELSE_{ifCount}");
+                ifLabels.Push(label);
+                EmitCode($"brfalse ELSE_{label}");
+
                 ifCond.Middle.Visit(this);
+                PopIfHasValue(ifCond.Middle);
+
                 ifCond.Right.Visit(this);
             }
             else
             {
-                EmitCode($"brfalse OUT_IF_ELSE_{ifCount}");
+                EmitCode($"brfalse OUT_IF_ELSE_{label}");
                 ifCond.Middle.Visit(this);
             }
-            EmitCode($"OUT_IF_ELSE_{ifCount++}: ");
+            EmitCode($"OUT_IF_ELSE_{label}: ");
         }
 
         public void Visit(ElseCond elseCond)
         {
-            EmitCode($"ELSE_{ifCount}: ");
+            EmitCode($"ELSE_{ifLabels.Pop()}: ");
             elseCond.Child.Visit(this);
+            PopIfHasValue(elseCond.Child);
         }
 
         public void Visit(Read read)
@@ -193,33 +201,69 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(Equals equals)
+        public void Visit(Equals bin)
         {
-            var left = equals.Left;
-            equals.Left.Visit(this);
-            string tmpNameLeft = GetTmp(equals.Left.Type);
-            EmitCode("stloc {0}", tmpNameLeft);
+            var left = bin.Left;
+            var right = bin.Right;
 
-            var right = equals.Right;
-            equals.Right.Visit(this);
-            var tmpNameRight = GetTmp(equals.Right.Type);
-            EmitCode("stloc {0}", tmpNameRight);
-
-            EmitCode("ldloc {0}", tmpNameLeft);
-            FreeTmp(left.Type);
-            if (right.Type == Type.Double && left.Type != Type.Double)
-            {
-                EmitCode("conv." + Type.Double.ToPrimitive());
-            }
-            
-            EmitCode("ldloc {0}", tmpNameRight);
-            FreeTmp(right.Type);
-            if (left.Type == Type.Double && right.Type != Type.Double)
-            {
-                EmitCode("conv." + Type.Double.ToPrimitive());
-            }
+            PrepareBinaryOperation(left, right);
 
             EmitCode("ceq");
+        }
+
+
+        public void Visit(NotEquals bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("ceq");
+        }
+
+
+        public void Visit(Greater bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("cgt");
+        }
+
+        public void Visit(GreaterOrEqual bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(right, left);
+
+            EmitCode("clt");
+        }
+
+
+        public void Visit(Less bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(left, right);
+
+            EmitCode("clt");
+        }
+
+
+
+        public void Visit(LessOrEqual bin)
+        {
+            var left = bin.Left;
+            var right = bin.Right;
+
+            PrepareBinaryOperation(right, left);
+
+            EmitCode("cgt");
         }
 
 
@@ -239,37 +283,12 @@ namespace MiniCompiler.Syntax
 
         }
 
-        public void Visit(GreaterOrEqual greaterOrEqual)
-        {
-
-        }
 
         public void Visit(LogicNegation logicNegation)
         {
 
         }
 
-        public void Visit(Less less)
-        {
-
-        }
-
-
-        public void Visit(NotEquals notEquals)
-        {
-
-        }
-
-        public void Visit(LessOrEqual lessOrEqual)
-        {
-
-        }
-
-
-        public void Visit(Greater greater)
-        {
-
-        }
 
         public void Visit(Subtract subtract)
         {
@@ -322,6 +341,33 @@ namespace MiniCompiler.Syntax
         {
             EmitCode("leave Return");
         }
+
+        private void PopIfHasValue(SyntaxNode node)
+        {
+            if (node.HasValue)
+            {
+                EmitCode("pop");
+            }
+        }
+
+        private void ConvertToDoubleIfNeeded(Type a, Type b)
+        {
+            if(a == Type.Double && b != Type.Double)
+            {
+                EmitCode("conv." + Type.Double.ToPrimitive());
+            }
+        }
+
+        private void PrepareBinaryOperation(TypeNode left, TypeNode right)
+        {
+            left.Visit(this);
+            ConvertToDoubleIfNeeded(right.Type, left.Type);
+
+            right.Visit(this);
+            ConvertToDoubleIfNeeded(left.Type, right.Type);
+        }
+
+
 
         private string GetTmp(Type type)
         {

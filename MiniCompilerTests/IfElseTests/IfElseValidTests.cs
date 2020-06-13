@@ -16,5 +16,17 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestUnbalancedStack()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestAppropriateLabels()
+        {
+            Invoke();
+        }
     }
 }

@@ -18,6 +18,8 @@ namespace MiniCompiler.Syntax.Variables
             Location = loc;
         }
 
+        public override bool HasValue => false;
+
         protected override bool IsNodeEqual(SyntaxNode node)
         {
             if (base.IsNodeEqual(node))

@@ -9,12 +9,6 @@ namespace MiniCompiler.Syntax
         protected SyntaxNode parent;
         protected LexLocation location;
 
-        // TODO
-        protected List<Token> TokensBefore;
-
-        // TODO
-        protected List<Token> TokensAfter;
-
         public SyntaxNode(LexLocation loc = null)
         {
             Location = loc;
@@ -34,6 +28,8 @@ namespace MiniCompiler.Syntax
         }
 
         public virtual bool ShouldInclude => true;
+
+        public virtual bool HasValue => false;
 
         public abstract int Count { get; }
 
@@ -95,21 +91,6 @@ namespace MiniCompiler.Syntax
                 result += $"({Location.StartLine}..{Location.EndLine}) ({Location.StartColumn}..{Location.EndColumn})";
             }
             return result;
-        }
-
-        public bool IsLeaf()
-        {
-            return Count == 0;
-        }
-
-        public void AddBefore(Token token)
-        {
-            TokensBefore.Add(token);
-        }
-
-        public void AddAfter(Token token)
-        {
-            TokensAfter.Add(token);
         }
     }
 }

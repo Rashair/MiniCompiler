@@ -226,7 +226,9 @@
     <Content Include="FullProgramTests\Valid\PrintAllPrimeNumbers.txt" />
     <Content Include="IfElseTests\NotValid\NoParenth.txt" />
     <None Include="IfElseTests\Valid\ManyBinaryConditions.out" />
+    <Content Include="IfElseTests\Valid\AppropriateLabels.txt" />
     <Content Include="IfElseTests\Valid\ManyBinaryConditions.txt" />
+    <Content Include="IfElseTests\Valid\UnbalancedStack.txt" />
     <Content Include="IfElseTests\Valid\Nested.txt" />
     <Content Include="IOStream\ReadTests\NotValid\ReadUndeclaredVariable.txt" />
     <Content Include="IOStream\ReadTests\Valid\AllTypes.txt" />

@@ -15,6 +15,8 @@
             return false;
         }
 
+        public override bool HasValue => true;
+
         protected override int GetNodeHash()
         {
             return CombineHashCode(base.GetNodeHash(), Type);
