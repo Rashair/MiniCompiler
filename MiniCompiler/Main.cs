@@ -63,7 +63,7 @@ namespace MiniCompiler
                 return 2;
             }
 
-            if (parser.SyntaxTree.Count < 10 && parser.SyntaxTree.All(nodes => nodes.Count < 10))
+            if (parser.SyntaxTree.Count < 10 && parser.SyntaxTree.All(nodes => nodes.Count < 15))
             {
                 Console.WriteLine(parser.SyntaxTree);
             }

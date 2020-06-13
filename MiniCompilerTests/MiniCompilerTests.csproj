@@ -259,6 +259,7 @@
     <Content Include="Operators\Bitwise\BitOrTests\Valid\MultilineStatement.txt" />
     <Content Include="Operators\Bitwise\BitOrTests\Valid\OneLineProgram.txt" />
     <Content Include="Operators\Logical\CombinedTests\NotValid\InvalidType.txt" />
+    <None Include="Operators\Logical\CombinedTests\Valid\ShortCircutEvaluation.out" />
     <Content Include="Operators\Logical\CombinedTests\Valid\ShortCircutEvaluation.txt" />
     <Content Include="Operators\Logical\CombinedTests\Valid\ManyCombinations.txt" />
     <Content Include="Operators\Logical\OrTests\NotValid\InvalidType.txt" />
@@ -346,6 +347,7 @@
     <Content Include="Operators\Unary\UnaryMinusTests\Valid\UsedManyTimesInRow.txt" />
     <Content Include="StatementsTests\NotValid\MissingArgument.txt" />
     <Content Include="StatementsTests\NotValid\WrongCase.txt" />
+    <None Include="StatementsTests\Valid\SimpleStatements .out" />
     <Content Include="StatementsTests\Valid\SimpleStatements.txt" />
     <Content Include="WhileTests\NotValid\InvalidFormat.txt" />
     <None Include="WhileTests\Valid\WithoutAddition.out" />
