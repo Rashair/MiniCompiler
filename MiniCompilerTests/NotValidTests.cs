@@ -5,6 +5,8 @@ namespace MiniCompilerTests
 {
     public class NotValidTests : BaseTests
     {
+        protected const int DefaultTimeout = 100;
+
         public NotValidTests() :
              base(2, Helpers.Self())
         {
@@ -19,7 +21,7 @@ namespace MiniCompilerTests
             ExpectedErrors = null;
         }
 
-        protected override void AssertCorrect()
+        protected override void AssertCorrect(string testCasePath)
         {
             if (ExpectedErrors.HasValue)
             {

@@ -7,7 +7,6 @@ namespace MiniCompilerTests
 {
     public abstract class BaseTests
     {
-        public const int DefaultTimeout = 100;
         // Length(Base)
         private const int prefixLength = 4;
         // Length(Tests)
@@ -29,7 +28,7 @@ namespace MiniCompilerTests
 
         protected virtual string PathSuffix => "";
 
-        protected abstract void AssertCorrect();
+        protected abstract void AssertCorrect(string testCasePath);
 
         [TestInitialize]
         public virtual void Init()
@@ -49,7 +48,7 @@ namespace MiniCompilerTests
 
             // Assert
             Assert.AreEqual(expectedResult, result);
-            AssertCorrect();
+            AssertCorrect(testCasePath);
         }
 
 

@@ -63,7 +63,10 @@ namespace MiniCompiler
                 return 2;
             }
 
-            Console.WriteLine(parser.SyntaxTree);
+            if (parser.SyntaxTree.Count < 4)
+            {
+                Console.WriteLine(parser.SyntaxTree);
+            }
             Console.WriteLine("  compilation successful\n");
             Console.Write("\n\n\r");
             return 0;

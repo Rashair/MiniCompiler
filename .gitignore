@@ -238,6 +238,7 @@ _Pvt_Extensions
 *.il
 *.lst
 *.conflicts
+*.exe
 
 **/Parser.cs
 **/Scanner.cs
