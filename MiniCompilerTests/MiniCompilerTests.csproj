@@ -181,7 +181,6 @@
     <Content Include="AssignmentTests\Valid\MultipleAssign.txt" />
     <Content Include="AssignmentTests\Valid\OneLineProgram.txt" />
     <Content Include="BracesTests\Valid\NestedBracesComments.txt" />
-    <Content Include="BracesTests\Valid\NestedBracesSemicolons.txt" />
     <Content Include="BracesTests\Valid\NestedBracesAssign.txt" />
     <Content Include="DeclarationsTests\NotValid\DeclarationAfterInstruction.txt" />
     <Content Include="DeclarationsTests\NotValid\DifferentTypeCaseMiddle.txt" />
@@ -189,6 +188,7 @@
     <Content Include="DeclarationsTests\NotValid\NameSameAsKeyword.txt" />
     <Content Include="DeclarationsTests\NotValid\RedeclarationMany.txt" />
     <Content Include="DeclarationsTests\NotValid\StartNameWithNumber.txt" />
+    <Content Include="DeclarationsTests\NotValid\MoreThanOneSemicolon.txt" />
     <Content Include="DeclarationsTests\NotValid\WithoutSemicolonMany.txt" />
     <Content Include="DeclarationsTests\NotValid\WithoutSemicolonInTheMiddle.txt" />
     <Content Include="DeclarationsTests\NotValid\WithoutSemicolonAfterOtherErrors.txt" />
@@ -220,6 +220,7 @@
     <Content Include="BracesTests\NotValid\NestedBracesMissingOpenAndClose.txt" />
     <Content Include="EmptyProgramTests\NotValid\CommentAtTheEndOfFile.txt" />
     <Content Include="EmptyProgramTests\NotValid\EmptyFile.txt" />
+    <Content Include="EmptyProgramTests\NotValid\EmptyInstruction.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramCommentedBraces.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramOneTooManyBrace.txt" />
     <Content Include="EmptyProgramTests\NotValid\ProgramWrongBraceOrder.txt" />
@@ -236,7 +237,6 @@
     <Content Include="EmptyProgramTests\Valid\WhitespaceAfterProgramBeforeBraces.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceBeforeProgram.txt" />
     <Content Include="BracesTests\Valid\NestedEmptyBraces.txt" />
-    <Content Include="EmptyProgramTests\Valid\ManySemicolons.txt" />
     <Content Include="EmptyProgramTests\Valid\WhitespaceInsideBraces.txt" />
     <Content Include="FullProgramTests\NotValid\VariableNotDeclaredInCompilacatedCondition.txt" />
     <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers.out" />

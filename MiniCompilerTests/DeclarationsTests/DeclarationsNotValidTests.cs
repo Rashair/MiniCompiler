@@ -120,5 +120,11 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestMoreThanOneSemicolon()
+        {
+            Invoke();
+        }
     }
 }

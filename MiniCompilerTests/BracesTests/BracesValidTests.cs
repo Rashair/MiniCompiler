@@ -61,42 +61,6 @@ namespace MiniCompilerTests
         }
 
         [TestMethod]
-        public void TestNestedBracesSemicolons()
-        {
-            ExpectedTree = new SyntaxTree(
-                new CompilationUnit()
-                {
-                    Child = new Block()
-                    {
-                        new Block(),
-                        new Block()
-                        {
-                            new Block()
-                        },
-                        new Block(),
-                        new Block(),
-                        new Block()
-                        {
-                            new Block
-                            {
-                                new Block
-                                {
-                                    new Block
-                                    {
-                                        new Block()
-                                    }
-                                }
-                            }
-                        },
-                        new Block(),
-                    }
-                }
-            );
-
-            Invoke();
-        }
-
-        [TestMethod]
         public void TestNestedBracesAssign()
         {
             Invoke();

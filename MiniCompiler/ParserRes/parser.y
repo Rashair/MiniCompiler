@@ -121,7 +121,6 @@ instr           : exp Colon { $$ = $1; }
                 | read Colon 
                 | write Colon
                 | Return Colon { $$ = new Return(Loc); }
-                | Colon { $$ = new EmptyNode(Loc); }
                 
                 // Errors
                 | exp great_err error_colon { Error("Invalid tokens at col: {0}", @2.StartColumn); }

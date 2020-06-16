@@ -62,12 +62,6 @@ namespace MiniCompilerTests
         }
 
         [TestMethod]
-        public void TestManySemicolons()
-        {
-            Invoke();
-        }
-
-        [TestMethod]
         public void TestComments()
         {
             Invoke();
