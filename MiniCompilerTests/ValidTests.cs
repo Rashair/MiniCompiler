@@ -117,12 +117,19 @@ namespace MiniCompilerTests
                 if (!areEqual)
                 {
                     int index = output.Zip(result, (c1, c2) => c1 == c2).TakeWhile(b => b).Count() + 1;
-                    Console.WriteLine("Expected: " + (output.Length > index ?
+                    Console.WriteLine("Expected: " + (output.Length > index ? $"[{(int)output[index]}]" +
                         output[index].ToString() :
                         "shorter result"));
-                    Console.WriteLine("Got: " + (result.Length > index ?
+                    Console.WriteLine($"Got: " + (result.Length > index ? $"[{(int)result[index]}]" +
                         result[index].ToString() :
                         "result too short"));
+
+                    int interv = 10;
+                    if (index - interv >= 0 && index + interv < output.Length)
+                    {
+                        Console.WriteLine($"Env[{index}]:'{output.Substring(index - interv, 2 * interv - 1)}'");
+                    }
+
 
                     Assert.Fail();
                 }

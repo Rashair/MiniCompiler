@@ -10,11 +10,13 @@
 IntVal             (0|[1-9][0-9]*)
 DoubleVal          (0\.[0-9]+|[1-9][0-9]*\.[0-9]+)
 Id                 [a-zA-Z][a-zA-Z0-9]*
-String             ((\"\")|(\"([^\n"]|\\\")*[^"\\\n]\"))
 Comment            \/\/.*/\n
 Endl               (\r\n|\n)
 
+String			   \"([^\n\\"]|\\.)*\"
+
 %%
+
 
 "program"	  { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.token = Token.Program; return (int) Token.Program; }
 "{"           { yylloc = new LexLocation(tokLin,tokCol,tokELin,tokECol); yylval.token = Token.OpenBrace; return (int) Token.OpenBrace;  }

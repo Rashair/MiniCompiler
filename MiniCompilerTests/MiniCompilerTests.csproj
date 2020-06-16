@@ -263,6 +263,8 @@
     <None Include="IOStream\WriteTests\Valid\Escaping.out" />
     <None Include="IOStream\WriteTests\Valid\DifferentNewLine.out" />
     <Content Include="IOStream\WriteTests\Valid\DifferentNewLine.txt" />
+    <None Include="IOStream\WriteTests\Valid\EscapingHard.out" />
+    <Content Include="IOStream\WriteTests\Valid\EscapingHard.txt" />
     <Content Include="IOStream\WriteTests\Valid\Escaping.txt" />
     <Content Include="IOStream\WriteTests\Valid\ManyCombinations.txt" />
     <None Include="IOStream\WriteTests\Valid\OneLineProgram.out" />
