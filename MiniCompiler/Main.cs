@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace MiniCompiler
 {
     public class Compiler
     {
-        private static StreamWriter sourceWriter;
+        private static List<string> assemblyLines;
         public static Scanner scanner;
         public static Parser parser;
         public static string file;
@@ -35,6 +34,7 @@ namespace MiniCompiler
                 {
                     string source = reader.ReadToEnd();
                     sourceLines = new List<string>(source.Split(new string[] { "\r\n" }, System.StringSplitOptions.None)); ;
+                    assemblyLines = new List<string>(sourceLines.Count * 2);
                 }
             }
             catch (Exception e)
@@ -48,13 +48,11 @@ namespace MiniCompiler
             {
                 scanner = new Scanner(sourceStream);
                 parser = new Parser(scanner);
-
                 Console.WriteLine();
 
-                sourceWriter = new StreamWriter(file + ".il");
                 result = parser.Parse();
 
-                sourceWriter.Close();
+                File.WriteAllLines(file + ".il", assemblyLines);
             }
 
             if (errors > 0)
@@ -65,7 +63,7 @@ namespace MiniCompiler
             }
             else if (!result)
             {
-                Console.WriteLine($"\n Unexpected error\n");
+                Console.WriteLine($"\n Source code is invalid\n");
                 File.Delete(file + ".il");
                 return 3;
             }
@@ -81,12 +79,19 @@ namespace MiniCompiler
 
         public static void EmitCode(string instr = null)
         {
-            sourceWriter.WriteLine(instr);
+            assemblyLines.Add(instr);
         }
 
-        public static void EmitCode(string instr, params object[] args)
+        public static void EmitAfterFirst(string toFind, string instr)
         {
-            sourceWriter.WriteLine(instr, args);
+            for (int i = 0; i < assemblyLines.Count - 1; ++i)
+            {
+                if (assemblyLines[i].Contains(toFind))
+                {
+                    assemblyLines.Insert(i + 1, instr);
+                    break;
+                }
+            }
         }
     }
 }

@@ -12,17 +12,19 @@ using MiniCompiler.Syntax.Operators.Unary;
 using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
 using System.Collections.Generic;
-using static MiniCompiler.Compiler;
+//using static MiniCompiler.Compiler;
 
 namespace MiniCompiler.Syntax
 {
     public class SyntaxVisitor
     {
         private readonly SyntaxTree tree;
+        private int stackDepth = 0;
+        private int maxStackDepth = 8;
 
         private const string TTY = "[mscorlib]System.Console";
         private readonly string PrintStr = $"call void {TTY}::Write(string)";
-        
+
         private readonly Stack<int> ifLabels;
         private int lastIfLabel;
 
@@ -45,48 +47,49 @@ namespace MiniCompiler.Syntax
             GenEpilog();
         }
 
-        private static void GenProlog()
+        private void GenProlog()
         {
-            EmitCode(".assembly extern mscorlib { auto }");
-            EmitCode(".assembly MiniCompiler { }");
-            EmitCode($".module MiniCompiler.exe");
+            Emit(".assembly extern mscorlib { auto }");
+            Emit(".assembly MiniCompiler { }");
+            Emit($".module MiniCompiler.exe");
 
             /* From Expert .NET 2.0 IL Assembler */
         }
 
-        private static void GenEpilog()
+        private void GenEpilog()
         {
+            Compiler.EmitAfterFirst(".entrypoint", $".maxstack {maxStackDepth}");
         }
 
         public void Visit(CompilationUnit compilationUnit)
         {
-            EmitCode(".method static void Program()");
-            EmitCode("{");
-            EmitCode(".entrypoint");
+            Emit(".method static void Program()");
+            Emit("{");
+            Emit(".entrypoint");
 
-            EmitCode(".try");
-            EmitCode("{");
-            EmitCode();
+            Emit(".try");
+            Emit("{");
+            Emit();
 
             compilationUnit.Child.Visit(this);
 
-            EmitCode("leave Return");
-            EmitCode("}");
+            Emit("leave Return");
+            Emit("}");
 
-            EmitCode("catch [mscorlib]System.Exception");
-            EmitCode("{");
-            EmitCode("callvirt instance string [mscorlib]System.Exception::get_Message()");
-            EmitCode(PrintStr);
-            EmitCode("leave Return");
-            EmitCode("}");
+            Emit("catch [mscorlib]System.Exception");
+            Emit("{");
+            Emit("callvirt instance string [mscorlib]System.Exception::get_Message()");
+            Emit(PrintStr);
+            Emit("leave Return");
+            Emit("}");
 
-            EmitCode("Return: ret");
-            EmitCode("}");
+            Emit("Return: ret");
+            Emit("}");
         }
 
         public void Visit(Block block)
         {
-            EmitCode("{");
+            Emit("{");
 
             for (int i = 0; i < block.Count; ++i)
             {
@@ -94,12 +97,12 @@ namespace MiniCompiler.Syntax
                 PopIfHasValue(block[i]);
             }
 
-            EmitCode("}");
+            Emit("}");
         }
 
         public void Visit(VariableDeclaration declare)
         {
-            EmitCode(".locals init ({0} '{1}')", declare.Type.ToCil(), declare.Name);
+            Emit($".locals init ({declare.Type.ToCil()} '{declare.Name}')");
         }
 
         public void Visit(Write write)
@@ -107,31 +110,31 @@ namespace MiniCompiler.Syntax
             var node = write.Child;
             if (node.Type == Type.Double)
             {
-                EmitCode("call class [mscorlib]System.Globalization.CultureInfo " +
+                EmitStackUp("call class [mscorlib]System.Globalization.CultureInfo " +
                     "[mscorlib]System.Globalization.CultureInfo::get_InvariantCulture()");
-                EmitCode("ldstr \"{0:0.000000}\"");
+                EmitStackUp("ldstr \"{0:0.000000}\"");
 
                 node.Visit(this);
 
-                EmitCode("box [mscorlib]System.Double");
-                EmitCode("call string [mscorlib]System.String:" +
-                    ":Format(class [mscorlib]System.IFormatProvider, string, object)");
-                EmitCode(PrintStr);
+                Emit("box [mscorlib]System.Double");
+                EmitStackDown("call string [mscorlib]System.String:" +
+                    ":Format(class [mscorlib]System.IFormatProvider, string, object)", 2);
+                Emit(PrintStr);
                 return;
             }
 
             node.Visit(this);
-            EmitCode($"call void {TTY}::Write({node.Type.ToCil()})");
+            EmitStackDown($"call void {TTY}::Write({node.Type.ToCil()})");
         }
 
         public void Visit(SimpleString simpleString)
         {
-            EmitCode("ldstr {0}", simpleString.Value);
+            EmitStackUp($"ldstr {simpleString.Value}");
         }
 
         public void Visit(VariableReference variableReference)
         {
-            EmitCode("ldloc '{0}'", variableReference.Declaration.Name);
+            EmitStackUp($"ldloc '{variableReference.Declaration.Name}'");
         }
 
         public void Visit(Assign assign)
@@ -140,13 +143,13 @@ namespace MiniCompiler.Syntax
             var left = assign.Left as VariableReference;
             ConvertToDoubleIfNeeded(left.Type, assign.Right.Type);
 
-            EmitCode("stloc '{0}'", left.Declaration.Name);
-            EmitCode("ldloc '{0}'", left.Declaration.Name);
+            Emit($"stloc '{left.Declaration.Name}'");
+            Emit($"ldloc '{left.Declaration.Name}'");
         }
 
         public void Visit(Value value)
         {
-            EmitCode("ldc.{0} {1}", value.Type.ToPrimitive(), value.Val);
+            EmitStackUp($"ldc.{value.Type.ToPrimitive()} {value.Val}");
         }
 
         public void Visit(IfCond ifCond)
@@ -156,26 +159,26 @@ namespace MiniCompiler.Syntax
             if (ifCond.HasElse)
             {
                 ifLabels.Push(label);
-                EmitCode($"brfalse ELSE_{label}");
+                EmitStackDown($"brfalse ELSE_{label}");
 
                 ifCond.Middle.Visit(this);
                 PopIfHasValue(ifCond.Middle);
 
-                EmitCode($"br OUT_IF_ELSE_{label}");
+                Emit($"br OUT_IF_ELSE_{label}");
                 ifCond.Right.Visit(this);
             }
             else
             {
-                EmitCode($"brfalse OUT_IF_ELSE_{label}");
+                EmitStackDown($"brfalse OUT_IF_ELSE_{label}");
                 ifCond.Middle.Visit(this);
                 PopIfHasValue(ifCond.Middle);
             }
-            EmitCode($"OUT_IF_ELSE_{label}: ");
+            Emit($"OUT_IF_ELSE_{label}: ");
         }
 
         public void Visit(ElseCond elseCond)
         {
-            EmitCode($"ELSE_{ifLabels.Pop()}: ");
+            Emit($"ELSE_{ifLabels.Pop()}: ");
             elseCond.Child.Visit(this);
             PopIfHasValue(elseCond.Child);
         }
@@ -183,15 +186,15 @@ namespace MiniCompiler.Syntax
         public void Visit(WhileLoop whileLoop)
         {
             int label = lastWhileLabel++;
-            EmitCode($"WHILE_{label}: ");
+            Emit($"WHILE_{label}: ");
             whileLoop.Left.Visit(this);
 
-            EmitCode($"brfalse OUT_WHILE_{label}");
+            EmitStackDown($"brfalse OUT_WHILE_{label}");
             whileLoop.Right.Visit(this);
             PopIfHasValue(whileLoop.Right);
-            EmitCode($"br WHILE_{label}");
+            Emit($"br WHILE_{label}");
 
-            EmitCode($"OUT_WHILE_{label}: ");
+            Emit($"OUT_WHILE_{label}: ");
         }
 
         public void Visit(Read read)
@@ -206,7 +209,7 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("ceq");
+            EmitStackDown("ceq");
         }
 
 
@@ -217,9 +220,9 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("ceq");
-            EmitCode("ldc.{0} 0", Type.Bool.ToPrimitive());
-            EmitCode("ceq");
+            Emit("ceq");
+            Emit($"ldc.{Type.Bool.ToPrimitive()} 0");
+            EmitStackDown("ceq");
         }
 
 
@@ -230,7 +233,7 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("cgt");
+            EmitStackDown("cgt");
         }
 
         public void Visit(GreaterOrEqual bin)
@@ -240,9 +243,9 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("clt");
-            EmitCode("ldc.{0} 0", Type.Bool.ToPrimitive());
-            EmitCode("ceq");
+            Emit("clt");
+            Emit($"ldc.{Type.Bool.ToPrimitive()} 0");
+            EmitStackDown("ceq");
         }
 
 
@@ -253,7 +256,7 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("clt");
+            EmitStackDown("clt");
         }
 
         public void Visit(LessOrEqual bin)
@@ -263,9 +266,9 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("cgt");
-            EmitCode("ldc.{0} 0", Type.Bool.ToPrimitive());
-            EmitCode("ceq");
+            Emit("cgt");
+            Emit($"ldc.{Type.Bool.ToPrimitive()} 0");
+            EmitStackDown("ceq");
         }
 
 
@@ -276,7 +279,7 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("add");
+            EmitStackDown("add");
         }
 
         public void Visit(Subtract bin)
@@ -286,7 +289,7 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("sub");
+            EmitStackDown("sub");
         }
 
         public void Visit(Multiplies bin)
@@ -296,7 +299,7 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("mul");
+            EmitStackDown("mul");
         }
 
         public void Visit(Divides bin)
@@ -306,7 +309,7 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("div");
+            EmitStackDown("div");
         }
 
         public void Visit(BitOr bin)
@@ -316,7 +319,7 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("or");
+            EmitStackDown("or");
         }
         public void Visit(BitAnd bin)
         {
@@ -325,85 +328,106 @@ namespace MiniCompiler.Syntax
 
             PrepareBinaryOperation(left, right);
 
-            EmitCode("and");
+            EmitStackDown("and");
         }
 
         public void Visit(UnaryMinus uno)
         {
             uno.Left.Visit(this);
-            EmitCode("neg");
+            Emit("neg");
         }
 
         public void Visit(LogicNegation uno)
         {
             uno.Left.Visit(this);
-            EmitCode("ldc.{0} 1", Type.Bool.ToPrimitive());
-            EmitCode("xor");
+            EmitStackUp($"ldc.{Type.Bool.ToPrimitive()} 1");
+            EmitStackDown("xor");
         }
 
         public void Visit(BitNegation uno)
         {
             uno.Left.Visit(this);
-            EmitCode("not");
+            Emit("not");
         }
 
         public void Visit(IntCast uno)
         {
             uno.Left.Visit(this);
-            EmitCode("conv." + Type.Int.ToPrimitive());
+            Emit("conv." + Type.Int.ToPrimitive());
         }
 
         public void Visit(DoubleCast uno)
         {
             uno.Left.Visit(this);
-            EmitCode("conv." + Type.Double.ToPrimitive());
+            Emit("conv." + Type.Double.ToPrimitive());
         }
 
         public void Visit(And and)
         {
             and.Left.Visit(this);
             int label = lastAndLabel++;
-            EmitCode("dup");
-            EmitCode($"brfalse AND_OUT_{label}");
-            
-            and.Right.Visit(this);
-            EmitCode("and");
+            EmitStackUp("dup");
+            EmitStackDown($"brfalse AND_OUT_{label}");
 
-            EmitCode($"AND_OUT_{label}: ");
+            and.Right.Visit(this);
+            EmitStackDown("and");
+
+            Emit($"AND_OUT_{label}: ");
         }
 
         public void Visit(Or or)
         {
             or.Left.Visit(this);
             int label = lastOrlabel++;
-            EmitCode("dup");
-            EmitCode($"brtrue OR_OUT_{label}");
+            EmitStackUp("dup");
+            EmitStackDown($"brtrue OR_OUT_{label}");
 
             or.Right.Visit(this);
-            EmitCode("or");
+            EmitStackDown("or");
 
-            EmitCode($"OR_OUT_{label}: ");
+            Emit($"OR_OUT_{label}: ");
         }
 
         public void Visit(Return @return)
         {
-            EmitCode("leave Return");
+            Emit("leave Return");
         }
 
         private void PopIfHasValue(SyntaxNode node)
         {
             if (node.HasValue)
             {
-                EmitCode("pop");
+                EmitStackDown("pop");
             }
         }
 
         private void ConvertToDoubleIfNeeded(Type a, Type b)
         {
-            if(a == Type.Double && b != Type.Double)
+            if (a == Type.Double && b != Type.Double)
             {
-                EmitCode("conv." + Type.Double.ToPrimitive());
+                Emit("conv." + Type.Double.ToPrimitive());
             }
+        }
+
+        private void Emit(string instr = null)
+        {
+            Compiler.EmitCode(instr);
+        }
+
+        private void EmitStackUp(string instr, int shift = 1)
+        {
+            Compiler.EmitCode(instr);
+            stackDepth += shift;
+            if (stackDepth > maxStackDepth)
+            {
+                maxStackDepth = stackDepth;
+            }
+        }
+
+        private void EmitStackDown(string instr, int shift = 1)
+        {
+            Compiler.EmitCode(instr);
+            stackDepth -= shift;
         }
 
         private void PrepareBinaryOperation(TypeNode left, TypeNode right)

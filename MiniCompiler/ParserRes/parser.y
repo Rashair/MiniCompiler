@@ -245,10 +245,10 @@ write           : Write exp
 
 /* ARITHEMITIC ------------------------------------------------------------------------------------------------ */ 
                 
-exp             : logic_exp Assign mult_endl exp
+exp             : logic_exp Assign exp
                   {
                       var lhs = $1;
-                      var rhs = $4;
+                      var rhs = $3;
                       if(rhs.Type == Type.Unknown)
                       {
                           $$ = rhs;
@@ -270,42 +270,42 @@ exp             : logic_exp Assign mult_endl exp
                   }
                 | logic_exp 
                 ;
-logic_exp       : logic_exp Or  mult_endl relat_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | logic_exp And mult_endl relat_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+logic_exp       : logic_exp Or  relat_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | logic_exp And relat_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
                 | relat_exp
                 ;
-relat_exp       : relat_exp Equals         mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | relat_exp NotEquals      mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | relat_exp Greater        mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | relat_exp GreaterOrEqual mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | relat_exp Less           mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | relat_exp LessOrEqual    mult_endl addit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+relat_exp       : relat_exp Equals         addit_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | relat_exp NotEquals      addit_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | relat_exp Greater        addit_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | relat_exp GreaterOrEqual addit_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | relat_exp Less           addit_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | relat_exp LessOrEqual    addit_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
                 | addit_exp
                 ;
-addit_exp       : addit_exp Add   mult_endl mult_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | addit_exp Minus mult_endl mult_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+addit_exp       : addit_exp Add   mult_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | addit_exp Minus mult_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
                 | mult_exp
                 ;
-mult_exp        : mult_exp Multiplies mult_endl bit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | mult_exp Divides    mult_endl bit_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+mult_exp        : mult_exp Multiplies bit_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | mult_exp Divides    bit_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
                 | bit_exp
                 ;
-bit_exp         : bit_exp BitOr  mult_endl unary_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
-                | bit_exp BitAnd mult_endl unary_exp  { $$ = TryCreateOperator($2.token, $1, $4); }
+bit_exp         : bit_exp BitOr  unary_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
+                | bit_exp BitAnd unary_exp  { $$ = TryCreateOperator($2.token, $1, $3); }
                 | unary_exp
                 ;
-unary_exp       : Minus                      mult_endl unary_exp { $$ = TryCreateOperator($1.token, $3); }
-                | Negation                   mult_endl unary_exp { $$ = TryCreateOperator($1.token, $3); }
-                | BitNegation                mult_endl unary_exp { $$ = TryCreateOperator($1.token, $3); }
-                | OpenPar mult_endl IntKey    mult_endl ClosePar mult_endl unary_exp { $$ = TryCreateOperator($3.token, $7); }
-                | OpenPar mult_endl DoubleKey mult_endl ClosePar mult_endl unary_exp { $$ = TryCreateOperator($3.token, $7); }
+unary_exp       : Minus                   unary_exp { $$ = TryCreateOperator($1.token, $2); }
+                | Negation                unary_exp { $$ = TryCreateOperator($1.token, $2); }
+                | BitNegation             unary_exp { $$ = TryCreateOperator($1.token, $2); }
+                | OpenPar IntKey ClosePar unary_exp { $$ = TryCreateOperator($2.token, $4); }
+                | OpenPar DoubleKey ClosePar unary_exp { $$ = TryCreateOperator($2.token, $4); }
                 | factor_exp
                 ;
 factor_exp      : IntVal    { $$ = CreateValue(); }
                 | DoubleVal { $$ = CreateValue(); }
                 | True      { $$ = CreateValue(); }
                 | False     { $$ = CreateValue(); }
-                | OpenPar mult_endl exp ClosePar { $$ = $3; }
+                | OpenPar exp ClosePar { $$ = $2; }
                 | Id 
                   {
                       $$ = TryCreateVariableReference($1, @1);

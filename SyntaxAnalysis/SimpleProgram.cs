@@ -15,11 +15,11 @@ namespace SyntaxAnalysis
 
         static void Main(string[] args)
         {
-            string val;
-            val = Console.ReadLine();
-            string[] values = val.Split();
-            int k = int.Parse(values[0]);
-            bool.Parse(values[1]);
+            int k = 1/1 + 1;
+            int d;
+            d = (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + k))))))))))))))))))))))))))))))))))))))))))))))))))));
+
+            Console.WriteLine(d);
         }
     }
 }
