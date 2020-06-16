@@ -15,11 +15,9 @@ namespace SyntaxAnalysis
 
         static void Main(string[] args)
         {
-            int k = 1/1 + 1;
-            int d;
-            d = (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + (k + k))))))))))))))))))))))))))))))))))))))))))))))))))));
-
-            Console.WriteLine(d);
+            int k = int.Parse(Console.ReadLine());
+            double d = double.Parse(Console.ReadLine());
+            bool b = bool.Parse(Console.ReadLine());
         }
     }
 }

@@ -35,5 +35,22 @@ namespace MiniCompiler.Extensions
 
             return null;
         }
+
+        public static string ToCSharp(this Type type)
+        {
+            switch (type)
+            {
+                case Type.Int:
+                    return "Int32";
+                case Type.Double:
+                    return "Double";
+                case Type.Bool:
+                    return "Boolean";
+                case Type.String:
+                    return "String";
+            }
+
+            return null;
+        }
     }
 }

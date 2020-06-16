@@ -199,7 +199,11 @@ namespace MiniCompiler.Syntax
 
         public void Visit(Read read)
         {
-
+            string cilStringType = Type.String.ToCil();
+            var child = read.Child as VariableReference;
+            EmitStackUp($"call {cilStringType} {TTY}::ReadLine()");
+            Emit($"call {child.Type.ToCil()} [mscorlib]System.{child.Type.ToCSharp()}::Parse({cilStringType})");
+            EmitStackDown($"stloc '{child.Declaration.Name}'");
         }
 
         public void Visit(Equals bin)
