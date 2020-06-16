@@ -141,6 +141,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FullProgramTests\Valid\MonteCarlo.out" />
+    <None Include="FullProgramTests\Valid\Rsa2.in" />
+    <None Include="FullProgramTests\Valid\Rsa2.out" />
+    <None Include="FullProgramTests\Valid\Rsa1.in" />
+    <None Include="FullProgramTests\Valid\Rsa1.out" />
+    <None Include="FullProgramTests\Valid\Rsa.in" />
+    <None Include="FullProgramTests\Valid\Rsa.out" />
+    <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers2.in" />
+    <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers2.out" />
+    <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers1.out" />
+    <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers1.in" />
+    <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers.in" />
     <None Include="IOStream\ReadTests\Valid\AllTypes.in" />
     <None Include="packages.config" />
     <None Include=".runsettings" />
@@ -230,6 +241,11 @@
     <Content Include="FullProgramTests\NotValid\VariableNotDeclaredInCompilacatedCondition.txt" />
     <None Include="FullProgramTests\Valid\PrintAllPrimeNumbers.out" />
     <Content Include="FullProgramTests\Valid\MonteCarlo.txt" />
+    <Content Include="FullProgramTests\Valid\Rsa2.txt" />
+    <Content Include="FullProgramTests\Valid\Rsa1.txt" />
+    <Content Include="FullProgramTests\Valid\Rsa.txt" />
+    <Content Include="FullProgramTests\Valid\PrintAllPrimeNumbers2.txt" />
+    <Content Include="FullProgramTests\Valid\PrintAllPrimeNumbers1.txt" />
     <Content Include="FullProgramTests\Valid\PrintAllPrimeNumbers.txt" />
     <Content Include="IfElseTests\NotValid\NoParenth.txt" />
     <None Include="IfElseTests\Valid\ManyBinaryConditions.out" />

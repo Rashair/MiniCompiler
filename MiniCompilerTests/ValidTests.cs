@@ -41,12 +41,8 @@ namespace MiniCompilerTests
 
             string result;
             int exitCode;
-            using (var process = new Process())
+            using (var process = CreateProcess(ilasm, testCasePath + ".il"))
             {
-                process.StartInfo.FileName = ilasm;
-                process.StartInfo.Arguments = testCasePath + ".il";
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.UseShellExecute = false;
                 process.Start();
 
                 StreamReader reader = process.StandardOutput;
@@ -59,14 +55,9 @@ namespace MiniCompilerTests
             Assert.AreEqual(0, exitCode, "Ilasm should return 0");
 
 
-
             string exePath = testCasePath + ".exe";
-            using (var process = new Process())
+            using (var process = CreateProcess(peverify, exePath))
             {
-                process.StartInfo.FileName = peverify;
-                process.StartInfo.Arguments = exePath;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.UseShellExecute = false;
                 process.Start();
 
                 StreamReader reader = process.StandardOutput;
@@ -78,19 +69,40 @@ namespace MiniCompilerTests
             Console.WriteLine(result);
             Assert.AreEqual(0, exitCode, "PEVerify should return 0");
 
-
-            using (var process = new Process())
+            exitCode = -1;
+            using (var process = CreateProcess(exePath))
             {
-                process.StartInfo.FileName = exePath;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardInput = true;
                 process.Start();
+
+                var inFile = testCasePath.Substring(0,
+                    testCasePath.Length - extension.Length) + "in";
+                if (File.Exists(inFile))
+                {
+                    using (var inReader = new StreamReader(inFile))
+                    {
+                        for (string str = inReader.ReadLine(); str != null; str = inReader.ReadLine())
+                        {
+                            process.StandardInput.WriteLine(str);
+                        }
+                    }
+                }
+                process.StandardInput.Close();
 
                 StreamReader reader = process.StandardOutput;
                 result = reader.ReadToEnd();
+                reader.Close();
 
-                process.WaitForExit();
-                exitCode = process.ExitCode;
+                if (process.WaitForExit(DefaultTimeout / 2))
+                {
+                    exitCode = process.ExitCode;
+                }
+                else
+                {
+                    process.Kill();
+                    process.Close();
+                    process.WaitForExit();
+                }
             }
             Console.WriteLine(result);
             Assert.AreEqual(0, exitCode, "Program should return 0");
@@ -115,6 +127,18 @@ namespace MiniCompilerTests
                     Assert.Fail();
                 }
             }
+        }
+
+        private static Process CreateProcess(string path, string args = "")
+        {
+            var process = new Process();
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.FileName = path;
+            process.StartInfo.Arguments = args;
+
+            return process;
         }
     }
 }
