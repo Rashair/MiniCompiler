@@ -256,6 +256,10 @@
     <Content Include="IOStream\ReadTests\NotValid\ReadUndeclaredVariable.txt" />
     <None Include="IOStream\ReadTests\Valid\AllTypes.out" />
     <Content Include="IOStream\ReadTests\Valid\AllTypes.txt" />
+    <Content Include="IOStream\WriteTests\NotValid\EscapingHardLastEscaped.txt" />
+    <Content Include="IOStream\WriteTests\NotValid\EscapingHardNotEnoughEscapes.txt" />
+    <Content Include="IOStream\WriteTests\NotValid\EscapingHardEvenEscapesQuote.txt" />
+    <Content Include="IOStream\WriteTests\NotValid\EscapingHardOddNumber.txt" />
     <Content Include="IOStream\WriteTests\NotValid\String.txt" />
     <Content Include="IOStream\WriteTests\NotValid\WithEscapedQuotation.txt" />
     <Content Include="IOStream\WriteTests\NotValid\WriteUndeclaredVariable.txt" />

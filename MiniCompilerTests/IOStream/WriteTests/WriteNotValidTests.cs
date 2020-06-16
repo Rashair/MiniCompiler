@@ -22,5 +22,29 @@ namespace MiniCompilerTests.IOStream
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestEscapingHardOddNumber()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestEscapingHardEvenEscapesQuote()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestEscapingHardLastEscaped()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestEscapingHardNotEnoughEscapes()
+        {
+            Invoke();
+        }
     }
 }
