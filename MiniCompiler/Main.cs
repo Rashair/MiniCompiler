@@ -43,6 +43,7 @@ namespace MiniCompiler
                 return 1;
             }
 
+            bool result;
             using (var sourceStream = new FileStream(file, FileMode.Open))
             {
                 scanner = new Scanner(sourceStream);
@@ -51,7 +52,7 @@ namespace MiniCompiler
                 Console.WriteLine();
 
                 sourceWriter = new StreamWriter(file + ".il");
-                parser.Parse();
+                result = parser.Parse();
 
                 sourceWriter.Close();
             }
@@ -61,6 +62,12 @@ namespace MiniCompiler
                 Console.WriteLine($"\n  {errors} errors detected\n");
                 File.Delete(file + ".il");
                 return 2;
+            }
+            else if (!result)
+            {
+                Console.WriteLine($"\n Unexpected error\n");
+                File.Delete(file + ".il");
+                return 3;
             }
 
             if (parser.SyntaxTree.Count < 10 && parser.SyntaxTree.All(nodes => nodes.Count < 15))
