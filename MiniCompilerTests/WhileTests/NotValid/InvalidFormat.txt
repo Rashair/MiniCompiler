@@ -2,7 +2,7 @@
 program {
     while true {} // Missing parentheses
     
-    while (1 < 2) {} ; // Maybe valid maybe not. // TODO
+    while (1 < 2) {} ;
     
     while (1) {} // int
     
