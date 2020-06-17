@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MiniCompiler.Syntax;
-using MiniCompiler.Syntax.General;
 
-namespace MiniCompilerTests.Operators.Unary 
+namespace MiniCompilerTests.Operators.Unary
 {
     [TestClass]
     public class DoubleCastValidTests : UnaryValidTests

@@ -1,6 +1,4 @@
-﻿using MiniCompiler.Syntax.Operators;
-
-namespace MiniCompiler.Extensions
+﻿namespace MiniCompiler.Extensions
 {
     public static class EnumToCilExtensions
     {
@@ -10,10 +8,13 @@ namespace MiniCompiler.Extensions
             {
                 case Type.Int:
                     return "int32";
+
                 case Type.Double:
                     return "float64";
+
                 case Type.Bool:
                     return "bool";
+
                 case Type.String:
                     return "string";
             }
@@ -27,8 +28,10 @@ namespace MiniCompiler.Extensions
             {
                 case Type.Int:
                     return "i4";
+
                 case Type.Double:
                     return "r8";
+
                 case Type.Bool:
                     return "i4";
             }
@@ -42,10 +45,13 @@ namespace MiniCompiler.Extensions
             {
                 case Type.Int:
                     return "Int32";
+
                 case Type.Double:
                     return "Double";
+
                 case Type.Bool:
                     return "Boolean";
+
                 case Type.String:
                     return "String";
             }

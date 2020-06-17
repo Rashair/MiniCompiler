@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
 
 namespace MiniCompilerTests.Operators
 {
     [TestClass]
-    public class PriorityNotValidTests : OperatorsNotValidTests 
+    public class PriorityNotValidTests : OperatorsNotValidTests
     {
         [TestMethod]
         public void TestBitAndLogic()

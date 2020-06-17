@@ -4,10 +4,11 @@ namespace SyntaxAnalysis
 {
     public class Braces
     {
-        public Braces() { }
+        public Braces()
+        {
+        }
 
-
-        static void DoSth()
+        private static void DoSth()
         {
             Console.WriteLine("element");
         }
@@ -23,7 +24,6 @@ namespace SyntaxAnalysis
                 }
                 else
                 {
-
                 }
 
                 DoSth();
@@ -40,22 +40,18 @@ namespace SyntaxAnalysis
             }
             if (b)
             {
-
             }
             else if (b)
             {
                 if (b)
                 {
-
                 }
                 else
                 {
-
                 }
             }
             else
             {
-
             }
         }
     }

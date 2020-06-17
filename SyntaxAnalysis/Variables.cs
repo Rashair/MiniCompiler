@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SyntaxAnalysis
 {
-    class Variables
+    internal class Variables
     {
         public void Action()
         {
-
             bool b = false;
             int a = 5;
             if (b)

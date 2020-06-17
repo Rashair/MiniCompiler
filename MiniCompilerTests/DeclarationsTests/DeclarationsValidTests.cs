@@ -157,7 +157,6 @@ namespace MiniCompilerTests
             var scope50 = new SubordinateScope(scopes[5]);
             var scope500 = new SubordinateScope(scope50);
 
-
             ExpectedTree = Helpers.CreateSyntaxTree(
                 new Block
                 {

@@ -15,6 +15,7 @@ namespace MiniCompilerTests
 
         private readonly string ilasm = ToolLocationHelper.GetPathToDotNetFrameworkFile("ilasm.exe",
             TargetDotNetFrameworkVersion.VersionLatest);
+
         private readonly string peverify = @"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.7 Tools\PEVerify.exe";
 
         public ValidTests() :
@@ -53,7 +54,6 @@ namespace MiniCompilerTests
             }
             Console.WriteLine(result);
             Assert.AreEqual(0, exitCode, "Ilasm should return 0");
-
 
             string exePath = testCasePath + ".exe";
             using (var process = CreateProcess(peverify, exePath))
@@ -129,7 +129,6 @@ namespace MiniCompilerTests
                     {
                         Console.WriteLine($"Env[{index}]:'{output.Substring(index - interv, 2 * interv - 1)}'");
                     }
-
 
                     Assert.Fail();
                 }

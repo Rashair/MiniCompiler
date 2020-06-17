@@ -1,7 +1,6 @@
 ﻿using MiniCompiler.Extensions;
 using MiniCompiler.Syntax.Abstract;
 using MiniCompiler.Syntax.General;
-using MiniCompiler.Syntax.HelperClasses;
 using MiniCompiler.Syntax.IOStream;
 using MiniCompiler.Syntax.Operators.Assignment;
 using MiniCompiler.Syntax.Operators.Bitwise;
@@ -12,7 +11,6 @@ using MiniCompiler.Syntax.Operators.Unary;
 using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
 using System.Collections.Generic;
-//using static MiniCompiler.Compiler;
 
 namespace MiniCompiler.Syntax
 {
@@ -216,7 +214,6 @@ namespace MiniCompiler.Syntax
             EmitStackDown("ceq");
         }
 
-
         public void Visit(NotEquals bin)
         {
             var left = bin.Left;
@@ -228,7 +225,6 @@ namespace MiniCompiler.Syntax
             Emit($"ldc.{Type.Bool.ToPrimitive()} 0");
             EmitStackDown("ceq");
         }
-
 
         public void Visit(Greater bin)
         {
@@ -252,7 +248,6 @@ namespace MiniCompiler.Syntax
             EmitStackDown("ceq");
         }
 
-
         public void Visit(Less bin)
         {
             var left = bin.Left;
@@ -274,7 +269,6 @@ namespace MiniCompiler.Syntax
             Emit($"ldc.{Type.Bool.ToPrimitive()} 0");
             EmitStackDown("ceq");
         }
-
 
         public void Visit(Add bin)
         {
@@ -325,6 +319,7 @@ namespace MiniCompiler.Syntax
 
             EmitStackDown("or");
         }
+
         public void Visit(BitAnd bin)
         {
             var left = bin.Left;

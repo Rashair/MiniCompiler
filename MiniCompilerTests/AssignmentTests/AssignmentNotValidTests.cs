@@ -19,7 +19,6 @@ namespace MiniCompilerTests
             Invoke();
         }
 
-
         [TestMethod]
         public void TestAssignWithDeclaration()
         {
@@ -60,7 +59,6 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
-
 
         [TestMethod]
         public void TestUndeclaredVariableMany()

@@ -1,11 +1,9 @@
 ﻿using MiniCompiler.Syntax;
 using MiniCompiler.Syntax.General;
-using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -45,7 +43,6 @@ namespace MiniCompilerTests
 
             throw new ArgumentException($"Value is not object of type: {typeof(TReturn).Name}");
         }
-
 
         /// <summary>
         /// Create SyntaxTree from main program block.

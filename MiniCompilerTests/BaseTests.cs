@@ -8,8 +8,10 @@ namespace MiniCompilerTests
     public abstract class BaseTests
     {
         protected string extension = "txt";
+
         // Length(Base)
         private const int prefixLength = 4;
+
         // Length(Tests)
         private const int suffixLength = 5;
 
@@ -51,7 +53,6 @@ namespace MiniCompilerTests
             Assert.AreEqual(expectedResult, result);
             AssertCorrect(testCasePath);
         }
-
 
         public string GetPath(string caller)
         {

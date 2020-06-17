@@ -18,7 +18,6 @@ namespace MiniCompilerTests
                 });
         }
 
-
         [TestMethod]
         public void TestOneLineProgram()
         {

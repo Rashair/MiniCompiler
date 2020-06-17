@@ -3,7 +3,6 @@ using MiniCompiler;
 using MiniCompiler.Extensions;
 using MiniCompiler.Syntax.Abstract;
 using MiniCompiler.Syntax.General;
-using MiniCompiler.Syntax.Operators.Assignment;
 using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
 

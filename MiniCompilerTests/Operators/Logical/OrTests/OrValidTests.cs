@@ -3,7 +3,7 @@
 namespace MiniCompilerTests.Operators.Logical
 {
     [TestClass]
-    public class OrValidTests :  LogicalValidTests
+    public class OrValidTests : LogicalValidTests
     {
         [TestMethod]
         public void TestOneLineProgram()

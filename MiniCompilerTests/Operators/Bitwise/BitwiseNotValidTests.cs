@@ -2,7 +2,7 @@
 
 namespace MiniCompilerTests.Operators.Bitwise
 {
-    public class BitwiseNotValidTests : OperatorsNotValidTests 
+    public class BitwiseNotValidTests : OperatorsNotValidTests
     {
         protected override string PathSuffix => Path.Combine(base.PathSuffix, "Bitwise");
     }

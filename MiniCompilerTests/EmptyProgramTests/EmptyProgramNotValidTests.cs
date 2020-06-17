@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MiniCompiler;
 
 namespace MiniCompilerTests
 {
@@ -29,7 +28,6 @@ namespace MiniCompilerTests
         {
             Invoke();
         }
-
 
         [TestMethod]
         public void TestProgramWrongBraceOrder()

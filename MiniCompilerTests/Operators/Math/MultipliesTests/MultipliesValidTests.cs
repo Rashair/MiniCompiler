@@ -3,7 +3,7 @@
 namespace MiniCompilerTests.Operators.Math
 {
     [TestClass]
-    public class MultipliesValidTests :  MathValidTests
+    public class MultipliesValidTests : MathValidTests
     {
         [TestMethod]
         public void TestOneLineProgram()
