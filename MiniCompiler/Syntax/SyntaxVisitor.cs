@@ -56,7 +56,7 @@ namespace MiniCompiler.Syntax
 
         private void GenEpilog()
         {
-            Compiler.EmitAfterFirst(".entrypoint", $".maxstack {maxStackDepth}");
+            Compiler.EmitAfterFirst(".entrypoint", $".maxstack {maxStackDepth + 1}");
         }
 
         public void Visit(CompilationUnit compilationUnit)

@@ -4,13 +4,7 @@
     {
         public override bool CanUse(Type typeA, Type typeB = Type.Unknown)
         {
-            switch (typeA)
-            {
-                case Type.Int:
-                    return typeB == Type.Int;
-            }
-
-            return false;
+            return typeA == Type.Int && typeB == Type.Int;
         }
 
         public override Type GetResultTypeBinary(Type typeA, Type typeB)

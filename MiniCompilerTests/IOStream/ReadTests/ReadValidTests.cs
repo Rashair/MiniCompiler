@@ -11,5 +11,23 @@ namespace MiniCompilerTests.IOStream
         {
             Invoke();
         }
+
+        [TestMethod]
+        public void TestReadInWhile()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestReadInWhile1()
+        {
+            Invoke();
+        }
+
+        [TestMethod]
+        public void TestReadInWhile2()
+        {
+            Invoke();
+        }
     }
 }
