@@ -242,3 +242,4 @@ _Pvt_Extensions
 
 **/Parser.cs
 **/Scanner.cs
+**/kompilator.cs

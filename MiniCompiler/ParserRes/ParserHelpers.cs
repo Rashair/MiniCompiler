@@ -2,6 +2,7 @@
 using MiniCompiler.Syntax;
 using MiniCompiler.Syntax.Abstract;
 using MiniCompiler.Syntax.General;
+using MiniCompiler.Syntax.Operators;
 using MiniCompiler.Syntax.Variables;
 using MiniCompiler.Syntax.Variables.Scopes;
 using QUT.Gppg;
