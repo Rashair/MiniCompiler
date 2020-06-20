@@ -1,15 +1,17 @@
-﻿namespace MiniCompiler.Syntax.Operators.Logical
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Operators.Logical
 {
     public class Or : BinaryOperator
     {
-        public override bool CanUse(Type typeA, Type typeB = Type.Unknown)
+        public override bool CanUse(MiniType typeA, MiniType typeB = MiniType.Unknown)
         {
-            return typeA == Type.Bool && typeB == Type.Bool;
+            return typeA == MiniType.Bool && typeB == MiniType.Bool;
         }
 
-        public override Type GetResultTypeBinary(Type typeA, Type typeB)
+        public override MiniType GetResultTypeBinary(MiniType typeA, MiniType typeB)
         {
-            return Type.Bool;
+            return MiniType.Bool;
         }
 
         public override void Visit(SyntaxVisitor visitor)

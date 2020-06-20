@@ -1,19 +1,21 @@
-﻿namespace MiniCompiler.Syntax.Operators.Assignment
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Operators.Assignment
 {
     public class Assign : BinaryOperator
     {
-        public override bool CanUse(Type typeA, Type typeB)
+        public override bool CanUse(MiniType typeA, MiniType typeB)
         {
             switch (typeA)
             {
-                case Type.Double:
-                    return typeB == Type.Double || typeB == Type.Int;
+                case MiniType.Double:
+                    return typeB == MiniType.Double || typeB == MiniType.Int;
             }
 
             return typeA == typeB;
         }
 
-        public override Type GetResultTypeBinary(Type typeA, Type typeB)
+        public override MiniType GetResultTypeBinary(MiniType typeA, MiniType typeB)
         {
             return typeA;
         }

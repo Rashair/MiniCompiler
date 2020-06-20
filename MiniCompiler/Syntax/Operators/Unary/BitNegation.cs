@@ -1,19 +1,21 @@
-﻿namespace MiniCompiler.Syntax.Operators.Unary
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Operators.Unary
 {
     public class BitNegation : UnaryOperator
     {
-        public override bool CanUse(Type typeA)
+        public override bool CanUse(MiniType typeA)
         {
             switch (typeA)
             {
-                case Type.Int:
+                case MiniType.Int:
                     return true;
             }
 
             return false;
         }
 
-        public override Type GetResultType(Type type)
+        public override MiniType GetResultType(MiniType type)
         {
             return type;
         }

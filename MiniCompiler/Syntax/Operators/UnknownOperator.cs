@@ -1,20 +1,22 @@
-﻿namespace MiniCompiler.Syntax.Operators
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Operators
 {
     public class UnknownOperator : Operator
     {
-        public override bool CanUse(Type typeA)
+        public override bool CanUse(MiniType typeA)
         {
             return false;
         }
 
-        public override bool CanUse(Type typeA, Type typeB)
+        public override bool CanUse(MiniType typeA, MiniType typeB)
         {
             return false;
         }
 
-        public override Type GetResultType(Type typeA, Type typeB = Type.Unknown)
+        public override MiniType GetResultType(MiniType typeA, MiniType typeB = MiniType.Unknown)
         {
-            return Type.Unknown;
+            return MiniType.Unknown;
         }
 
         public override void Visit(SyntaxVisitor visitor)

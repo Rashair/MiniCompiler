@@ -19,7 +19,7 @@
 %union
 {
     public Token            token;
-    public Type             type;
+    public MiniType         type;
     public string           val;
     public SyntaxNode       node;
     public TypeNode         typeNode;
@@ -118,8 +118,8 @@ content         : content instr
 instr           : exp Colon { $$ = $1; }
                 | if_else
                 | while
-                | read Colon 
-                | write Colon
+                | read Colon { $$ = $1; }
+                | write Colon { $$ = $1; }
                 | Return Colon { $$ = new Return(Loc); }
                 
                 // Errors
@@ -144,11 +144,11 @@ declar_colon    : declar Colon
 declar          : declar_key Id
                   {
                       var name = $2;
-                      if($1 != Type.Unknown && !currentScope.IsPresent(name))
+                      if($1 != MiniType.Unknown && !currentScope.IsPresent(name))
                       {
                           $$ = new VariableDeclaration(name, currentScope, $1, Loc);
                       }
-                      else if($1 == Type.Unknown)
+                      else if($1 == MiniType.Unknown)
                       {
                           Error("Unrecognized type");
                       }
@@ -159,9 +159,9 @@ declar          : declar_key Id
                   }
                 | declar_key unrecon_word { Error("Invalid character at: ", @2.StartColumn); }
                 ;
-declar_key      : IntKey  { $$ = Type.Int; }
-                | BoolKey { $$ = Type.Bool; }
-                | DoubleKey { $$ = Type.Double; }
+declar_key      : IntKey  { $$ = MiniType.Int; }
+                | BoolKey { $$ = MiniType.Bool; }
+                | DoubleKey { $$ = MiniType.Double; }
                 ;
 /* IF ELSE  --------------------------------------------------------------------------------------------------*/
 if_else         : if_stmnt %prec If
@@ -179,7 +179,7 @@ if_else         : if_stmnt %prec If
                 ;
 if_stmnt        : If OpenPar exp ClosePar instr_block
                   {
-                    if($3.Type != Type.Bool)
+                    if($3.Type != MiniType.Bool)
                     {
                         Error("Expression in IF statement must evaluate to bool.");
                         EndRecovery();
@@ -197,7 +197,7 @@ if_stmnt        : If OpenPar exp ClosePar instr_block
 /* WHILE  --------------------------------------------------------------------------------------------------*/
 while           : While OpenPar exp ClosePar instr_block
                   {
-                    if($3.Type != Type.Bool)
+                    if($3.Type != MiniType.Bool)
                     {
                         Error("Expression in WHILE statement must evaluate to bool.");
                         EndRecovery();
@@ -216,7 +216,7 @@ while           : While OpenPar exp ClosePar instr_block
 read            : Read Id 
                   {
                     var variable = TryCreateVariableReference($2, @2);
-                    if(variable.Type != Type.Unknown)
+                    if(variable.Type != MiniType.Unknown)
                     {
                         $$ = new Read(@1) { Child = variable };
                     }
@@ -229,7 +229,7 @@ read            : Read Id
                 ;
 write           : Write exp     
                   { 
-                    if($2.Type != Type.Unknown)
+                    if($2.Type != MiniType.Unknown)
                     {
                         $$ = new Write(@1) { Child = $2 };
                     }
@@ -248,12 +248,12 @@ exp             : logic_exp Assign exp
                   {
                       var lhs = $1;
                       var rhs = $3;
-                      if(rhs.Type == Type.Unknown)
+                      if(rhs.Type == MiniType.Unknown)
                       {
                           $$ = rhs;
                           EndRecovery();
                       }
-                      else if(lhs.Type == Type.Unknown)
+                      else if(lhs.Type == MiniType.Unknown)
                       {
                           $$ = lhs;
                           EndRecovery();
@@ -309,7 +309,6 @@ factor_exp      : IntVal    { $$ = CreateValue(); }
                   {
                       $$ = TryCreateVariableReference($1, @1);
                   }
-                | factor_exp Endl
                 ;
 /* ERRORS  ------------------------------------------------------------------------------------------------ */ 
 error_colon     : error Colon
@@ -328,14 +327,8 @@ unrecon_word    : Id Error
                 | unrecon_word Id
                 ;
 /* OTHER  ------------------------------------------------------------------------------------------------ */ 
-mult_endl       : /* empty */
-                | mult_endl Endl
-                ;
 great_err       : Error
                 | great_err Error;
-end             : Colon
-                | Eof
-                ;
 none            : %prec Error 
                     { $$ = null; }
                 ;

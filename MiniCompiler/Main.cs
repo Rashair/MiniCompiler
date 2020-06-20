@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Console = System.Console;
 
 namespace MiniCompiler
 {
@@ -37,7 +37,7 @@ namespace MiniCompiler
                     assemblyLines = new List<string>(sourceLines.Count * 2);
                 }
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 Console.WriteLine("\n" + e.Message);
                 return 1;

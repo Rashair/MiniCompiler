@@ -1,15 +1,17 @@
-﻿namespace MiniCompiler.Syntax.Operators.Unary
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Operators.Unary
 {
     public class DoubleCast : UnaryOperator
     {
-        public override bool CanUse(Type typeA)
+        public override bool CanUse(MiniType typeA)
         {
-            return typeA != Type.Unknown;
+            return typeA != MiniType.Unknown;
         }
 
-        public override Type GetResultType(Type type)
+        public override MiniType GetResultType(MiniType type)
         {
-            return Type.Double;
+            return MiniType.Double;
         }
 
         public override void Visit(SyntaxVisitor visitor)

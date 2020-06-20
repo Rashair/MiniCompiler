@@ -67,7 +67,7 @@ namespace MiniCompiler
 
             CurrentSemanticValue.node = new EmptyNode(Loc);
             CurrentSemanticValue.typeNode = new EmptyTypeNode(Loc);
-            CurrentSemanticValue.type = Type.Unknown;
+            CurrentSemanticValue.type = MiniType.Unknown;
 
             if (lastErrorToken == Token.Eof)
             {
@@ -118,11 +118,11 @@ namespace MiniCompiler
         private TypeNode CreateValue()
         {
             var value = ValueStack[ValueStack.Depth - 1];
-            Type type = value.token.ConvertToType();
+            MiniType type = value.token.ConvertToType();
             string val = value.val;
 
             TypeNode result;
-            if (type == Type.Unknown)
+            if (type == MiniType.Unknown)
             {
                 result = Error("Cannot use provided type: {0}", value.token).typeNode;
                 StartRecovery();

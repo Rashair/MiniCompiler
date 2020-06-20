@@ -106,7 +106,7 @@ namespace MiniCompiler.Syntax
         public void Visit(Write write)
         {
             var node = write.Child;
-            if (node.Type == Type.Double)
+            if (node.Type == MiniType.Double)
             {
                 EmitStackUp("call class [mscorlib]System.Globalization.CultureInfo " +
                     "[mscorlib]System.Globalization.CultureInfo::get_InvariantCulture()");
@@ -197,7 +197,7 @@ namespace MiniCompiler.Syntax
 
         public void Visit(Read read)
         {
-            string cilStringType = Type.String.ToCil();
+            string cilStringType = MiniType.String.ToCil();
             var child = read.Child as VariableReference;
             EmitStackUp($"call {cilStringType} {TTY}::ReadLine()");
             Emit($"call {child.Type.ToCil()} [mscorlib]System.{child.Type.ToCSharp()}::Parse({cilStringType})");
@@ -222,7 +222,7 @@ namespace MiniCompiler.Syntax
             PrepareBinaryOperation(left, right);
 
             Emit("ceq");
-            Emit($"ldc.{Type.Bool.ToPrimitive()} 0");
+            Emit($"ldc.{MiniType.Bool.ToPrimitive()} 0");
             EmitStackDown("ceq");
         }
 
@@ -244,7 +244,7 @@ namespace MiniCompiler.Syntax
             PrepareBinaryOperation(left, right);
 
             Emit("clt");
-            Emit($"ldc.{Type.Bool.ToPrimitive()} 0");
+            Emit($"ldc.{MiniType.Bool.ToPrimitive()} 0");
             EmitStackDown("ceq");
         }
 
@@ -266,7 +266,7 @@ namespace MiniCompiler.Syntax
             PrepareBinaryOperation(left, right);
 
             Emit("cgt");
-            Emit($"ldc.{Type.Bool.ToPrimitive()} 0");
+            Emit($"ldc.{MiniType.Bool.ToPrimitive()} 0");
             EmitStackDown("ceq");
         }
 
@@ -339,7 +339,7 @@ namespace MiniCompiler.Syntax
         public void Visit(LogicNegation uno)
         {
             uno.Left.Visit(this);
-            EmitStackUp($"ldc.{Type.Bool.ToPrimitive()} 1");
+            EmitStackUp($"ldc.{MiniType.Bool.ToPrimitive()} 1");
             EmitStackDown("xor");
         }
 
@@ -352,13 +352,13 @@ namespace MiniCompiler.Syntax
         public void Visit(IntCast uno)
         {
             uno.Left.Visit(this);
-            Emit("conv." + Type.Int.ToPrimitive());
+            Emit("conv." + MiniType.Int.ToPrimitive());
         }
 
         public void Visit(DoubleCast uno)
         {
             uno.Left.Visit(this);
-            Emit("conv." + Type.Double.ToPrimitive());
+            Emit("conv." + MiniType.Double.ToPrimitive());
         }
 
         public void Visit(And and)
@@ -400,11 +400,11 @@ namespace MiniCompiler.Syntax
             }
         }
 
-        private void ConvertToDoubleIfNeeded(Type a, Type b)
+        private void ConvertToDoubleIfNeeded(MiniType a, MiniType b)
         {
-            if (a == Type.Double && b != Type.Double)
+            if (a == MiniType.Double && b != MiniType.Double)
             {
-                Emit("conv." + Type.Double.ToPrimitive());
+                Emit("conv." + MiniType.Double.ToPrimitive());
             }
         }
 

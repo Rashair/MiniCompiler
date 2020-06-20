@@ -1,4 +1,5 @@
 ﻿using MiniCompiler.Syntax.Abstract;
+using MiniCompiler.Syntax.Variables;
 using QUT.Gppg;
 
 namespace MiniCompiler.Syntax.IOStream
@@ -8,7 +9,7 @@ namespace MiniCompiler.Syntax.IOStream
         public SimpleString(string value, LexLocation loc = null)
         {
             Value = value;
-            Type = Type.String;
+            Type = MiniType.String;
             Location = loc;
         }
 

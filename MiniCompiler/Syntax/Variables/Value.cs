@@ -5,7 +5,7 @@ namespace MiniCompiler.Syntax.Variables
 {
     public class Value : TypeNode
     {
-        public Value(Type type, string val, LexLocation loc = null)
+        public Value(MiniType type, string val, LexLocation loc = null)
         {
             Type = type;
             Val = val;

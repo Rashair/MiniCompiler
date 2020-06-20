@@ -1,58 +1,60 @@
-﻿namespace MiniCompiler.Extensions
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Extensions
 {
     public static class EnumToCilExtensions
     {
-        public static string ToCil(this Type type)
+        public static string ToCil(this MiniType type)
         {
             switch (type)
             {
-                case Type.Int:
+                case MiniType.Int:
                     return "int32";
 
-                case Type.Double:
+                case MiniType.Double:
                     return "float64";
 
-                case Type.Bool:
+                case MiniType.Bool:
                     return "bool";
 
-                case Type.String:
+                case MiniType.String:
                     return "string";
             }
 
             return null;
         }
 
-        public static string ToPrimitive(this Type type)
+        public static string ToPrimitive(this MiniType type)
         {
             switch (type)
             {
-                case Type.Int:
+                case MiniType.Int:
                     return "i4";
 
-                case Type.Double:
+                case MiniType.Double:
                     return "r8";
 
-                case Type.Bool:
+                case MiniType.Bool:
                     return "i4";
             }
 
             return null;
         }
 
-        public static string ToCSharp(this Type type)
+        public static string ToCSharp(this MiniType type)
         {
             switch (type)
             {
-                case Type.Int:
+                case MiniType.Int:
                     return "Int32";
 
-                case Type.Double:
+                case MiniType.Double:
                     return "Double";
 
-                case Type.Bool:
+                case MiniType.Bool:
                     return "Boolean";
 
-                case Type.String:
+                case MiniType.String:
                     return "String";
             }
 

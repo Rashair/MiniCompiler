@@ -1,24 +1,26 @@
-﻿namespace MiniCompiler.Syntax.Operators.Math
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Operators.Math
 {
     public class Subtract : BinaryOperator
     {
-        public override bool CanUse(Type typeA, Type typeB = Type.Unknown)
+        public override bool CanUse(MiniType typeA, MiniType typeB = MiniType.Unknown)
         {
             switch (typeA)
             {
-                case Type.Int:
-                    return typeB == Type.Int || typeB == Type.Double;
+                case MiniType.Int:
+                    return typeB == MiniType.Int || typeB == MiniType.Double;
 
-                case Type.Double:
-                    return typeB == Type.Int || typeB == Type.Double;
+                case MiniType.Double:
+                    return typeB == MiniType.Int || typeB == MiniType.Double;
             }
 
             return false;
         }
 
-        public override Type GetResultTypeBinary(Type typeA, Type typeB)
+        public override MiniType GetResultTypeBinary(MiniType typeA, MiniType typeB)
         {
-            return typeA == Type.Double || typeB == Type.Double ? Type.Double : Type.Int;
+            return typeA == MiniType.Double || typeB == MiniType.Double ? MiniType.Double : MiniType.Int;
         }
 
         public override void Visit(SyntaxVisitor visitor)

@@ -1,17 +1,18 @@
-﻿using System;
+﻿using MiniCompiler.Syntax.Variables;
+using System;
 
 namespace MiniCompiler.Syntax.Operators
 {
     public abstract class UnaryOperator : Operator
     {
-        public override bool CanUse(Type typeA, Type typeB)
+        public override bool CanUse(MiniType typeA, MiniType typeB)
         {
             return false;
         }
 
-        public override Type GetResultType(Type typeA, Type typeB = Type.Unknown)
+        public override MiniType GetResultType(MiniType typeA, MiniType typeB = MiniType.Unknown)
         {
-            if (typeB != Type.Unknown || typeA == Type.Unknown)
+            if (typeB != MiniType.Unknown || typeA == MiniType.Unknown)
             {
                 throw new ArgumentException("You can't use this operator on this types.");
             }
@@ -19,6 +20,6 @@ namespace MiniCompiler.Syntax.Operators
             return GetResultType(typeA);
         }
 
-        public abstract Type GetResultType(Type type);
+        public abstract MiniType GetResultType(MiniType type);
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace MiniCompiler.Syntax.Abstract
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Abstract
 {
     public abstract class TypeNode : SiblingsNode<TypeNode, TypeNode>
     {
-        public virtual Type Type { get; protected set; }
+        public virtual MiniType Type { get; protected set; }
 
         protected override bool IsNodeEqual(SyntaxNode node)
         {

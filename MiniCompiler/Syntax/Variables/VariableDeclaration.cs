@@ -9,7 +9,7 @@ namespace MiniCompiler.Syntax.Variables
         public string Name { get; private set; }
         public IScope Scope { get; private set; }
 
-        public VariableDeclaration(string name, IScope scope, Type type, LexLocation loc = null)
+        public VariableDeclaration(string name, IScope scope, MiniType type, LexLocation loc = null)
         {
             Name = name;
             Scope = scope;

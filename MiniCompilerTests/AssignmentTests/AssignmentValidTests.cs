@@ -15,14 +15,14 @@ namespace MiniCompilerTests
         public void TestOneLineProgram()
         {
             var scope = new SubordinateScope(new EmptyScope());
-            var declare = new VariableDeclaration("a", scope, Type.Int);
+            var declare = new VariableDeclaration("a", scope, MiniType.Int);
             ExpectedTree = Helpers.CreateSyntaxTree(
                 new Block()
                 {
                     declare,
-                    Operator.Create(Token.Assign, Type.Int, Type.Int)
+                    Operator.Create(Token.Assign, MiniType.Int, MiniType.Int)
                     .WithLeft<Operator, TypeNode>(new VariableReference(declare))
-                    .WithRight<Operator, TypeNode>(new Value(Type.Int, "5"))
+                    .WithRight<Operator, TypeNode>(new Value(MiniType.Int, "5"))
                 }
             );
 
@@ -33,24 +33,24 @@ namespace MiniCompilerTests
         public void TestMultipleAssign()
         {
             var scope = new SubordinateScope(new EmptyScope());
-            var declare0 = new VariableDeclaration("a", scope, Type.Int);
-            var declare1 = new VariableDeclaration("b", scope, Type.Int);
-            var declare2 = new VariableDeclaration("c", scope, Type.Int);
+            var declare0 = new VariableDeclaration("a", scope, MiniType.Int);
+            var declare1 = new VariableDeclaration("b", scope, MiniType.Int);
+            var declare2 = new VariableDeclaration("c", scope, MiniType.Int);
             ExpectedTree = Helpers.CreateSyntaxTree(
                 new Block()
                 {
                     declare0,
                     declare1,
                     declare2,
-                    Operator.Create(Token.Assign, Type.Int, Type.Int)
+                    Operator.Create(Token.Assign, MiniType.Int, MiniType.Int)
                     .WithLeft<Operator, TypeNode>(new VariableReference(declare1))
                     .WithRight<Operator, TypeNode>(
-                        Operator.Create(Token.Assign, Type.Int, Type.Int)
+                        Operator.Create(Token.Assign, MiniType.Int, MiniType.Int)
                          .WithLeft<Operator, TypeNode>(new VariableReference(declare0))
                          .WithRight<Operator, TypeNode>(
-                            Operator.Create(Token.Assign, Type.Int, Type.Int)
+                            Operator.Create(Token.Assign, MiniType.Int, MiniType.Int)
                             .WithLeft<Operator, TypeNode>( new VariableReference(declare2))
-                            .WithRight<Operator, TypeNode>( new Value(Type.Int, "0"))
+                            .WithRight<Operator, TypeNode>( new Value(MiniType.Int, "0"))
 
                          )
                     )

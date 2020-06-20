@@ -1,27 +1,29 @@
-﻿namespace MiniCompiler.Syntax.Operators.Relation
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Operators.Relation
 {
     public class NotEquals : BinaryOperator
     {
-        public override bool CanUse(Type typeA, Type typeB = Type.Unknown)
+        public override bool CanUse(MiniType typeA, MiniType typeB = MiniType.Unknown)
         {
             switch (typeA)
             {
-                case Type.Int:
-                    return typeB == Type.Int || typeB == Type.Double;
+                case MiniType.Int:
+                    return typeB == MiniType.Int || typeB == MiniType.Double;
 
-                case Type.Double:
-                    return typeB == Type.Int || typeB == Type.Double;
+                case MiniType.Double:
+                    return typeB == MiniType.Int || typeB == MiniType.Double;
 
-                case Type.Bool:
-                    return typeB == Type.Bool;
+                case MiniType.Bool:
+                    return typeB == MiniType.Bool;
             }
 
             return false;
         }
 
-        public override Type GetResultTypeBinary(Type typeA, Type typeB)
+        public override MiniType GetResultTypeBinary(MiniType typeA, MiniType typeB)
         {
-            return Type.Bool;
+            return MiniType.Bool;
         }
 
         public override void Visit(SyntaxVisitor visitor)

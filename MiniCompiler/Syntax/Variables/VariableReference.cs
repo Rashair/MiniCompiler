@@ -14,7 +14,7 @@ namespace MiniCompiler.Syntax.Variables.Scopes
 
         public VariableDeclaration Declaration { get; }
 
-        public override Type Type
+        public override MiniType Type
         {
             get => Declaration.Type;
             protected set => throw new InvalidOperationException("You cannot set type of declared variable");

@@ -1,17 +1,18 @@
-﻿using System;
+﻿using MiniCompiler.Syntax.Variables;
+using System;
 
 namespace MiniCompiler.Syntax.Operators
 {
     public abstract class BinaryOperator : Operator
     {
-        public override bool CanUse(Type typeA)
+        public override bool CanUse(MiniType typeA)
         {
             return false;
         }
 
-        public override Type GetResultType(Type typeA, Type typeB = Type.Unknown)
+        public override MiniType GetResultType(MiniType typeA, MiniType typeB = MiniType.Unknown)
         {
-            if (typeA == Type.Unknown || typeB == Type.Unknown)
+            if (typeA == MiniType.Unknown || typeB == MiniType.Unknown)
             {
                 throw new ArgumentException("You can't use this operator on this types.");
             }
@@ -19,6 +20,6 @@ namespace MiniCompiler.Syntax.Operators
             return GetResultTypeBinary(typeA, typeB);
         }
 
-        public abstract Type GetResultTypeBinary(Type typeA, Type typeB);
+        public abstract MiniType GetResultTypeBinary(MiniType typeA, MiniType typeB);
     }
 }

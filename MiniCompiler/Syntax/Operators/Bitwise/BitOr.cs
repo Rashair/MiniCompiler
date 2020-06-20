@@ -1,15 +1,17 @@
-﻿namespace MiniCompiler.Syntax.Operators.Bitwise
+﻿using MiniCompiler.Syntax.Variables;
+
+namespace MiniCompiler.Syntax.Operators.Bitwise
 {
     public class BitOr : BinaryOperator
     {
-        public override bool CanUse(Type typeA, Type typeB = Type.Unknown)
+        public override bool CanUse(MiniType typeA, MiniType typeB = MiniType.Unknown)
         {
-            return typeA == Type.Int && typeB == Type.Int;
+            return typeA == MiniType.Int && typeB == MiniType.Int;
         }
 
-        public override Type GetResultTypeBinary(Type typeA, Type typeB)
+        public override MiniType GetResultTypeBinary(MiniType typeA, MiniType typeB)
         {
-            return Type.Int;
+            return MiniType.Int;
         }
 
         public override void Visit(SyntaxVisitor visitor)
